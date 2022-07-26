@@ -38,7 +38,7 @@ tmp/firebase_test/index.html 파이어베이스 API를 모듈화하려고 시도
 tmp/firebase_test/index-module.html script태그에 type="module"추가
 
 
-index.html 에러
+index.html 에러 
 파이어폭스 : Uncaught SyntaxError: import declarations may only appear at top level of a module
 크롬 : Uncaught SyntaxError: Cannot use import statement outside a module
 

@@ -1,5 +1,7 @@
-import { initializeApp } from  '/node_modules/firebase/app/dist/index.cjs.js';
-import { getDatabase} from '/node_modules/firebase/database/dist/public.d.ts';
+import { initializeApp } from 'firebase/app';
+import { getDatabase, ref, child, get, onValue  } from 'firebase/database';
+// import { initializeApp } from  '/node_modules/firebase/app/dist/index.cjs.js';
+// import { getDatabase} from '/node_modules/firebase/database/dist/public.d.ts';
 // import { getDatabase, ref,get, set, child, update, remove } from '/node_modules/firebase/database/dist/public.d.ts';
 // node_modules/firebase/database/dist/public.d.ts
 // node_modules\@firebase\database\dist\public.d.ts
@@ -24,7 +26,7 @@ const app = initializeApp(firebaseConfig);
 const db = getDatabase(app);
 
 
-const select = function(){
+const selectTest = function(){
     const dbref = ref(db);
 
     get(child(dbref,"test")).then((snapshot)=>{
@@ -44,7 +46,37 @@ const select = function(){
         console.log("error : "+error);
     });
 }
+const dayCount = async function(){
+    const dbref = ref(db);
+    let count = 0;
+
+    let today = new Date();
+    let year = today.getFullYear();
+    let month = today.getMonth() + 1; 
+    month = month <10 ? '0'+month:month;
+    let date = today.getDate();
+    date = 26;
+    await get(child(dbref,"club/"+year+"/"+month+"/"+date)).then( function(snapshot){
+        if(snapshot.exists()){
+            snapshot.forEach(childSnapshot => {
+                console.log(childSnapshot.val());
+                count++;
+            });
+        }
+    });
+    return count;
+  }
+
+
+
+
+
+
+
+
+
+
 // const select = function(){
 //     console.log("select");
 // }
-export {select};
+export {selectTest , dayCount};

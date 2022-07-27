@@ -1,5 +1,12 @@
-import { initializeApp} from 'firebase/app';
-import { getDatabase, ref,get, set, child, update, remove } from 'firebase/database';
+import { initializeApp } from  '/node_modules/firebase/app/dist/index.cjs.js';
+import { getDatabase} from '/node_modules/firebase/database/dist/public.d.ts';
+// import { getDatabase, ref,get, set, child, update, remove } from '/node_modules/firebase/database/dist/public.d.ts';
+// node_modules/firebase/database/dist/public.d.ts
+// node_modules\@firebase\database\dist\public.d.ts
+// node_modules\@firebase\database\dist\public.d.ts
+// 
+
+
 
 
 const firebaseConfig = {

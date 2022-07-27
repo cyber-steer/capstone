@@ -1,5 +1,5 @@
-// import {select} from '../db/firebase-connect.js';
-// select()
+import {select} from '../db/firebase-connect.js';
+select()
 
 
 // Set new default font family and font color to mimic Bootstrap's default styling

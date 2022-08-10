@@ -25,6 +25,7 @@
     <link href="img/cod.png" rel="icon">
     <link rel="stylesheet" href="css/calendar.css">
     
+    
 </head>
 
 <body id="page-top">
@@ -207,7 +208,7 @@
 
                         <!-- Earnings (Monthly) Card Example -->
                         <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-info shadow h-100 py-2">
+                            <div class="card border-left-success shadow h-100 py-2">
                                 <div class="card-body">
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
@@ -216,7 +217,7 @@
                                             <div class="h5 mb-0 font-weight-bold text-gray-800">0명</div>
                                         </div>
                                         <div class="col-auto">
-                                            <i class="fas fa-calendar fa-2x text-gray-300"></i>
+                                            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
                                         </div>
                                     </div>
                                 </div>
@@ -521,312 +522,11 @@
     <script src="js/sb-admin-2.min.js"></script>
 
     <!-- Page level plugins -->
-    <script src="vendor/chart.js/Chart.min.js"></script>
+    <script src="/vendor/chart.js/Chart.min.js"></script>
 
-    <!-- ================================================================================================================================== -->
     <!-- Page level custom scripts -->
-
-    <script type="module">
-        import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.9.1/firebase-app.js';
-        import { getDatabase, ref, child, get, onValue  } from 'https://www.gstatic.com/firebasejs/9.9.1/firebase-database.js';
-
-        const firebaseConfig = {
-            apiKey: "AIzaSyBETK45cbP1g2ZYC03ras5UYys5fXAqV_4",
-            authDomain: "fir-course-edb8c.firebaseapp.com",
-            databaseURL: "https://fir-course-edb8c-default-rtdb.firebaseio.com",
-            projectId: "fir-course-edb8c",
-            storageBucket: "fir-course-edb8c.appspot.com",
-            messagingSenderId: "760960563313",
-            appId: "1:760960563313:web:eb3b145202888f8a3c83d0",
-            measurementId: "G-336MJ5MK72"
-         };
-
-        const app = initializeApp(firebaseConfig);
-        const db = getDatabase(app);
-
-        const todayCount = async function(){
-            const dbref = ref(db);
-            let count = 0;
-
-            let today = new Date();
-            let year = today.getFullYear();
-            let month = today.getMonth() + 1; 
-            month = month <10 ? '0'+month:month;
-            let date = today.getDate();
-            date = 26;
-            let snapshot = await get(child(dbref,"club/"+year+"/"+month+"/"+date))
-            if (snapshot.exists) {
-                snapshot.forEach(childSnapshot => {
-                    count++;
-                });
-            }
-            return count;
-        }
-
-        const dayTotal = async function(){
-            const dbref = ref(db);
-            let returns = {};
-            let count =0;
-            let today = new Date();
-            let year = today.getFullYear();
-            let month = today.getMonth() + 1; 
-            month = month <10 ? '0'+month:month;
-
-            let snapshot = await get(child(dbref,"club/"+year+"/"+month));
-            if(snapshot.exists){
-                snapshot.forEach(childSnapshot=>{
-                    childSnapshot.forEach(item =>{
-                        count++;
-                    })
-                    returns[childSnapshot.key] = count;
-                    count = 0;
-                })
-            }
-            return returns;
-        }
-
-        const dayPerson = async function(){
-            const dbref = ref(db);
-            let returns = {};
-            let list = {};
-            let count =0;
-            let today = new Date();
-            let year = today.getFullYear();
-            let month = today.getMonth() + 1; 
-            month = month <10 ? '0'+month:month;
-
-            let snapshot = await get(child(dbref,"club/"+year+"/"+month));
-            if(snapshot.exists){
-                snapshot.forEach(childSnapshot=>{
-                    childSnapshot.forEach(item =>{
-                        let dic = item.val();
-                        let keyList = Object.keys(dic);
-                        let name = keyList[0];
-                        if('Unknown' == name){}
-                        else if(name in list){
-                            list[name] = list[name] + 1;
-                        }
-                        else{
-                            list[name] = 1;
-                        }
-                    })
-                    returns[childSnapshot.key] = list;
-                    list = {};
-                })
-            }
-            return returns;
-        }
-
-        const personCount = async function(){
-            const dbref = ref(db);
-            let count = 0;
-
-            let snapshot = await get(child(dbref,"person"));
-            if(snapshot.exists){
-                snapshot.forEach(key=>{
-                    count++;
-                })
-            }
-            return count;
-        }
-
-        let today = new Date();
-        let year = today.getFullYear();
-        let month = today.getMonth() + 1; 
-        month = month <10 ? '0'+month:month;
-        let date = today.getDate();
-        
-        date = 25;
-        let count = 0;
-        //-------------------------------------------------------------------------------------------
-
-        let dayPersonDict = await dayPerson()
-        let dayPersonList = dayPersonDict[date];
-
-        for(let key in dayPersonList){
-            count += dayPersonList[key];
-        }
-
-        let list = document.getElementsByClassName("h5 mb-0 font-weight-bold text-gray-800");
-        list[0].innerHTML = await personCount() +"명";
-        list[1].innerHTML = await todayCount()+'명';
-
-        list[2].innerHTML = count +"명";
-
-        //-------------------------------------------------------------------------------------------
-
-        let dayTotalDict = await dayTotal();
-        console.log(dayTotalDict)
-        let keyList = [];
-        let valList = [];
-        for(let key in dayTotalDict){
-            keyList.push(key + "일");
-            valList.push(dayTotalDict[key]);
-        }
-        console.log(keyList);
-        console.log(valList);
-
-        // Set new default font family and font color to mimic Bootstrap's default styling
-        Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif'; 
-        Chart.defaults.global.defaultFontColor = '#858796';
-
-        function number_format(number, decimals, dec_point, thousands_sep) {
-        // *     example: number_format(1234.56, 2, ',', ' ');
-        // *     return: '1 234,56'
-        number = (number + '').replace(',', '').replace(' ', '');
-        var n = !isFinite(+number) ? 0 : +number,
-            prec = !isFinite(+decimals) ? 0 : Math.abs(decimals),
-            sep = (typeof thousands_sep === 'undefined') ? ',' : thousands_sep,
-            dec = (typeof dec_point === 'undefined') ? '.' : dec_point,
-            s = '',
-            toFixedFix = function(n, prec) {
-            var k = Math.pow(10, prec);
-            return '' + Math.round(n * k) / k;
-            };
-            // Fix for IE parseFloat(0.55).toFixed(0) = 0;
-            s = (prec ? toFixedFix(n, prec) : '' + Math.round(n)).split('.');
-            if (s[0].length > 3) {
-                s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep);
-            }
-            if ((s[1] || '').length < prec) {
-                s[1] = s[1] || '';
-                s[1] += new Array(prec - s[1].length + 1).join('0');
-            }
-            return s.join(dec);
-            }
-
-            // Area Chart Example
-
-
-
-            var ctx = document.getElementById("myAreaChart");
-            var myLineChart = new Chart(ctx, {
-            type: 'line',
-            data: {
-                labels: keyList,
-                datasets: [{
-                label: "출입 학생 수 ",
-                lineTension: 0.3,
-                backgroundColor: "rgba(78, 115, 223, 0.05)",
-                borderColor: "rgba(78, 115, 223, 1)",
-                pointRadius: 3,
-                pointBackgroundColor: "rgba(78, 115, 223, 1)",
-                pointBorderColor: "rgba(78, 115, 223, 1)",
-                pointHoverRadius: 3,
-                pointHoverBackgroundColor: "rgba(78, 115, 223, 1)",
-                pointHoverBorderColor: "rgba(78, 115, 223, 1)",
-                pointHitRadius: 10,
-                pointBorderWidth: 2,
-                data: valList,
-                }],
-            },
-            options: {
-                maintainAspectRatio: false,
-                layout: {
-                padding: {
-                    left: 10,
-                    right: 25,
-                    top: 25,
-                    bottom: 0
-                }
-                },
-                scales: {
-                xAxes: [{
-                    time: {
-                    unit: 'date'
-                    },
-                    gridLines: {
-                    display: false,
-                    drawBorder: false
-                    },
-                    ticks: {
-                    maxTicksLimit: 7
-                    }
-                }],
-                yAxes: [{
-                    ticks: {
-                    maxTicksLimit: 5,
-                    padding: 10,
-                    // Include a dollar sign in the ticks
-                    callback: function(value, index, values) {
-                        return number_format(value)+"명"; 
-                    }
-                    },
-                    gridLines: {
-                    color: "rgb(234, 236, 244)",
-                    zeroLineColor: "rgb(234, 236, 244)",
-                    drawBorder: false,
-                    borderDash: [2],
-                    zeroLineBorderDash: [2]
-                    }
-                }],
-                },
-                legend: {
-                display: false
-                },
-                tooltips: {
-                backgroundColor: "rgb(255,255,255)",
-                bodyFontColor: "#858796",
-                titleMarginBottom: 10,
-                titleFontColor: '#6e707e',
-                titleFontSize: 14,
-                borderColor: '#dddfeb',
-                borderWidth: 1,
-                xPadding: 15,
-                yPadding: 15,
-                displayColors: false,
-                intersect: false,
-                mode: 'index',
-                caretPadding: 10,
-                callbacks: {
-                    label: function(tooltipItem, chart) {
-                    var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
-                    return datasetLabel + ': ' + number_format(tooltipItem.yLabel);
-                    }
-                }
-                }
-            }
-        });
-
-
-        //-------------------------------------------------------------------------------------------
-        // Set new default font family and font color to mimic Bootstrap's default styling
-        Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
-        Chart.defaults.global.defaultFontColor = '#858796';
-
-        // Pie Chart Example
-        var ctx = document.getElementById("myPieChart");
-        var myPieChart = new Chart(ctx, {
-        type: 'doughnut',
-        data: {
-            labels: ["Direct", "Referral", "Social"],
-            datasets: [{
-            data: [55, 30, 15],
-            backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc'],
-            hoverBackgroundColor: ['#2e59d9', '#17a673', '#2c9faf'],
-            hoverBorderColor: "rgba(234, 236, 244, 1)",
-            }],
-        },
-        options: {
-            maintainAspectRatio: false,
-            tooltips: {
-            backgroundColor: "rgb(255,255,255)",
-            bodyFontColor: "#858796",
-            borderColor: '#dddfeb',
-            borderWidth: 1,
-            xPadding: 15,
-            yPadding: 15,
-            displayColors: false,
-            caretPadding: 10,
-            },
-            legend: {
-            display: false
-            },
-            cutoutPercentage: 80,
-        },
-        });
-
-    </script>
+    <script src="/js/demo/chart-area-demo.js"></script>
+    <script src="/js/demo/chart-pie-demo.js"></script>
 
 </body>
 

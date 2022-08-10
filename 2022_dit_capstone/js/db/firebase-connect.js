@@ -46,7 +46,28 @@ const selectTest = function(){
         console.log("error : "+error);
     });
 }
-const dayCount = async function(){
+// const dayCount = async function(){
+//     const dbref = ref(db);
+//     let count = 0;
+
+//     let today = new Date();
+//     let year = today.getFullYear();
+//     let month = today.getMonth() + 1; 
+//     month = month <10 ? '0'+month:month;
+//     let date = today.getDate();
+//     date = 26;
+//     await get(child(dbref,"club/"+year+"/"+month+"/"+date)).then( function(snapshot){
+//         if(snapshot.exists()){
+//             snapshot.forEach(childSnapshot => {
+//                 console.log(childSnapshot.val());
+//                 count++;
+//             });
+//         }
+//     });
+//     return count;
+//   }
+
+const todayCount = async function(){
     const dbref = ref(db);
     let count = 0;
 
@@ -56,21 +77,83 @@ const dayCount = async function(){
     month = month <10 ? '0'+month:month;
     let date = today.getDate();
     date = 26;
-    await get(child(dbref,"club/"+year+"/"+month+"/"+date)).then( function(snapshot){
-        if(snapshot.exists()){
-            snapshot.forEach(childSnapshot => {
-                console.log(childSnapshot.val());
-                count++;
-            });
-        }
-    });
+    let snapshot = await get(child(dbref,"club/"+year+"/"+month+"/"+date))
+    if (snapshot.exists) {
+        snapshot.forEach(childSnapshot => {
+            count++;
+        });
+    }
     return count;
   }
+const dayTotal = async function(){
+    const dbref = ref(db);
+    let returns = {};
+    let count =0;
+    let today = new Date();
+    let year = today.getFullYear();
+    let month = today.getMonth() + 1; 
+    month = month <10 ? '0'+month:month;
 
+    let snapshot = await get(child(dbref,"club/"+year+"/"+month));
+    if(snapshot.exists){
+        console.log(snapshot.key);
+        snapshot.forEach(childSnapshot=>{
+            console.log(childSnapshot.key);
+            childSnapshot.forEach(item =>{
+                count++;
+            })
+            returns[childSnapshot.key] = count;
+            count = 0;
+        })
+    }
+    console.log(returns);
+    return returns;
+}
+const dayPerson = async function(){
+    const dbref = ref(db);
+    let returns = {};
+    let list = {};
+    let count =0;
+    let today = new Date();
+    let year = today.getFullYear();
+    let month = today.getMonth() + 1; 
+    month = month <10 ? '0'+month:month;
 
+    let snapshot = await get(child(dbref,"club/"+year+"/"+month));
+    if(snapshot.exists){
+        snapshot.forEach(childSnapshot=>{
+            childSnapshot.forEach(item =>{
+                let dic = item.val();
+                let keyList = Object.keys(dic);
+                let name = keyList[0];
+                if('Unknown' == name){}
+                else if(name in list){
+                    list[name] = list[name] + 1;
+                }
+                else{
+                    list[name] = 1;
+                }
+            })
+            returns[childSnapshot.key] = list;
+            list = {};
+        })
+    }
+    console.log(returns);
+    return returns;
+}
 
+const personCount = async function(){
+    const dbref = ref(db);
+    let count = 0;
 
-
+    let snapshot = await get(child(dbref,"person"));
+    if(snapshot.exists){
+        snapshot.forEach(key=>{
+            count++;
+        })
+    }
+    return count;
+}
 
 
 
@@ -79,4 +162,4 @@ const dayCount = async function(){
 // const select = function(){
 //     console.log("select");
 // }
-export {selectTest , dayCount};
+export {selectTest , todayCount, dayTotal, dayPerson, personCount};

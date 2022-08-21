@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        img{
+            height: 200px;
+            width: 200px;
+            border: 2px black solid;
+        }
+    </style>
+</head>
+<body>
+    <label>Image Name</label> <input type="text" id="namebox">
+    <label id="extlab"></label> <br><br>
+    <img id="myimg"> <label id="upprogress"></label> <br><br>
+
+    <button id="selbtn">Select Image</button>
+    <button id="upbtn">Upload Image</button>
+    <button id="downbtn">Retrieve Image</button>
+
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.9.1/firebase-app.js';
+        import { getStorage, ref as sRef, uploadBytesResumable, getDownloadURL} from 'https://www.gstatic.com/firebasejs/9.9.1/firebase-storage.js';
+
+        const firebaseConfig = {
+            apiKey: "AIzaSyBETK45cbP1g2ZYC03ras5UYys5fXAqV_4",
+            authDomain: "fir-course-edb8c.firebaseapp.com",
+            databaseURL: "https://fir-course-edb8c.firebaseio.com",
+            projectId: "fir-course-edb8c",
+            storageBucket: "fir-course-edb8c.appspot.com",
+            messagingSenderId: "760960563313",
+            appId: "1:760960563313:web:eb3b145202888f8a3c83d0",
+            measurementId: "G-336MJ5MK72"
+        };
+        
+        const app = initializeApp(firebaseConfig);
+
+        let files = [];
+        let reader = new FileReader();
+
+        let namebox = document.getElementById('namebox');
+        let extlab = document.getElementById('extlab');
+        let myimg = document.getElementById('myimg');
+        let proglab = document.getElementById('upprogress');
+        let selbtn = document.getElementById('selbtn');
+        let upbtn = document.getElementById('upbtn');
+        let downbtn = document.getElementById('downbtn');
+
+        let input = document.createElement('input');
+        input.type = 'file';
+
+        input.onchange = e =>{
+            files = e.target.files;
+
+            let extention = GetFileExt(files[0]);
+            let name = GetFileName(files[0]);
+
+            namebox.value = name;
+            extlab.innerHTML = extention;
+
+            reader.readAsDataURL(files[0]);
+        }
+
+        reader.onload = function(){
+            myimg.src = reader.result;
+        }
+
+        selbtn.onclick = function(){
+            input.click();
+        }
+
+        function GetFileExt(file){
+            let temp = file.name.split('.');
+            let ext = temp.slice((temp.length-1), (temp.length));
+            return '.'+ ext[0]
+        }
+        function GetFileName(file){
+            let temp = file.name.split('.');
+            let fname = temp.slice(0,-1).join('.');
+            return fname;
+        }
+
+        async function UploadProcess(){
+            let ImgToUpload = files[0];
+            let ImgName = namebox.value + extlab.innerHTML;
+
+            const metaDdata = {
+                contentType: ImgToUpload.type
+            }
+            const storage = getStorage();
+            const storageRef = sRef(storage, "Images/"+ImgName);
+            const UploadTask = uploadBytesResumable(storageRef, ImgToUpload, metaDdata);
+
+            UploadTask.on('state-changed', (snapshot)=>{
+                let progess = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                console.log('progess : '+progess);
+                proglab.innerHTML = "Upload" + progess +"%";
+            },(error)=>{
+                alert("error: image not uploaded!");
+            },()=>{
+                getDownloadURL(UploadTask.snapshot.ref).then((downloadURL)=>{
+                    console.log('downloadURL : '+downloadURL);
+                });
+            });
+        }
+        upbtn.onclick = UploadProcess;
+    </script>
+</body>
+</html>

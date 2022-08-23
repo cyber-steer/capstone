@@ -790,6 +790,7 @@
                                     </tbody>
                                 </table>
                             </div>
+                            <button id="btn">ADD</button>
                         </div>
                     </div>
 
@@ -857,6 +858,28 @@
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
 
+    <script>
+        let num = 0;
+        let table = document.getElementById('dataTable');
+        function AddEvent(){
+            let newRow = document.createElement('tr');
+            table.appendChild(newRow);
+
+            let cell0 = newRow.insertCell(0)
+            let cell1 = newRow.insertCell(1)
+            let cell2 = newRow.insertCell(2)
+            let cell3 = newRow.insertCell(3)
+            let cell4 = newRow.insertCell(4)
+            let cell5 = newRow.insertCell(5)
+
+            cell0.innerHTML = num++;
+            
+            $('#dataTable').DataTable();
+        }
+        let btn = document.getElementById("btn");
+
+        btn.addEventListener('click', AddEvent);
+    </script>
 </body>
 
 </html>

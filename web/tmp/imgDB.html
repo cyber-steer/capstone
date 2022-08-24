@@ -25,34 +25,8 @@
     <script type="module">
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.9.1/firebase-app.js';
         import { getStorage, ref as sRef, uploadBytesResumable, getDownloadURL} from 'https://www.gstatic.com/firebasejs/9.9.1/firebase-storage.js';
-        import { getDatabase, ref as dRef, child, get, onValue  } from 'https://www.gstatic.com/firebasejs/9.9.1/firebase-database.js';
+        import { getDatabase, ref, get, set, child, update, remove} from 'https://www.gstatic.com/firebasejs/9.9.1/firebase-database.js';
 
-        
-        // let firebaseConfig = {
-        //     apiKey: "AIzaSyBETK45cbP1g2ZYC03ras5UYys5fXAqV_4",
-        //     authDomain: "fir-course-edb8c.firebaseapp.com",
-        //     databaseURL: "https://fir-course-edb8c-default-rtdb.firebaseio.com",
-        //     projectId: "fir-course-edb8c",
-        //     storageBucket: "fir-course-edb8c.appspot.com",
-        //     messagingSenderId: "760960563313",
-        //     appId: "1:760960563313:web:eb3b145202888f8a3c83d0",
-        //     measurementId: "G-336MJ5MK72"
-        //  };
-
-        // const dbApp = initializeApp(firebaseConfig);
-        // const db = getDatabase(dbApp);
-
-        // firebaseConfig = {
-        //     apiKey: "AIzaSyBETK45cbP1g2ZYC03ras5UYys5fXAqV_4",
-        //     authDomain: "fir-course-edb8c.firebaseapp.com",
-        //     databaseURL: "https://fir-course-edb8c.firebaseio.com",
-        //     projectId: "fir-course-edb8c",
-        //     storageBucket: "fir-course-edb8c.appspot.com",
-        //     messagingSenderId: "760960563313",
-        //     appId: "1:760960563313:web:eb3b145202888f8a3c83d0",
-        //     measurementId: "G-336MJ5MK72"
-        // };
-        
         const firebaseConfig = {
             apiKey: "AIzaSyBETK45cbP1g2ZYC03ras5UYys5fXAqV_4",
             authDomain: "fir-course-edb8c.firebaseapp.com",
@@ -63,8 +37,9 @@
             appId: "1:760960563313:web:eb3b145202888f8a3c83d0",
             measurementId: "G-336MJ5MK72"
         };
+        
         const app = initializeApp(firebaseConfig);
-        const db = getDatabase(app);
+        const realdb = getDatabase();
 
         let files = [];
         let reader = new FileReader();
@@ -79,12 +54,13 @@
 
         let input = document.createElement('input');
         input.type = 'file';
+        let name;
 
         input.onchange = e =>{
             files = e.target.files;
 
             let extention = GetFileExt(files[0]);
-            let name = GetFileName(files[0]);
+            name = GetFileName(files[0]);
 
             namebox.value = name;
             extlab.innerHTML = extention;
@@ -115,10 +91,6 @@
             let ImgToUpload = files[0];
             let ImgName = namebox.value + extlab.innerHTML;
 
-            if(!ValidateName()){
-                alert('name cannot contain "."", "#", "$", "[", or "]"');
-                return;
-            }
             const metaDdata = {
                 contentType: ImgToUpload.type
             }
@@ -139,31 +111,28 @@
         }
 
         function SaveURLtoRealtimeDB(URL){
-            const dbRef = dRef(db);
             let name = namebox.value;
             let ext = extlab.innerHTML;
+            console.log(URL);
 
-            set(dbRef(realdb, "ImagesLinks/"+name),{
-                ImagesName:(name+ext),
-                ImgUrl:URL
+            set(ref(realdb, "ImagesLinks/"+name),{
+                ImageName: (name+ext),
+                ImgUrl : URL
             });
+            console.log(name+ext)
         }
+
         function GetUrlfromRealtimeDB(){
-            const dbRef = dRef(db);
             let name = namebox.value;
-            
-            get(chile(dbRef, "ImagesLinks/"+name)).then((snapshot)=>{
+            let dbRef = ref(realdb);
+
+            get(child(dbRef, "ImagesLinks/"+name)).then((snapshot)=>{
                 if(snapshot.exists()){
                     myimg.src = snapshot.val().ImgUrl;
+
                 }
             })
         }
-        
-        function ValidateName(){
-            let regex = /[\.#$\[\]]/
-            return !(regex.test(namebox.value));
-        }
-
         upbtn.onclick = UploadProcess;
         downbtn.onclick = GetUrlfromRealtimeDB;
     </script>

@@ -1,6 +1,4 @@
 .img-box {
-    width: 200px;
-    height: 200px; 
     overflow: hidden;
     display: inline-block;
    
@@ -37,4 +35,7 @@ form{
 }
 .btn-box{
     margin-top: 30px;
+}
+.data-box{
+    overflow: hidden;
 }

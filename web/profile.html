@@ -2,13 +2,13 @@
 <html lang="en">
 
 <head>
-
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=21">
 
     <title>Binary</title>
 
@@ -27,6 +27,9 @@
     <!-- Favicon -->
     <link href="img/cod.png" rel="icon">
     <link rel="stylesheet" href="css/calendar.css">
+
+    <!-- Button -->
+    <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body id="page-top">
@@ -73,7 +76,6 @@
                         <a class="collapse-item" href="profile.html">회원정보</a>
                         <a class="collapse-item" href="charts.html">출입통계</a>
                         <a class="collapse-item" href="record.html">출입기록</a>
-                        <a class="collapse-item" href="calendar.html">월별 출입통계</a>
                     </div>
                 </div>
             </li>
@@ -103,8 +105,16 @@
                         <a class="collapse-item" href="contact.html">Contact</a>
                         <a class="collapse-item" href="login.html">Login</a>
                         <div class="collapse-divider"></div>
+                        <hr>
                         <h6 class="collapse-header">Other Pages:</h6>
                         <a class="collapse-item" href="404.html">404 Page</a>
+                        <hr>
+                        <h6 class="collapse-header">My pages:</h6>
+                        <a class="collapse-item" href="profile.html">회원정보</a>
+                        <a class="collapse-item" href="re.html">정보수정</a>
+                        <a class="collapse-item" href="regist2.html">회원추가</a>
+                        <a class="collapse-item" href="mypage.html">정보확인</a>
+                        <a class="collapse-item" href="mypage.html">정보삭제</a>
                     </div>
                 </div>
             </li>
@@ -189,608 +199,71 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">회원정보</h1>
+                    <h1 class="h3 mb-2 text-gray-800">회원정보</h1>                            
                     <p class="mb-4">등록된 회원의 정보를 확인할 수 있습니다.</p>
 
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary">회원 정보</h6>
+                            <h6 class="m-0 font-weight-bold text-primary" style="display:inline-block">회원 정보</h6>  <button onClick="location.href='regist2.html'">추가</button>
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-                                <table class="table table-bordered" id="dataTable" width="100%" cellspacing="0">
+                                <table class="table table-bordered" id="dataTable" width="100%"  cellspacing="0">
                                     <thead>
                                         <tr>
+                                            <td align=center><b>구분</td>
+                                            <td align=center><b>학번</td>
                                             <td align=center><b>이름</td>
-                                            <td align=center><b>소속(학과/학번)</td>
                                             <td align=center><b>전화번호</td>
-                                            <td align=center><b>직위</td>
-                                            <td align=center><b>등록된 사진</td>
-                                            <td align=center><b>관리</td>
+                                            <td align=center><b>학적상태</td>
+                                            <td align=center><b>비고</td>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td align=center>관리자</td>
-                                            <td align=center>Binary</td>
-                                            <td align=center>010-1234-5678</td>
-                                            <td align=center>Admin</td>
-                                            <td align=center><a href="img/undraw_profile.svg" onclick="window.open(this.href, '_blank', 'width=250, height=250, toolbars=no, scrollbars=yes'); return false;">사진</td></a>
-                                            <td align=center><a href="popup.html"  onclick="window.open(this.href, '_blank', 'width=530, height=370, toolbars=no, scrollbars=yes'); return false;">수정</a> | 삭제
-                                        </tr>
-                                        <tr>
-                                            <td align=center>London</td>
-                                            <td align=center>30</td>
-                                            <td align=center>2008/12/19</td>
-                                            <td align=center>$90,560</td>
-                                            <td align=center><a href="#" onclick="window.open(this.href, '_blank', 'width=250, height=250, toolbars=no, scrollbars=yes'); return false;">사진</td></a>
-                                            <td align=center><a href="popup.html"  onclick="window.open(this.href, '_blank', 'width=530, height=370, toolbars=no, scrollbars=yes'); return false;">수정</a> | 삭제
-                                        </tr>
-                                        <tr>
-                                            <td align=center>London</td>
-                                            <td align=center>30</td>
-                                            <td align=center>2008/12/19</td>
-                                            <td align=center>$90,560</td>
-                                            <td align=center><a href="#" onclick="window.open(this.href, '_blank', 'width=250, height=250, toolbars=no, scrollbars=yes'); return false;">사진</td></a>
-                                            <td align=center><a href="popup.html"  onclick="window.open(this.href, '_blank', 'width=530, height=370, toolbars=no, scrollbars=yes'); return false;">수정</a> | 삭제
-                                        </tr>
-                                        <tr>
-                                            <td align=center>London</td>
-                                            <td align=center>30</td>
-                                            <td align=center>2008/12/19</td>
-                                            <td align=center>$90,560</td>
-                                            <td align=center><a href="#" onclick="window.open(this.href, '_blank', 'width=250, height=250, toolbars=no, scrollbars=yes'); return false;">사진</td></a>
-                                            <td align=center><a href="popup.html"  onclick="window.open(this.href, '_blank', 'width=530, height=370, toolbars=no, scrollbars=yes'); return false;">수정</a> | 삭제
-                                        </tr>
-                                        <tr>
-                                            <td align=center>London</td>
-                                            <td align=center>30</td>
-                                            <td align=center>2008/12/19</td>
-                                            <td align=center>$90,560</td>
-                                            <td align=center><a href="#" onclick="window.open(this.href, '_blank', 'width=250, height=250, toolbars=no, scrollbars=yes'); return false;">사진</td></a>
-                                            <td align=center><a href="popup.html"  onclick="window.open(this.href, '_blank', 'width=530, height=370, toolbars=no, scrollbars=yes'); return false;">수정</a> | 삭제
-                                        </tr>
-                                        <tr>
-                                            <td align=center>London</td>
-                                            <td align=center>30</td>
-                                            <td align=center>2008/12/19</td>
-                                            <td align=center>$90,560</td>
-                                            <td align=center><a href="#" onclick="window.open(this.href, '_blank', 'width=250, height=250, toolbars=no, scrollbars=yes'); return false;">사진</td></a>
-                                            <td align=center><a href="popup.html"  onclick="window.open(this.href, '_blank', 'width=530, height=370, toolbars=no, scrollbars=yes'); return false;">수정</a> | 삭제
-                                        </tr>
-                                        <tr>
-                                            <td align=center>London</td>
-                                            <td align=center>30</td>
-                                            <td align=center>2008/12/19</td>
-                                            <td align=center>$90,560</td>
-                                            <td align=center><a href="#" onclick="window.open(this.href, '_blank', 'width=250, height=250, toolbars=no, scrollbars=yes'); return false;">사진</td></a>
-                                            <td align=center><a href="popup.html"  onclick="window.open(this.href, '_blank', 'width=530, height=370, toolbars=no, scrollbars=yes'); return false;">수정</a> | 삭제
-                                        </tr>
-                                        <tr>
-                                            <td align=center>London</td>
-                                            <td align=center>30</td>
-                                            <td align=center>2008/12/19</td>
-                                            <td align=center>$90,560</td>
-                                            <td align=center><a href="#" onclick="window.open(this.href, '_blank', 'width=250, height=250, toolbars=no, scrollbars=yes'); return false;">사진</td></a>
-                                            <td align=center><a href="popup.html"  onclick="window.open(this.href, '_blank', 'width=530, height=370, toolbars=no, scrollbars=yes'); return false;">수정</a> | 삭제
-                                        </tr>
-                                        <tr>
-                                            <td align=center>London</td>
-                                            <td align=center>30</td>
-                                            <td align=center>2008/12/19</td>
-                                            <td align=center>$90,560</td>
-                                            <td align=center><a href="#" onclick="window.open(this.href, '_blank', 'width=250, height=250, toolbars=no, scrollbars=yes'); return false;">사진</td></a>
-                                            <td align=center><a href="popup.html"  onclick="window.open(this.href, '_blank', 'width=530, height=370, toolbars=no, scrollbars=yes'); return false;">수정</a> | 삭제
-                                        </tr>
-                                        <tr>
-                                            <td align=center>London</td>
-                                            <td align=center>30</td>
-                                            <td align=center>2008/12/19</td>
-                                            <td align=center>$90,560</td>
-                                            <td align=center><a href="#" onclick="window.open(this.href, '_blank', 'width=250, height=250, toolbars=no, scrollbars=yes'); return false;">사진</td></a>
-                                            <td align=center><a href="popup.html"  onclick="window.open(this.href, '_blank', 'width=530, height=370, toolbars=no, scrollbars=yes'); return false;">수정</a> | 삭제
-                                        </tr>
-                                        <tr>
-                                            <td align=center>London</td>
-                                            <td align=center>30</td>
-                                            <td align=center>2008/12/19</td>
-                                            <td align=center>$90,560</td>
-                                            <td align=center><a href="#" onclick="window.open(this.href, '_blank', 'width=250, height=250, toolbars=no, scrollbars=yes'); return false;">사진</td></a>
-                                            <td align=center><a href="popup.html"  onclick="window.open(this.href, '_blank', 'width=530, height=370, toolbars=no, scrollbars=yes'); return false;">수정</a> | 삭제
-                                        </tr>
-                                        <tr>
-                                            <td align=center>London</td>
-                                            <td align=center>30</td>
-                                            <td align=center>2008/12/19</td>
-                                            <td align=center>$90,560</td>
-                                            <td align=center><a href="#" onclick="window.open(this.href, '_blank', 'width=250, height=250, toolbars=no, scrollbars=yes'); return false;">사진</td></a>
-                                            <td align=center><a href="popup.html"  onclick="window.open(this.href, '_blank', 'width=530, height=370, toolbars=no, scrollbars=yes'); return false;">수정</a> | 삭제
-                                        </tr>
-                                        <tr>
-                                            <td align=center>London</td>
-                                            <td align=center>30</td>
-                                            <td align=center>2008/12/19</td>
-                                            <td align=center>$90,560</td>
-                                            <td align=center><a href="#" onclick="window.open(this.href, '_blank', 'width=250, height=250, toolbars=no, scrollbars=yes'); return false;">사진</td></a>
-                                            <td align=center><a href="popup.html"  onclick="window.open(this.href, '_blank', 'width=530, height=370, toolbars=no, scrollbars=yes'); return false;">수정</a> | 삭제
-                                        </tr>
-                                        <tr>
-                                            <td align=center>London</td>
-                                            <td align=center>30</td>
-                                            <td align=center>2008/12/19</td>
-                                            <td align=center>$90,560</td>
-                                            <td align=center><a href="#" onclick="window.open(this.href, '_blank', 'width=250, height=250, toolbars=no, scrollbars=yes'); return false;">사진</td></a>
-                                            <td align=center><a href="popup.html"  onclick="window.open(this.href, '_blank', 'width=530, height=370, toolbars=no, scrollbars=yes'); return false;">수정</a> | 삭제
-                                        </tr>
-                                        <tr>
-                                            <td align=center>London</td>
-                                            <td align=center>30</td>
-                                            <td align=center>2008/12/19</td>
-                                            <td align=center>$90,560</td>
-                                            <td align=center><a href="#" onclick="window.open(this.href, '_blank', 'width=250, height=250, toolbars=no, scrollbars=yes'); return false;">사진</td></a>
-                                            <td align=center><a href="popup.html"  onclick="window.open(this.href, '_blank', 'width=530, height=370, toolbars=no, scrollbars=yes'); return false;">수정</a> | 삭제
-                                        </tr>
-                                        <tr>
-                                            <td align=center>London</td>
-                                            <td align=center>30</td>
-                                            <td align=center>2008/12/19</td>
-                                            <td align=center>$90,560</td>
-                                            <td align=center><a href="#" onclick="window.open(this.href, '_blank', 'width=250, height=250, toolbars=no, scrollbars=yes'); return false;">사진</td></a>
-                                            <td align=center><a href="popup.html"  onclick="window.open(this.href, '_blank', 'width=530, height=370, toolbars=no, scrollbars=yes'); return false;">수정</a> | 삭제
-                                        </tr>
-                                        <tr>
-                                            <td align=center>London</td>
-                                            <td align=center>30</td>
-                                            <td align=center>2008/12/19</td>
-                                            <td align=center>$90,560</td>
-                                            <td align=center><a href="#" onclick="window.open(this.href, '_blank', 'width=250, height=250, toolbars=no, scrollbars=yes'); return false;">사진</td></a>
-                                            <td align=center><a href="popup.html"  onclick="window.open(this.href, '_blank', 'width=530, height=370, toolbars=no, scrollbars=yes'); return false;">수정</a> | 삭제
-                                        </tr>
-                                        <tr>
-                                            <td align=center>London</td>
-                                            <td align=center>30</td>
-                                            <td align=center>2008/12/19</td>
-                                            <td align=center>$90,560</td>
-                                            <td align=center><a href="#" onclick="window.open(this.href, '_blank', 'width=250, height=250, toolbars=no, scrollbars=yes'); return false;">사진</td></a>
-                                            <td align=center><a href="popup.html"  onclick="window.open(this.href, '_blank', 'width=530, height=370, toolbars=no, scrollbars=yes'); return false;">수정</a> | 삭제
-                                        </tr>
-                                        <tr>
-                                            <td align=center>London</td>
-                                            <td align=center>30</td>
-                                            <td align=center>2008/12/19</td>
-                                            <td align=center>$90,560</td>
-                                            <td align=center><a href="#" onclick="window.open(this.href, '_blank', 'width=250, height=250, toolbars=no, scrollbars=yes'); return false;">사진</td></a>
-                                            <td align=center><a href="popup.html"  onclick="window.open(this.href, '_blank', 'width=530, height=370, toolbars=no, scrollbars=yes'); return false;">수정</a> | 삭제
-                                        </tr>
-                                        <tr>
-                                            <td align=center>London</td>
-                                            <td align=center>30</td>
-                                            <td align=center>2008/12/19</td>
-                                            <td align=center>$90,560</td>
-                                            <td align=center><a href="#" onclick="window.open(this.href, '_blank', 'width=250, height=250, toolbars=no, scrollbars=yes'); return false;">사진</td></a>
-                                            <td align=center><a href="popup.html"  onclick="window.open(this.href, '_blank', 'width=530, height=370, toolbars=no, scrollbars=yes'); return false;">수정</a> | 삭제
-                                        </tr>
-                                        <tr>
-                                            <td align=center>London</td>
-                                            <td align=center>30</td>
-                                            <td align=center>2008/12/19</td>
-                                            <td align=center>$90,560</td>
-                                            <td align=center><a href="#" onclick="window.open(this.href, '_blank', 'width=250, height=250, toolbars=no, scrollbars=yes'); return false;">사진</td></a>
-                                            <td align=center><a href="popup.html"  onclick="window.open(this.href, '_blank', 'width=530, height=370, toolbars=no, scrollbars=yes'); return false;">수정</a> | 삭제
-                                        </tr>
-                                        <tr>
-                                            <td align=center>London</td>
-                                            <td align=center>30</td>
-                                            <td align=center>2008/12/19</td>
-                                            <td align=center>$90,560</td>
-                                            <td align=center><a href="#" onclick="window.open(this.href, '_blank', 'width=250, height=250, toolbars=no, scrollbars=yes'); return false;">사진</td></a>
-                                            <td align=center><a href="popup.html"  onclick="window.open(this.href, '_blank', 'width=530, height=370, toolbars=no, scrollbars=yes'); return false;">수정</a> | 삭제
-                                        </tr>
-                                        <tr>
-                                            <td align=center>London</td>
-                                            <td align=center>30</td>
-                                            <td align=center>2008/12/19</td>
-                                            <td align=center>$90,560</td>
-                                            <td align=center><a href="#" onclick="window.open(this.href, '_blank', 'width=250, height=250, toolbars=no, scrollbars=yes'); return false;">사진</td></a>
-                                            <td align=center><a href="popup.html"  onclick="window.open(this.href, '_blank', 'width=530, height=370, toolbars=no, scrollbars=yes'); return false;">수정</a> | 삭제
-                                        </tr>
-                                        <tr>
-                                            <td align=center>London</td>
-                                            <td align=center>30</td>
-                                            <td align=center>2008/12/19</td>
-                                            <td align=center>$90,560</td>
-                                            <td align=center><a href="#" onclick="window.open(this.href, '_blank', 'width=250, height=250, toolbars=no, scrollbars=yes'); return false;">사진</td></a>
-                                            <td align=center><a href="popup.html"  onclick="window.open(this.href, '_blank', 'width=530, height=370, toolbars=no, scrollbars=yes'); return false;">수정</a> | 삭제
-                                        </tr>
-                                        <tr>
-                                            <td align=center>London</td>
-                                            <td align=center>30</td>
-                                            <td align=center>2008/12/19</td>
-                                            <td align=center>$90,560</td>
-                                            <td align=center><a href="#" onclick="window.open(this.href, '_blank', 'width=250, height=250, toolbars=no, scrollbars=yes'); return false;">사진</td></a>
-                                            <td align=center><a href="popup.html"  onclick="window.open(this.href, '_blank', 'width=530, height=370, toolbars=no, scrollbars=yes'); return false;">수정</a> | 삭제
-                                        </tr>
-                                        <tr>
-                                            <td align=center>London</td>
-                                            <td align=center>30</td>
-                                            <td align=center>2008/12/19</td>
-                                            <td align=center>$90,560</td>
-                                            <td align=center><a href="#" onclick="window.open(this.href, '_blank', 'width=250, height=250, toolbars=no, scrollbars=yes'); return false;">사진</td></a>
-                                            <td align=center><a href="popup.html"  onclick="window.open(this.href, '_blank', 'width=530, height=370, toolbars=no, scrollbars=yes'); return false;">수정</a> | 삭제
-                                        </tr>
-                                        <tr>
-                                            <td align=center>London</td>
-                                            <td align=center>30</td>
-                                            <td align=center>2008/12/19</td>
-                                            <td align=center>$90,560</td>
-                                            <td align=center><a href="#" onclick="window.open(this.href, '_blank', 'width=250, height=250, toolbars=no, scrollbars=yes'); return false;">사진</td></a>
-                                            <td align=center><a href="popup.html"  onclick="window.open(this.href, '_blank', 'width=530, height=370, toolbars=no, scrollbars=yes'); return false;">수정</a> | 삭제
-                                        </tr>
-                                        <tr>
-                                            <td align=center>London</td>
-                                            <td align=center>30</td>
-                                            <td align=center>2008/12/19</td>
-                                            <td align=center>$90,560</td>
-                                            <td align=center><a href="#" onclick="window.open(this.href, '_blank', 'width=250, height=250, toolbars=no, scrollbars=yes'); return false;">사진</td></a>
-                                            <td align=center><a href="popup.html"  onclick="window.open(this.href, '_blank', 'width=530, height=370, toolbars=no, scrollbars=yes'); return false;">수정</a> | 삭제
-                                        </tr>
-                                        <tr>
-                                            <td align=center>London</td>
-                                            <td align=center>30</td>
-                                            <td align=center>2008/12/19</td>
-                                            <td align=center>$90,560</td>
-                                            <td align=center><a href="#" onclick="window.open(this.href, '_blank', 'width=250, height=250, toolbars=no, scrollbars=yes'); return false;">사진</td></a>
-                                            <td align=center><a href="popup.html"  onclick="window.open(this.href, '_blank', 'width=530, height=370, toolbars=no, scrollbars=yes'); return false;">수정</a> | 삭제
-                                        </tr>
-                                        <tr>
-                                            <td align=center>London</td>
-                                            <td align=center>30</td>
-                                            <td align=center>2008/12/19</td>
-                                            <td align=center>$90,560</td>
-                                            <td align=center><a href="#" onclick="window.open(this.href, '_blank', 'width=250, height=250, toolbars=no, scrollbars=yes'); return false;">사진</td></a>
-                                            <td align=center><a href="popup.html"  onclick="window.open(this.href, '_blank', 'width=530, height=370, toolbars=no, scrollbars=yes'); return false;">수정</a> | 삭제
-                                        </tr>
-                                        <tr>
-                                            <td align=center>London</td>
-                                            <td align=center>30</td>
-                                            <td align=center>2008/12/19</td>
-                                            <td align=center>$90,560</td>
-                                            <td align=center><a href="#" onclick="window.open(this.href, '_blank', 'width=250, height=250, toolbars=no, scrollbars=yes'); return false;">사진</td></a>
-                                            <td align=center><a href="popup.html"  onclick="window.open(this.href, '_blank', 'width=530, height=370, toolbars=no, scrollbars=yes'); return false;">수정</a> | 삭제
-                                        </tr>
-                                        <tr>
-                                            <td align=center>London</td>
-                                            <td align=center>30</td>
-                                            <td align=center>2008/12/19</td>
-                                            <td align=center>$90,560</td>
-                                            <td align=center><a href="#" onclick="window.open(this.href, '_blank', 'width=250, height=250, toolbars=no, scrollbars=yes'); return false;">사진</td></a>
-                                            <td align=center><a href="popup.html"  onclick="window.open(this.href, '_blank', 'width=530, height=370, toolbars=no, scrollbars=yes'); return false;">수정</a> | 삭제
-                                        </tr>
-                                        <tr>
-                                            <td align=center>London</td>
-                                            <td align=center>30</td>
-                                            <td align=center>2008/12/19</td>
-                                            <td align=center>$90,560</td>
-                                            <td align=center><a href="#" onclick="window.open(this.href, '_blank', 'width=250, height=250, toolbars=no, scrollbars=yes'); return false;">사진</td></a>
-                                            <td align=center><a href="popup.html"  onclick="window.open(this.href, '_blank', 'width=530, height=370, toolbars=no, scrollbars=yes'); return false;">수정</a> | 삭제
-                                        </tr>
-                                        <tr>
-                                            <td align=center>London</td>
-                                            <td align=center>30</td>
-                                            <td align=center>2008/12/19</td>
-                                            <td align=center>$90,560</td>
-                                            <td align=center><a href="#" onclick="window.open(this.href, '_blank', 'width=250, height=250, toolbars=no, scrollbars=yes'); return false;">사진</td></a>
-                                            <td align=center><a href="popup.html"  onclick="window.open(this.href, '_blank', 'width=530, height=370, toolbars=no, scrollbars=yes'); return false;">수정</a> | 삭제
-                                        </tr>
-                                        <tr>
-                                            <td align=center>London</td>
-                                            <td align=center>30</td>
-                                            <td align=center>2008/12/19</td>
-                                            <td align=center>$90,560</td>
-                                            <td align=center><a href="#" onclick="window.open(this.href, '_blank', 'width=250, height=250, toolbars=no, scrollbars=yes'); return false;">사진</td></a>
-                                            <td align=center><a href="popup.html"  onclick="window.open(this.href, '_blank', 'width=530, height=370, toolbars=no, scrollbars=yes'); return false;">수정</a> | 삭제
-                                        </tr>
-                                        <tr>
-                                            <td align=center>London</td>
-                                            <td align=center>30</td>
-                                            <td align=center>2008/12/19</td>
-                                            <td align=center>$90,560</td>
-                                            <td align=center><a href="#" onclick="window.open(this.href, '_blank', 'width=250, height=250, toolbars=no, scrollbars=yes'); return false;">사진</td></a>
-                                            <td align=center><a href="popup.html"  onclick="window.open(this.href, '_blank', 'width=530, height=370, toolbars=no, scrollbars=yes'); return false;">수정</a> | 삭제
-                                        </tr>
-                                        <tr>
-                                            <td align=center>London</td>
-                                            <td align=center>30</td>
-                                            <td align=center>2008/12/19</td>
-                                            <td align=center>$90,560</td>
-                                            <td align=center><a href="#" onclick="window.open(this.href, '_blank', 'width=250, height=250, toolbars=no, scrollbars=yes'); return false;">사진</td></a>
-                                            <td align=center><a href="popup.html"  onclick="window.open(this.href, '_blank', 'width=530, height=370, toolbars=no, scrollbars=yes'); return false;">수정</a> | 삭제
-                                        </tr>
-                                        <tr>
-                                            <td align=center>London</td>
-                                            <td align=center>30</td>
-                                            <td align=center>2008/12/19</td>
-                                            <td align=center>$90,560</td>
-                                            <td align=center><a href="#" onclick="window.open(this.href, '_blank', 'width=250, height=250, toolbars=no, scrollbars=yes'); return false;">사진</td></a>
-                                            <td align=center><a href="popup.html"  onclick="window.open(this.href, '_blank', 'width=530, height=370, toolbars=no, scrollbars=yes'); return false;">수정</a> | 삭제
-                                        </tr>
-                                        <tr>
-                                            <td align=center>London</td>
-                                            <td align=center>30</td>
-                                            <td align=center>2008/12/19</td>
-                                            <td align=center>$90,560</td>
-                                            <td align=center><a href="#" onclick="window.open(this.href, '_blank', 'width=250, height=250, toolbars=no, scrollbars=yes'); return false;">사진</td></a>
-                                            <td align=center><a href="popup.html"  onclick="window.open(this.href, '_blank', 'width=530, height=370, toolbars=no, scrollbars=yes'); return false;">수정</a> | 삭제
-                                        </tr>
-                                        <tr>
-                                            <td align=center>London</td>
-                                            <td align=center>30</td>
-                                            <td align=center>2008/12/19</td>
-                                            <td align=center>$90,560</td>
-                                            <td align=center><a href="#" onclick="window.open(this.href, '_blank', 'width=250, height=250, toolbars=no, scrollbars=yes'); return false;">사진</td></a>
-                                            <td align=center><a href="popup.html"  onclick="window.open(this.href, '_blank', 'width=530, height=370, toolbars=no, scrollbars=yes'); return false;">수정</a> | 삭제
-                                        </tr>
-                                        <tr>
-                                            <td align=center>London</td>
-                                            <td align=center>30</td>
-                                            <td align=center>2008/12/19</td>
-                                            <td align=center>$90,560</td>
-                                            <td align=center><a href="#" onclick="window.open(this.href, '_blank', 'width=250, height=250, toolbars=no, scrollbars=yes'); return false;">사진</td></a>
-                                            <td align=center><a href="popup.html"  onclick="window.open(this.href, '_blank', 'width=530, height=370, toolbars=no, scrollbars=yes'); return false;">수정</a> | 삭제
-                                        </tr>
-                                        <tr>
-                                            <td align=center>London</td>
-                                            <td align=center>30</td>
-                                            <td align=center>2008/12/19</td>
-                                            <td align=center>$90,560</td>
-                                            <td align=center><a href="#" onclick="window.open(this.href, '_blank', 'width=250, height=250, toolbars=no, scrollbars=yes'); return false;">사진</td></a>
-                                            <td align=center><a href="popup.html"  onclick="window.open(this.href, '_blank', 'width=530, height=370, toolbars=no, scrollbars=yes'); return false;">수정</a> | 삭제
-                                        </tr>
-                                        <tr>
-                                            <td align=center>London</td>
-                                            <td align=center>30</td>
-                                            <td align=center>2008/12/19</td>
-                                            <td align=center>$90,560</td>
-                                            <td align=center><a href="#" onclick="window.open(this.href, '_blank', 'width=250, height=250, toolbars=no, scrollbars=yes'); return false;">사진</td></a>
-                                            <td align=center><a href="popup.html"  onclick="window.open(this.href, '_blank', 'width=530, height=370, toolbars=no, scrollbars=yes'); return false;">수정</a> | 삭제
-                                        </tr>
-                                        <tr>
-                                            <td align=center>London</td>
-                                            <td align=center>30</td>
-                                            <td align=center>2008/12/19</td>
-                                            <td align=center>$90,560</td>
-                                            <td align=center><a href="#" onclick="window.open(this.href, '_blank', 'width=250, height=250, toolbars=no, scrollbars=yes'); return false;">사진</td></a>
-                                            <td align=center><a href="popup.html"  onclick="window.open(this.href, '_blank', 'width=530, height=370, toolbars=no, scrollbars=yes'); return false;">수정</a> | 삭제
-                                        </tr>
-                                        <tr>
-                                            <td align=center>London</td>
-                                            <td align=center>30</td>
-                                            <td align=center>2008/12/19</td>
-                                            <td align=center>$90,560</td>
-                                            <td align=center><a href="#" onclick="window.open(this.href, '_blank', 'width=250, height=250, toolbars=no, scrollbars=yes'); return false;">사진</td></a>
-                                            <td align=center><a href="popup.html"  onclick="window.open(this.href, '_blank', 'width=530, height=370, toolbars=no, scrollbars=yes'); return false;">수정</a> | 삭제
-                                        </tr>
-                                        <tr>
-                                            <td align=center>London</td>
-                                            <td align=center>30</td>
-                                            <td align=center>2008/12/19</td>
-                                            <td align=center>$90,560</td>
-                                            <td align=center><a href="#" onclick="window.open(this.href, '_blank', 'width=250, height=250, toolbars=no, scrollbars=yes'); return false;">사진</td></a>
-                                            <td align=center><a href="popup.html"  onclick="window.open(this.href, '_blank', 'width=530, height=370, toolbars=no, scrollbars=yes'); return false;">수정</a> | 삭제
-                                        </tr>
-                                        <tr>
-                                            <td align=center>London</td>
-                                            <td align=center>30</td>
-                                            <td align=center>2008/12/19</td>
-                                            <td align=center>$90,560</td>
-                                            <td align=center><a href="#" onclick="window.open(this.href, '_blank', 'width=250, height=250, toolbars=no, scrollbars=yes'); return false;">사진</td></a>
-                                            <td align=center><a href="popup.html"  onclick="window.open(this.href, '_blank', 'width=530, height=370, toolbars=no, scrollbars=yes'); return false;">수정</a> | 삭제
-                                        </tr>
-                                        <tr>
-                                            <td align=center>London</td>
-                                            <td align=center>30</td>
-                                            <td align=center>2008/12/19</td>
-                                            <td align=center>$90,560</td>
-                                            <td align=center><a href="#" onclick="window.open(this.href, '_blank', 'width=250, height=250, toolbars=no, scrollbars=yes'); return false;">사진</td></a>
-                                            <td align=center><a href="popup.html"  onclick="window.open(this.href, '_blank', 'width=530, height=370, toolbars=no, scrollbars=yes'); return false;">수정</a> | 삭제
-                                        </tr>
-                                        <tr>
-                                            <td align=center>London</td>
-                                            <td align=center>30</td>
-                                            <td align=center>2008/12/19</td>
-                                            <td align=center>$90,560</td>
-                                            <td align=center><a href="#" onclick="window.open(this.href, '_blank', 'width=250, height=250, toolbars=no, scrollbars=yes'); return false;">사진</td></a>
-                                            <td align=center><a href="popup.html"  onclick="window.open(this.href, '_blank', 'width=530, height=370, toolbars=no, scrollbars=yes'); return false;">수정</a> | 삭제
-                                        </tr>
-                                        <tr>
-                                            <td align=center>London</td>
-                                            <td align=center>30</td>
-                                            <td align=center>2008/12/19</td>
-                                            <td align=center>$90,560</td>
-                                            <td align=center><a href="#" onclick="window.open(this.href, '_blank', 'width=250, height=250, toolbars=no, scrollbars=yes'); return false;">사진</td></a>
-                                            <td align=center><a href="popup.html"  onclick="window.open(this.href, '_blank', 'width=530, height=370, toolbars=no, scrollbars=yes'); return false;">수정</a> | 삭제
-                                        </tr>
-                                        <tr>
-                                            <td align=center>London</td>
-                                            <td align=center>30</td>
-                                            <td align=center>2008/12/19</td>
-                                            <td align=center>$90,560</td>
-                                            <td align=center><a href="#" onclick="window.open(this.href, '_blank', 'width=250, height=250, toolbars=no, scrollbars=yes'); return false;">사진</td></a>
-                                            <td align=center><a href="popup.html"  onclick="window.open(this.href, '_blank', 'width=530, height=370, toolbars=no, scrollbars=yes'); return false;">수정</a> | 삭제
-                                        </tr>
-                                        <tr>
-                                            <td align=center>London</td>
-                                            <td align=center>30</td>
-                                            <td align=center>2008/12/19</td>
-                                            <td align=center>$90,560</td>
-                                            <td align=center><a href="#" onclick="window.open(this.href, '_blank', 'width=250, height=250, toolbars=no, scrollbars=yes'); return false;">사진</td></a>
-                                            <td align=center><a href="popup.html"  onclick="window.open(this.href, '_blank', 'width=530, height=370, toolbars=no, scrollbars=yes'); return false;">수정</a> | 삭제
-                                        </tr>
-                                        <tr>
-                                            <td align=center>London</td>
-                                            <td align=center>30</td>
-                                            <td align=center>2008/12/19</td>
-                                            <td align=center>$90,560</td>
-                                            <td align=center><a href="#" onclick="window.open(this.href, '_blank', 'width=250, height=250, toolbars=no, scrollbars=yes'); return false;">사진</td></a>
-                                            <td align=center><a href="popup.html"  onclick="window.open(this.href, '_blank', 'width=530, height=370, toolbars=no, scrollbars=yes'); return false;">수정</a> | 삭제
-                                        </tr>
-                                        <tr>
-                                            <td align=center>London</td>
-                                            <td align=center>30</td>
-                                            <td align=center>2008/12/19</td>
-                                            <td align=center>$90,560</td>
-                                            <td align=center><a href="#" onclick="window.open(this.href, '_blank', 'width=250, height=250, toolbars=no, scrollbars=yes'); return false;">사진</td></a>
-                                            <td align=center><a href="popup.html"  onclick="window.open(this.href, '_blank', 'width=530, height=370, toolbars=no, scrollbars=yes'); return false;">수정</a> | 삭제
-                                        </tr>
-                                        <tr>
-                                            <td align=center>London</td>
-                                            <td align=center>30</td>
-                                            <td align=center>2008/12/19</td>
-                                            <td align=center>$90,560</td>
-                                            <td align=center><a href="#" onclick="window.open(this.href, '_blank', 'width=250, height=250, toolbars=no, scrollbars=yes'); return false;">사진</td></a>
-                                            <td align=center><a href="popup.html"  onclick="window.open(this.href, '_blank', 'width=530, height=370, toolbars=no, scrollbars=yes'); return false;">수정</a> | 삭제
-                                        </tr>
-                                        <tr>
-                                            <td align=center>London</td>
-                                            <td align=center>30</td>
-                                            <td align=center>2008/12/19</td>
-                                            <td align=center>$90,560</td>
-                                            <td align=center><a href="#" onclick="window.open(this.href, '_blank', 'width=250, height=250, toolbars=no, scrollbars=yes'); return false;">사진</td></a>
-                                            <td align=center><a href="popup.html"  onclick="window.open(this.href, '_blank', 'width=530, height=370, toolbars=no, scrollbars=yes'); return false;">수정</a> | 삭제
-                                        </tr>
-                                        <tr>
-                                            <td align=center>London</td>
-                                            <td align=center>30</td>
-                                            <td align=center>2008/12/19</td>
-                                            <td align=center>$90,560</td>
-                                            <td align=center><a href="#" onclick="window.open(this.href, '_blank', 'width=250, height=250, toolbars=no, scrollbars=yes'); return false;">사진</td></a>
-                                            <td align=center><a href="popup.html"  onclick="window.open(this.href, '_blank', 'width=530, height=370, toolbars=no, scrollbars=yes'); return false;">수정</a> | 삭제
-                                        </tr>
-                                        <tr>
-                                            <td align=center>London</td>
-                                            <td align=center>30</td>
-                                            <td align=center>2008/12/19</td>
-                                            <td align=center>$90,560</td>
-                                            <td align=center><a href="#" onclick="window.open(this.href, '_blank', 'width=250, height=250, toolbars=no, scrollbars=yes'); return false;">사진</td></a>
-                                            <td align=center><a href="popup.html"  onclick="window.open(this.href, '_blank', 'width=530, height=370, toolbars=no, scrollbars=yes'); return false;">수정</a> | 삭제
-                                        </tr>
-                                        <tr>
-                                            <td align=center>London</td>
-                                            <td align=center>30</td>
-                                            <td align=center>2008/12/19</td>
-                                            <td align=center>$90,560</td>
-                                            <td align=center><a href="#" onclick="window.open(this.href, '_blank', 'width=250, height=250, toolbars=no, scrollbars=yes'); return false;">사진</td></a>
-                                            <td align=center><a href="popup.html"  onclick="window.open(this.href, '_blank', 'width=530, height=370, toolbars=no, scrollbars=yes'); return false;">수정</a> | 삭제
-                                        </tr>
-                                        <tr>
-                                            <td align=center>London</td>
-                                            <td align=center>30</td>
-                                            <td align=center>2008/12/19</td>
-                                            <td align=center>$90,560</td>
-                                            <td align=center><a href="#" onclick="window.open(this.href, '_blank', 'width=250, height=250, toolbars=no, scrollbars=yes'); return false;">사진</td></a>
-                                            <td align=center><a href="popup.html"  onclick="window.open(this.href, '_blank', 'width=530, height=370, toolbars=no, scrollbars=yes'); return false;">수정</a> | 삭제
-                                        </tr>
-                                        <tr>
-                                            <td align=center>London</td>
-                                            <td align=center>30</td>
-                                            <td align=center>2008/12/19</td>
-                                            <td align=center>$90,560</td>
-                                            <td align=center><a href="#" onclick="window.open(this.href, '_blank', 'width=250, height=250, toolbars=no, scrollbars=yes'); return false;">사진</td></a>
-                                            <td align=center><a href="popup.html"  onclick="window.open(this.href, '_blank', 'width=530, height=370, toolbars=no, scrollbars=yes'); return false;">수정</a> | 삭제
-                                        </tr>
-                                        <tr>
-                                            <td align=center>London</td>
-                                            <td align=center>30</td>
-                                            <td align=center>2008/12/19</td>
-                                            <td align=center>$90,560</td>
-                                            <td align=center><a href="#" onclick="window.open(this.href, '_blank', 'width=250, height=250, toolbars=no, scrollbars=yes'); return false;">사진</td></a>
-                                            <td align=center><a href="popup.html"  onclick="window.open(this.href, '_blank', 'width=530, height=370, toolbars=no, scrollbars=yes'); return false;">수정</a> | 삭제
-                                        </tr>
-                                        <tr>
-                                            <td align=center>London</td>
-                                            <td align=center>30</td>
-                                            <td align=center>2008/12/19</td>
-                                            <td align=center>$90,560</td>
-                                            <td align=center><a href="#" onclick="window.open(this.href, '_blank', 'width=250, height=250, toolbars=no, scrollbars=yes'); return false;">사진</td></a>
-                                            <td align=center><a href="popup.html"  onclick="window.open(this.href, '_blank', 'width=530, height=370, toolbars=no, scrollbars=yes'); return false;">수정</a> | 삭제
-                                        </tr>
-                                        <tr>
-                                            <td align=center>London</td>
-                                            <td align=center>30</td>
-                                            <td align=center>2008/12/19</td>
-                                            <td align=center>$90,560</td>
-                                            <td align=center><a href="#" onclick="window.open(this.href, '_blank', 'width=250, height=250, toolbars=no, scrollbars=yes'); return false;">사진</td></a>
-                                            <td align=center><a href="popup.html"  onclick="window.open(this.href, '_blank', 'width=530, height=370, toolbars=no, scrollbars=yes'); return false;">수정</a> | 삭제
-                                        </tr>
-                                        <tr>
-                                            <td align=center>London</td>
-                                            <td align=center>30</td>
-                                            <td align=center>2008/12/19</td>
-                                            <td align=center>$90,560</td>
-                                            <td align=center><a href="#" onclick="window.open(this.href, '_blank', 'width=250, height=250, toolbars=no, scrollbars=yes'); return false;">사진</td></a>
-                                            <td align=center><a href="popup.html"  onclick="window.open(this.href, '_blank', 'width=530, height=370, toolbars=no, scrollbars=yes'); return false;">수정</a> | 삭제
-                                        </tr>
-                                        <tr>
-                                            <td align=center>London</td>
-                                            <td align=center>30</td>
-                                            <td align=center>2008/12/19</td>
-                                            <td align=center>$90,560</td>
-                                            <td align=center><a href="#" onclick="window.open(this.href, '_blank', 'width=250, height=250, toolbars=no, scrollbars=yes'); return false;">사진</td></a>
-                                            <td align=center><a href="popup.html"  onclick="window.open(this.href, '_blank', 'width=530, height=370, toolbars=no, scrollbars=yes'); return false;">수정</a> | 삭제
-                                        </tr>
-                                        <tr>
-                                            <td align=center>London</td>
-                                            <td align=center>30</td>
-                                            <td align=center>2008/12/19</td>
-                                            <td align=center>$90,560</td>
-                                            <td align=center><a href="#" onclick="window.open(this.href, '_blank', 'width=250, height=250, toolbars=no, scrollbars=yes'); return false;">사진</td></a>
-                                            <td align=center><a href="popup.html"  onclick="window.open(this.href, '_blank', 'width=530, height=370, toolbars=no, scrollbars=yes'); return false;">수정</a> | 삭제
-                                        </tr>
-                                        <tr>
-                                            <td align=center>London</td>
-                                            <td align=center>30</td>
-                                            <td align=center>2008/12/19</td>
-                                            <td align=center>$90,560</td>
-                                            <td align=center><a href="#" onclick="window.open(this.href, '_blank', 'width=250, height=250, toolbars=no, scrollbars=yes'); return false;">사진</td></a>
-                                            <td align=center><a href="popup.html"  onclick="window.open(this.href, '_blank', 'width=530, height=370, toolbars=no, scrollbars=yes'); return false;">수정</a> | 삭제
-                                        </tr>
-                                        <tr>
-                                            <td align=center>London</td>
-                                            <td align=center>30</td>
-                                            <td align=center>2008/12/19</td>
-                                            <td align=center>$90,560</td>
-                                            <td align=center><a href="#" onclick="window.open(this.href, '_blank', 'width=250, height=250, toolbars=no, scrollbars=yes'); return false;">사진</td></a>
-                                            <td align=center><a href="popup.html"  onclick="window.open(this.href, '_blank', 'width=530, height=370, toolbars=no, scrollbars=yes'); return false;">수정</a> | 삭제
-                                        </tr>
-                                        <tr>
-                                            <td align=center>London</td>
-                                            <td align=center>30</td>
-                                            <td align=center>2008/12/19</td>
-                                            <td align=center>$90,560</td>
-                                            <td align=center><a href="#" onclick="window.open(this.href, '_blank', 'width=250, height=250, toolbars=no, scrollbars=yes'); return false;">사진</td></a>
-                                            <td align=center><a href="popup.html"  onclick="window.open(this.href, '_blank', 'width=530, height=370, toolbars=no, scrollbars=yes'); return false;">수정</a> | 삭제
-                                        </tr>
-                                        <tr>
-                                            <td align=center>London</td>
-                                            <td align=center>30</td>
-                                            <td align=center>2008/12/19</td>
-                                            <td align=center>$90,560</td>
-                                            <td align=center><a href="#" onclick="window.open(this.href, '_blank', 'width=250, height=250, toolbars=no, scrollbars=yes'); return false;">사진</td></a>
-                                            <td align=center><a href="popup.html"  onclick="window.open(this.href, '_blank', 'width=530, height=370, toolbars=no, scrollbars=yes'); return false;">수정</a> | 삭제
-                                        </tr>
-                                        <tr>
-                                            <td align=center>London</td>
-                                            <td align=center>30</td>
-                                            <td align=center>2008/12/19</td>
-                                            <td align=center>$90,560</td>
-                                            <td align=center><a href="#" onclick="window.open(this.href, '_blank', 'width=250, height=250, toolbars=no, scrollbars=yes'); return false;">사진</td></a>
-                                            <td align=center><a href="popup.html"  onclick="window.open(this.href, '_blank', 'width=530, height=370, toolbars=no, scrollbars=yes'); return false;">수정</a> | 삭제
+                                    <tbody id="tbody">
+                                        <tr>
+                                            <td align=center>교수</td>
+                                            <td align=center>-</td>
+                                            <td align=center>김진숙</td>
+                                            <td align=center>010-4550-3285</td>
+                                            <td align=center>재직</td>
+                                            <td align=center><a href="mypage.html">관리</a></td>
+                                        </tr>
+                                        <tr>
+                                            <td align=center>학생</td>
+                                            <td align=center>202159884</td>
+                                            <td align=center>손옥무</td>
+                                            <td align=center>010-4003-0631</td>
+                                            <td align=center>재학</td>
+                                            <td align=center><a href="mypage.html">관리</a></td>
+                                        </tr>
+                                        <tr>
+                                            <td align=center>학생</td>
+                                            <td align=center>202163104</td>
+                                            <td align=center>김건우</td>
+                                            <td align=center>010-4132-5406</td>
+                                            <td align=center>재학</td>
+                                            <td align=center><a href="mypage.html">관리</a></td>
+                                        </tr>
+                                        <tr>
+                                            <td align=center>학생</td>
+                                            <td align=center>201813066</td>
+                                            <td align=center>장성익</td>
+                                            <td align=center>010-5296-7638</td>
+                                            <td align=center>재학</td>
+                                            <td align=center><a href="mypage.html">관리</a></td>
+                                        </tr>
+                                        <tr>
+                                            <td align=center>학생</td>
+                                            <td align=center>201929196</td>
+                                            <td align=center>설재혁</td>
+                                            <td align=center>010-2813-1858</td>
+                                            <td align=center>재학</td>
+                                            <td align=center><a href="mypage.html">관리</a></td>
                                         </tr>
                                     </tbody>
                                 </table>
                             </div>
-                            <button id="btn">ADD</button>
                         </div>
                     </div>
 
@@ -828,14 +301,11 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">정말 로그아웃 하시겠습니까?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
                 </div>
                 <div class="modal-body">현재 세션을 종료할 준비가 되었으면 아래 "로그아웃"을 <br>선택하십시오.</div>
                 <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">취소</button>
-                    <a class="btn btn-primary" href="index.html">로그아웃</a>
+                    <button class="btn-secondary" type="button" data-dismiss="modal" data-dismiss="modal">취소</button>
+                    <button class="btn-primary" type="button" data-dismiss="modal" onclick="location.href='index.html'">로그아웃</button>
                 </div>
             </div>
         </div>
@@ -856,30 +326,79 @@
     <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
     <!-- Page level custom scripts -->
-    <script src="js/demo/datatables-demo.js"></script>
+    <!-- <script src="js/demo/datatables-demo.js"></script> -->
 
-    <script>
-        let num = 0;
-        let table = document.getElementById('dataTable');
-        function AddEvent(){
-            let newRow = document.createElement('tr');
-            table.appendChild(newRow);
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.9.1/firebase-app.js';
+        import { getDatabase, ref, get, set, child, update, remove} from 'https://www.gstatic.com/firebasejs/9.9.1/firebase-database.js';
+        
+        const firebaseConfig = {
+            apiKey: "AIzaSyBETK45cbP1g2ZYC03ras5UYys5fXAqV_4",
+            authDomain: "fir-course-edb8c.firebaseapp.com",
+            databaseURL: "https://fir-course-edb8c-default-rtdb.firebaseio.com",
+            projectId: "fir-course-edb8c",
+            storageBucket: "fir-course-edb8c.appspot.com",
+            messagingSenderId: "760960563313",
+            appId: "1:760960563313:web:eb3b145202888f8a3c83d0",
+            measurementId: "G-336MJ5MK72"
+        };
+        
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase();
 
-            let cell0 = newRow.insertCell(0)
-            let cell1 = newRow.insertCell(1)
-            let cell2 = newRow.insertCell(2)
-            let cell3 = newRow.insertCell(3)
-            let cell4 = newRow.insertCell(4)
-            let cell5 = newRow.insertCell(5)
+        
+        const selectData = async function(){
+            const dbref = ref(db);
 
-            cell0.innerHTML = num++;
+            let snapshot = await get(child(dbref,"registered/"));
+            if(snapshot.exists()){
+                snapshot.forEach(number=>{
+                    let key = number.key;
+                    let categori = number.val().categori;
+                    let name = number.val().name;
+                    let status = number.val().status;
+                    let tel = number.val().tel;
+                    addRow(categori, key, name, tel, status)
+                    
+                })
+            }
+            else{
+                alret("No data found");
+            }
             
-            $('#dataTable').DataTable();
         }
-        let btn = document.getElementById("btn");
+        function addRow(categori, number, name, status, tel){
+            let tbody = document.getElementById("tbody")
+            let tdList = [];
+            let row = document.createElement("tr");
+            for(let i=0; i<6;i++){
+                let td = document.createElement("td");
+                td.align = 'center';
+                tdList.push(td)
+            }
 
-        btn.addEventListener('click', AddEvent);
+            tdList[0].innerHTML = categori;
+            tdList[1].innerHTML = number;
+            tdList[2].innerHTML = name;
+            tdList[3].innerHTML = tel;
+            tdList[4].innerHTML = status;
+            tdList[5].appendChild(nextPage(number));
+            for(let i=0; i<6;i++){
+                row.appendChild(tdList[i])
+            }
+            tbody.appendChild(row)
+        }
+        function nextPage(number){
+            let a= document.createElement("a");
+            a.innerHTML = "관리"
+            a.href = "mypage.html?number="+number;
+            return a;
+        }
+        await selectData()
+
+        $('#dataTable').DataTable();
     </script>
+
 </body>
 
 </html>

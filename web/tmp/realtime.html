@@ -70,6 +70,7 @@
 
             get(child(dbref,"TheStudents/" + rollBox.value)).then((snapshot)=>{
                 if(snapshot.exists()){
+                    console.log(snapshot.key)
                     nameBox.value = snapshot.val().NameOfStd;
                     secBox.value = snapshot.val().Section;
                     genBox.value = snapshot.val().Gender;

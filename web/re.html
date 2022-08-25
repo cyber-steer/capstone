@@ -78,7 +78,6 @@
                         <a class="collapse-item" href="profile.html">회원정보</a>
                         <a class="collapse-item" href="charts.html">출입통계</a>
                         <a class="collapse-item" href="record.html">출입기록</a>
-                        <a class="collapse-item" href="calendar.html">월별 출입통계</a>
                     </div>
                 </div>
             </li>
@@ -108,8 +107,16 @@
                         <a class="collapse-item" href="contact.html">Contact</a>
                         <a class="collapse-item" href="login.html">Login</a>
                         <div class="collapse-divider"></div>
+                        <hr>
                         <h6 class="collapse-header">Other Pages:</h6>
                         <a class="collapse-item" href="404.html">404 Page</a>
+                        <hr>
+                        <h6 class="collapse-header">My pages:</h6>
+                        <a class="collapse-item" href="profile.html">회원정보</a>
+                        <a class="collapse-item" href="re.html">정보수정</a>
+                        <a class="collapse-item" href="regist2.html">회원추가</a>
+                        <a class="collapse-item" href="mypage.html">정보확인</a>
+                        <a class="collapse-item" href="mypage.html">정보삭제</a>
                     </div>
                 </div>
             </li>
@@ -194,52 +201,48 @@
                 <div class="container-fluid">
 
                     <!-- Page Heading -->
-                    <h1 class="h3 mb-2 text-gray-800">학생 추가</h1>
-                    <p class="mb-4">학생을 추가할 수 있습니다.</p>
+                    <h1 class="h3 mb-2 text-gray-800">회원 정보 수정</h1>
+                    <p class="mb-4">등록된 회원의 정보를 수정할 수 있습니다.</p>
 
                     <!-- DataTales Example -->
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
-                            <h6 class="m-0 font-weight-bold text-primary" style="display:inline-block">학생 추가</h6>
+                            <h6 class="m-0 font-weight-bold text-primary" style="display:inline-block">회원 정보 수정</h6>
                         </div>
                         <form class="form">
-                            <div class="data-box">
-                                <div class="img-box">
-                                    <img id="myimg" class="profile" src="img/add profile.png" alt="사진등록" title="사진을 등록해주세요"
-                                        required autofocus>
-                                </div>
-                                <div class="input-box">
-                                    <label for="categori">구분 : </label>
-                                    <select id="categori">
-                                        <option value="교수">교수</option>
-                                        <option value="학생">학생</option>
-                                    </select> <br>
-                                    <label for="status">학적 : </label>
-                                    <select id="status">
-                                        <option value="재학">재학</option>
-                                        <option value="휴학">휴학</option>
-                                    </select>
-                                    <label for="number" style="left:auto;">학번 : </label>
-                                    <input id="number" type="text"
-                                        oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-                                        minlength="1" maxlength="9" required autofocus> <br>
-                                    <label for="tel">
-                                        전화번호 : </label>
-                                    <input id="tel" type="text"
-                                        oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-                                        minlength="1" maxlength="11" required autofocus> <br>
+                            <div class="img-box">
+                                <img id="myimg" class="profile" src="img/add profile.png" alt="사진등록" title="사진을 등록해주세요"
+                                    required autofocus>
+                            </div>
+                            <div class="input-box">
+                                <label for="inputPassword6">구분 : </label>
+                                <input id="gu" type="text" readonly minlength="1" maxlength="2" required autofocus> <br>
+                                <label for="inputPassword6">학적 : </label>
+                                <select>
+                                    <option value="재학">재학</option>
+                                    <option value="휴학">휴학</option>
+                                </select>
+                                <label for="number" style="left:auto;">학번 : </label>
+                                <input id="number" type="text" readonly
+                                    oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                                    minlength="1" maxlength="9" required autofocus> <br>
+                                <label for="tel">
+                                    전화번호 : </label>
+                                <input id="tel" type="text"
+                                    oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                                    minlength="1" maxlength="11" required autofocus> <br>
 
-                                    <label for="name">이름 : </label>
-                                    <input id="name" type="text" minlength="1" maxlength="7" required autofocus> <br>
+                                <label for="name">이름 : </label>
+                                <input id="name" type="text"  minlength="1" maxlength="7"
+                                    required autofocus> <br>
 
-                                    <label for="engname">영문이름 : </label>
-                                    <input id="engname" type="text" aria-describedby="name" minlength="1" maxlength="7"
-                                        required autofocus>
-                                </div>
+                                <label for="engname">영문이름 : </label>
+                                <input id="engname" type="text" aria-describedby="name" minlength="1" maxlength="7"
+                                    required autofocus>
                             </div>
                             <div class="btn-box">
                                 <a class="btn btn-primary" data-toggle="modal" data-target="#addModal">
-                                    학생 추가하기
+                                    정보 수정하기
                                 </a>
                             </div>
 
@@ -282,8 +285,7 @@
                         <div class="modal-footer">
                             <button class="btn-secondary" type="button" data-dismiss="modal"
                                 data-dismiss="modal">취소</button>
-                            <button class="btn-primary" type="button" data-dismiss="modal"
-                                href="profile.html">로그아웃</button>
+                                <button class="btn-primary" type="button" data-dismiss="modal" onclick="location.href='index.html'">로그아웃</button>
                         </div>
                     </div>
                 </div>
@@ -295,14 +297,14 @@
                 <div class="modal-dialog" role="document">
                     <div class="modal-content">
                         <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLabel">학생을 추가하시겠습니까?</h5>
+                            <h5 class="modal-title" id="exampleModalLabel">회원정보를 수정하시겠습니까?</h5>
                         </div>
-                        <div class="modal-body">입력하신 정보로 학생을 추가하시겠습니까?</div>
+                        <div class="modal-body">입력하신 내용으로 정보를 수정하시겠습니까?</div>
                         <div class="modal-footer">
-                            <button id="noBtn" class="btn-secondary" type="button" data-dismiss="modal"
+                            <button class="btn-secondary" type="button" data-dismiss="modal"
                                 data-dismiss="modal">아니오</button>
-                            <button id="yesBtn" class="btn-primary" type="button" data-dismiss="modal"
-                                href="profile.html">네</button>
+                            <button class="btn-primary" type="button" data-dismiss="modal"
+                            onclick="location.href='mypage.html'">네</button>
                         </div>
                     </div>
                 </div>
@@ -326,27 +328,8 @@
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
 
-    <script type="module">
-        
-        import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.9.1/firebase-app.js';
-        import { getStorage, ref as sRef, uploadBytesResumable, getDownloadURL} from 'https://www.gstatic.com/firebasejs/9.9.1/firebase-storage.js';
-        import { getDatabase, ref, get, set, push, child, update, remove} from 'https://www.gstatic.com/firebasejs/9.9.1/firebase-database.js';
-        
-        const firebaseConfig = {
-            apiKey: "AIzaSyBETK45cbP1g2ZYC03ras5UYys5fXAqV_4",
-            authDomain: "fir-course-edb8c.firebaseapp.com",
-            databaseURL: "https://fir-course-edb8c-default-rtdb.firebaseio.com",
-            projectId: "fir-course-edb8c",
-            storageBucket: "fir-course-edb8c.appspot.com",
-            messagingSenderId: "760960563313",
-            appId: "1:760960563313:web:eb3b145202888f8a3c83d0",
-            measurementId: "G-336MJ5MK72"
-        };
-        
-        const app = initializeApp(firebaseConfig);
-        const realdb = getDatabase();
+    <script>
 
-        // 사진 선택 ----------------------------------------------------------
         let files = [];
         let reader = new FileReader();
 
@@ -356,83 +339,21 @@
         input.type = 'file';
 
         input.onchange = e => {
+            console.log("change")
             files = e.target.files;
 
             reader.readAsDataURL(files[0]);
         }
 
         reader.onload = function () {
+            console.log(reader.result)
             myimg.src = reader.result;
         }
 
         myimg.onclick = function () {
+            console.log("click")
             input.click();
         }
-        //----------------------------------------------------------
-        let categori = document.getElementById("categori");
-        let status = document.getElementById("status");
-        let number = document.getElementById("number");
-        let tel = document.getElementById("tel");
-        let name = document.getElementById("name");
-        let engname = document.getElementById("engname");
-
-        let yesBtn = document.getElementById("yesBtn");
-
-        function GetFileExt(file){
-            let temp = file.name.split('.');
-            let ext = temp.slice((temp.length-1), (temp.length));
-            return '.'+ ext[0]
-        }
-
-        async function firebaseStorage(){
-            let ImgToUpload = files[0];
-            let imgName = number.value + GetFileExt(files[0])
-
-            const metaDdata = {
-                contentType: ImgToUpload.type
-            }
-            const storage = getStorage();
-            const storageRef = sRef(storage, "registered/"+imgName);
-            const UploadTask = uploadBytesResumable(storageRef, ImgToUpload, metaDdata);
-
-            UploadTask.on('state-changed', (snapshot)=>{
-                // let progess = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
-                // proglab.innerHTML = "Upload" + progess +"%";
-            },(error)=>{
-                alert("error: image not uploaded!");
-            },()=>{
-                getDownloadURL(UploadTask.snapshot.ref).then((downloadURL)=>{
-                    firebaseRealtimeDB(downloadURL);
-                    firebaseCRUD();
-                });
-            });
-        }
-
-        function firebaseRealtimeDB(URL){
-            set(ref(realdb, "registered/"+number.value),{
-                categori: categori.value,
-                status: status.value,
-                tel: tel.value,
-                name: name.value,
-                engname: engname.value,
-                imgUrl: URL
-            });
-        }
-
-        function firebaseCRUD(){
-            const postListRef = ref(realdb, 'CRUD/create');
-            const key = push(postListRef);
-            set(key, {
-                number:number.value
-            }).then(()=>{
-                    window.location.href = './profile.html';
-            }).catch((error)=>{
-                alert("unsuccessful, error : "+error);
-            });
-
-        }
-        
-        yesBtn.addEventListener('click', firebaseStorage);
 
     </script>
 </body>

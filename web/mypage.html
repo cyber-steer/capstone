@@ -244,8 +244,8 @@
                                 <div class="btn-box">
                                     <button class="btn-primary" type="button" data-dismiss="modal" data-toggle="modal"
                                         data-target="#delModal" href="profile.html" style="margin:6px">정보삭제</button>
-                                    <button class="btn-secondary" type="button" data-toggle="modal" data-target="#reModal"
-                                        onclick="location.href='re.html'" style="margin:6px">정보수정</button>
+                                    <button id="upBtn" class="btn-secondary" type="button" data-toggle="modal" data-target="#reModal"
+                                        style="margin:6px">정보수정</button>
                                 </div>
                             </div>
 
@@ -307,8 +307,7 @@
                         <div class="modal-footer">
                             <button class="btn-secondary" type="button" data-dismiss="modal"
                                 data-dismiss="modal">아니오</button>
-                            <button class="btn-primary" type="button" data-dismiss="modal"
-                                onclick="location.href='profile.html'">네</button>
+                            <button id="delBtn" class="btn-primary" type="button" data-dismiss="modal">네</button>
                         </div>
                     </div>
                 </div>
@@ -334,7 +333,8 @@
 
     <script type="module">
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.9.1/firebase-app.js';
-        import { getDatabase, ref, get, set, child, update, remove } from 'https://www.gstatic.com/firebasejs/9.9.1/firebase-database.js';
+        import { getDatabase, ref, get, push, set, child, update, remove } from 'https://www.gstatic.com/firebasejs/9.9.1/firebase-database.js';
+        import { getStorage, ref as sRef, uploadBytesResumable, getDownloadURL, deleteObject} from 'https://www.gstatic.com/firebasejs/9.9.1/firebase-storage.js';
 
         const firebaseConfig = {
             apiKey: "AIzaSyBETK45cbP1g2ZYC03ras5UYys5fXAqV_4",
@@ -371,13 +371,6 @@
                 engname.value = engnameVal;
                 myimg.src = imgUrl;
 
-                console.log(key)
-                console.log(categoriVal)
-                console.log(nameVal)
-                console.log(engnameVal)
-                console.log(statusVal)
-                console.log(telVal)
-                console.log(imgUrl)
             }
             else {
                 alret("No data found");
@@ -392,6 +385,40 @@
             return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
         }
 
+        function imgStorageDelete(){
+            let number = getParameterByName("number");
+            const storage = getStorage();
+            const desertRef = sRef(storage, 'registered/'+number);
+            // Delete the file
+            deleteObject(desertRef).then(() => {
+                realDbDelete(number)
+            }).catch((error) => {
+                alert("error : "+error);
+            });
+        }
+        function realDbDelete(number){
+            remove(ref(db, "registered/"+number)).then(()=>{
+                firebaseCRUD();
+            }).catch((error)=>{
+                alert("unsuccessful, error : "+error);
+            });
+
+        }
+        
+        function firebaseCRUD(){
+            const postListRef = ref(db, 'CRUD/delete');
+            const key = push(postListRef);
+            set(key, {
+                number:number.value
+            }).then(()=>{
+                    window.location.href = './profile.html';
+            }).catch((error)=>{
+                alert("unsuccessful, error : "+error);
+            });
+        }
+        function updatePage(){
+            location.href='re.html?number='+key;
+        }
         let myimg = document.getElementById("myimg");
         let categori = document.getElementById("categori");
         let status = document.getElementById("status");
@@ -400,9 +427,15 @@
         let name = document.getElementById("name");
         let engname = document.getElementById("engname");
 
+        let delBtn = document.getElementById("delBtn");
+
         let key = getParameterByName("number");
 
+        let upBtn = document.getElementById("upBtn");
+        
         await selectData(key);
+        delBtn.addEventListener('click',imgStorageDelete);
+        upBtn.addEventListener("click", updatePage);
 
     </script>
 </body>

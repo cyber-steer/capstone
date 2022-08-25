@@ -211,8 +211,8 @@
                                 <div class="input-box">
                                     <label for="categori">구분 : </label>
                                     <select id="categori">
-                                        <option value="교수">교수</option>
                                         <option value="학생">학생</option>
+                                        <option value="교수">교수</option>
                                     </select> <br>
                                     <label for="status">학적 : </label>
                                     <select id="status">
@@ -386,7 +386,7 @@
 
         async function firebaseStorage(){
             let ImgToUpload = files[0];
-            let imgName = number.value + GetFileExt(files[0])
+            let imgName = number.value// + GetFileExt(files[0])
 
             const metaDdata = {
                 contentType: ImgToUpload.type
@@ -429,7 +429,6 @@
             }).catch((error)=>{
                 alert("unsuccessful, error : "+error);
             });
-
         }
         
         yesBtn.addEventListener('click', firebaseStorage);

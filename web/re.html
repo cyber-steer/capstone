@@ -215,10 +215,10 @@
                                     required autofocus>
                             </div>
                             <div class="input-box">
-                                <label for="inputPassword6">구분 : </label>
-                                <input id="gu" type="text" readonly minlength="1" maxlength="2" required autofocus> <br>
-                                <label for="inputPassword6">학적 : </label>
-                                <select>
+                                <label for="categori">구분 : </label>
+                                <input id="categori" type="text" readonly minlength="1" maxlength="2" required autofocus> <br>
+                                <label for="status">학적 : </label>
+                                <select id="status">
                                     <option value="재학">재학</option>
                                     <option value="휴학">휴학</option>
                                 </select>
@@ -303,8 +303,8 @@
                         <div class="modal-footer">
                             <button class="btn-secondary" type="button" data-dismiss="modal"
                                 data-dismiss="modal">아니오</button>
-                            <button class="btn-primary" type="button" data-dismiss="modal"
-                            onclick="location.href='mypage.html'">네</button>
+                            <button id="yesBtn" class="btn-primary" type="button" data-dismiss="modal"
+                            >네</button>
                         </div>
                     </div>
                 </div>
@@ -328,8 +328,26 @@
     <!-- Page level custom scripts -->
     <script src="js/demo/datatables-demo.js"></script>
 
-    <script>
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.9.1/firebase-app.js';
+        import { getDatabase, ref, get, push, set, child, update, remove } from 'https://www.gstatic.com/firebasejs/9.9.1/firebase-database.js';
+        import { getStorage, ref as sRef, uploadBytesResumable, getDownloadURL, deleteObject} from 'https://www.gstatic.com/firebasejs/9.9.1/firebase-storage.js';
 
+        const firebaseConfig = {
+            apiKey: "AIzaSyBETK45cbP1g2ZYC03ras5UYys5fXAqV_4",
+            authDomain: "fir-course-edb8c.firebaseapp.com",
+            databaseURL: "https://fir-course-edb8c-default-rtdb.firebaseio.com",
+            projectId: "fir-course-edb8c",
+            storageBucket: "fir-course-edb8c.appspot.com",
+            messagingSenderId: "760960563313",
+            appId: "1:760960563313:web:eb3b145202888f8a3c83d0",
+            measurementId: "G-336MJ5MK72"
+        };
+
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase();
+
+        // 사진 선택 ----------------------------------------------------------
         let files = [];
         let reader = new FileReader();
 
@@ -339,21 +357,150 @@
         input.type = 'file';
 
         input.onchange = e => {
-            console.log("change")
             files = e.target.files;
 
             reader.readAsDataURL(files[0]);
         }
 
         reader.onload = function () {
-            console.log(reader.result)
             myimg.src = reader.result;
         }
 
         myimg.onclick = function () {
-            console.log("click")
             input.click();
         }
+        //----------------------------------------------------------
+
+        const selectData = async function (key) {
+            const dbref = ref(db);
+
+            let snapshot = await get(child(dbref, "registered/" + key + "/"));
+            if (snapshot.exists()) {
+                let categoriVal = snapshot.val().categori;
+                let nameVal = snapshot.val().name;
+                let engnameVal = snapshot.val().engname;
+                let statusVal = snapshot.val().status;
+                let telVal = snapshot.val().tel;
+                let imgUrl = snapshot.val().imgUrl;
+
+                categori.value = categoriVal;
+                status.value = statusVal;
+                number.value = key;
+                tel.value = telVal;
+                name.value = nameVal;
+                engname.value = engnameVal;
+                myimg.src = imgUrl;
+
+            }
+            else {
+                alret("No data found");
+            }
+
+        }
+
+        function getParameterByName(name) {
+            name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+            var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+                results = regex.exec(location.search);
+            return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+        }
+        //------------------------------------------------------------
+        
+        async function firebaseStorage(){
+            if( files.length == 0){
+                    realDbUpdate(0);
+                    firebaseCRUD();
+            }
+            else{
+                let ImgToUpload;
+                ImgToUpload = files[0];
+                let imgName = number.value// + GetFileExt(files[0])
+    
+                const metaDdata = {
+                    contentType: ImgToUpload.type
+                }
+                const storage = getStorage();
+                const storageRef = sRef(storage, "registered/"+imgName);
+                const UploadTask = uploadBytesResumable(storageRef, ImgToUpload, metaDdata);
+                UploadTask.on('state-changed', (snapshot)=>{
+                    // let progess = (snapshot.bytesTransferred / snapshot.totalBytes) * 100;
+                    // proglab.innerHTML = "Upload" + progess +"%";
+                },(error)=>{
+                    alert("error: image not uploaded!");
+                },()=>{
+                    getDownloadURL(UploadTask.snapshot.ref).then((downloadURL)=>{
+                        realDbUpdate(downloadURL);
+                        firebaseCRUD();
+                    });
+                });
+            }
+        }
+
+        function realDbUpdate(URL){
+            if(URL == 0){
+                update(ref(db, "registered/"+number.value),{
+                    categori: categori.value,
+                    status: status.value,
+                    tel: tel.value,
+                    name: name.value,
+                    engname: engname.value
+                }).then(()=>{
+                    alert("data updated successfully");
+                }).catch((error)=>{
+                    alert("unsuccessful, error : "+error);
+                });
+
+            }
+            else{
+                update(ref(db, "registered/"+number.value),{
+                    categori: categori.value,
+                    status: status.value,
+                    tel: tel.value,
+                    name: name.value,
+                    engname: engname.value,
+                    imgUrl: URL
+                }).then(()=>{
+                    alert("data updated successfully");
+                }).catch((error)=>{
+                    alert("unsuccessful, error : "+error);
+                });
+            }
+
+        }
+        
+        function firebaseCRUD(){
+            if(engname.value == engnameVal){
+                    window.location.href = './mypage.html?number='+num;
+            }
+            else{
+                const postListRef = ref(db, 'CRUD/update');
+                const key = push(postListRef);
+                set(key, {
+                    number:number.value
+                }).then(()=>{
+                        window.location.href = './mypage.html?number='+num;
+                }).catch((error)=>{
+                    alert("unsuccessful, error : "+error);
+                });
+            }
+
+
+        }
+        let categori = document.getElementById("categori");
+        let status = document.getElementById("status");
+        let number = document.getElementById("number");
+        let tel = document.getElementById("tel");
+        let name = document.getElementById("name");
+        let engname = document.getElementById("engname");
+        let engnameVal = engname.value;
+
+        let yesBtn = document.getElementById('yesBtn');
+
+        let num = getParameterByName("number");
+
+
+        await selectData(num);
+        yesBtn.addEventListener('click',firebaseStorage)
 
     </script>
 </body>

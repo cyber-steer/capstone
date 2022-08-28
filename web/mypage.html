@@ -406,10 +406,13 @@
         }
         
         function firebaseCRUD(){
-            const postListRef = ref(db, 'CRUD/delete');
+            const postListRef = ref(db, 'log/');
             const key = push(postListRef);
             set(key, {
-                number:number.value
+                // type : 'delete',
+                // number:number.value,
+                // engname : engname.value,
+                delete : number.value
             }).then(()=>{
                     window.location.href = './profile.html';
             }).catch((error)=>{

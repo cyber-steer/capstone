@@ -420,10 +420,13 @@
         }
 
         function firebaseCRUD(){
-            const postListRef = ref(realdb, 'CRUD/create');
+            const postListRef = ref(realdb, 'log/');
             const key = push(postListRef);
             set(key, {
-                number:number.value
+                // type : 'insert',
+                // number:number.value,
+                // engname : engname.value,
+                insert : number.value
             }).then(()=>{
                     window.location.href = './profile.html';
             }).catch((error)=>{

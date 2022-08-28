@@ -473,10 +473,13 @@
                     window.location.href = './mypage.html?number='+num;
             }
             else{
-                const postListRef = ref(db, 'CRUD/update');
+                const postListRef = ref(db, 'log/');
                 const key = push(postListRef);
                 set(key, {
-                    number:number.value
+                    // type : 'update',
+                    // number:number.value,
+                    // engname : engname.value,
+                    update : number.value
                 }).then(()=>{
                         window.location.href = './mypage.html?number='+num;
                 }).catch((error)=>{

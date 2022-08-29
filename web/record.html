@@ -22,11 +22,11 @@
 
     <!-- Custom styles for this page -->
     <link href="vendor/datatables/dataTables.bootstrap4.min.css" rel="stylesheet">
-    
+
     <!-- Favicon -->
     <link href="img/cod.png" rel="icon">
     <link rel="stylesheet" href="css/calendar.css">
-    
+
 </head>
 
 <body id="page-top">
@@ -39,7 +39,8 @@
 
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href="index2.html">
-               <img src="img/cod.png" width="50" height="50"> <div class="sidebar-brand-text mx-3">Binary</div>
+                <img src="img/cod.png" width="50" height="50">
+                <div class="sidebar-brand-text mx-3">Binary</div>
             </a>
 
             <!-- Divider -->
@@ -169,12 +170,12 @@
                             <a class="nav-link dropdown-toggle" href="#" id="userDropdown" role="button"
                                 data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
                                 <span class="mr-2 d-none d-lg-inline text-gray-600 small">Admin</span>
-                                <img class="img-profile rounded-circle"
-                                    src="img/undraw_profile.svg">
+                                <img class="img-profile rounded-circle" src="img/undraw_profile.svg">
                             </a>
                             <!-- Dropdown - User Information -->
                             <div class="dropdown-menu dropdown-menu-right shadow">
-                                <a class="dropdown-item" href="index.html" data-toggle="modal" data-target="#logoutModal">
+                                <a class="dropdown-item" href="index.html" data-toggle="modal"
+                                    data-target="#logoutModal">
                                     <i class="fas fa-sign-out-alt fa-sm fa-fw mr-2 text-gray-400"></i>
                                     Logout
                                 </a>
@@ -197,16 +198,21 @@
                     <div class="card shadow mb-4">
                         <div class="card-header py-3">
                             <h6 class="m-0 font-weight-bold text-primary">일자별 출입 기록</h6>
+                            
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
-								<form>
-  								<center>
-  								<input type='date' id='currentDate'>
-  								</center>
-								</form>
-							<br>
-							<table class="table table-bordered" width="100%" cellspacing="0">
+                                <div class="header">
+                                    <div class="btn prevDay"></div>
+                                    <div class="input-date">
+                                        <label for="select-date">
+                                            <h2 class='dateTitle'></h2>
+                                        </label>
+                                    </div>
+                                    <div class="btn nextDay"></div>
+                                </div>
+                                <br>
+                                <table class="table table-bordered" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
                                             <td align="center"><b>학번</td>
@@ -214,208 +220,33 @@
                                             <td align=center><b>출입일시</td>
                                         </tr>
                                     </thead>
-                                    <tbody>
-                                        <tr>
-                                            <td align=center>000000000</td>
-                                            <td align=center>홍길동</td>
-                                            <td align=center>0000-00-00 00:00:00</td>
-                                        </tr>
-                                        <tr>
-                                            <td align=center>000000000</td>
-                                            <td align=center>홍길동</td>
-                                            <td align=center>0000-00-00 00:00:00</td>
-                                        </tr>
-                                        <tr>
-                                            <td align=center>000000000</td>
-                                            <td align=center>홍길동</td>
-                                            <td align=center>0000-00-00 00:00:00</td>
-                                        </tr>
-                                        <tr>
-                                            <td align=center>000000000</td>
-                                            <td align=center>홍길동</td>
-                                            <td align=center>0000-00-00 00:00:00</td>
-                                        </tr>
-                                        <tr>
-                                            <td align=center>000000000</td>
-                                            <td align=center>홍길동</td>
-                                            <td align=center>0000-00-00 00:00:00</td>
-                                        </tr>
-                                        <tr>
-                                            <td align=center>000000000</td>
-                                            <td align=center>홍길동</td>
-                                            <td align=center>0000-00-00 00:00:00</td>
-                                        </tr>
-                                        <tr>
-                                            <td align=center>000000000</td>
-                                            <td align=center>홍길동</td>
-                                            <td align=center>0000-00-00 00:00:00</td>
-                                        </tr>
-                                        <tr>
-                                            <td align=center>000000000</td>
-                                            <td align=center>홍길동</td>
-                                            <td align=center>0000-00-00 00:00:00</td>
-                                        </tr>
-                                        <tr>
-                                            <td align=center>000000000</td>
-                                            <td align=center>홍길동</td>
-                                            <td align=center>0000-00-00 00:00:00</td>
-                                        </tr>
-                                        <tr>
-                                            <td align=center>000000000</td>
-                                            <td align=center>홍길동</td>
-                                            <td align=center>0000-00-00 00:00:00</td>
-                                        </tr>
-                                        <tr>
-                                            <td align=center>000000000</td>
-                                            <td align=center>홍길동</td>
-                                            <td align=center>0000-00-00 00:00:00</td>
-                                        </tr>
-                                        <tr>
-                                            <td align=center>000000000</td>
-                                            <td align=center>홍길동</td>
-                                            <td align=center>0000-00-00 00:00:00</td>
-                                        </tr>
-                                        <tr>
-                                            <td align=center>000000000</td>
-                                            <td align=center>홍길동</td>
-                                            <td align=center>0000-00-00 00:00:00</td>
-                                        </tr>
-                                        <tr>
-                                            <td align=center>000000000</td>
-                                            <td align=center>홍길동</td>
-                                            <td align=center>0000-00-00 00:00:00</td>
-                                        </tr>
-                                        <tr>
-                                            <td align=center>000000000</td>
-                                            <td align=center>홍길동</td>
-                                            <td align=center>0000-00-00 00:00:00</td>
-                                        </tr>
-                                        <tr>
-                                            <td align=center>000000000</td>
-                                            <td align=center>홍길동</td>
-                                            <td align=center>0000-00-00 00:00:00</td>
-                                        </tr>
-                                        <tr>
-                                            <td align=center>admin</td>
-                                            <td align=center>admin</td>
-                                            <td align=center>관리자</td>
-                                        </tr>
-                                        <tr>
-                                            <td align=center>admin</td>
-                                            <td align=center>admin</td>
-                                            <td align=center>관리자</td>
-                                        </tr>
-                                        <tr>
-                                            <td align=center>admin</td>
-                                            <td align=center>admin</td>
-                                            <td align=center>관리자</td>
-                                        </tr>
-                                        <tr>
-                                            <td align=center>admin</td>
-                                            <td align=center>admin</td>
-                                            <td align=center>관리자</td>
-                                        </tr>
-                                        <tr>
-                                            <td align=center>admin</td>
-                                            <td align=center>admin</td>
-                                            <td align=center>관리자</td>
-                                        </tr>
-                                        <tr>
-                                            <td align=center>admin</td>
-                                            <td align=center>admin</td>
-                                            <td align=center>관리자</td>
-                                        </tr>
-                                        <tr>
-                                            <td align=center>admin</td>
-                                            <td align=center>admin</td>
-                                            <td align=center>관리자</td>
-                                        </tr>
-                                        <tr>
-                                            <td align=center>admin</td>
-                                            <td align=center>admin</td>
-                                            <td align=center>관리자</td>
-                                        </tr>
-                                        <tr>
-                                            <td align=center>admin</td>
-                                            <td align=center>admin</td>
-                                            <td align=center>관리자</td>
-                                        </tr>
-                                        <tr>
-                                            <td align=center>admin</td>
-                                            <td align=center>admin</td>
-                                            <td align=center>관리자</td>
-                                        </tr>
-                                        <tr>
-                                            <td align=center>admin</td>
-                                            <td align=center>admin</td>
-                                            <td align=center>관리자</td>
-                                        </tr>
-                                        <tr>
-                                            <td align=center>admin</td>
-                                            <td align=center>admin</td>
-                                            <td align=center>관리자</td>
-                                        </tr>
-                                        <tr>
-                                            <td align=center>admin</td>
-                                            <td align=center>admin</td>
-                                            <td align=center>관리자</td>
-                                        </tr>
-                                        <tr>
-                                            <td align=center>admin</td>
-                                            <td align=center>admin</td>
-                                            <td align=center>관리자</td>
-                                        </tr>
-                                        <tr>
-                                            <td align=center>admin</td>
-                                            <td align=center>admin</td>
-                                            <td align=center>관리자</td>
-                                        </tr>
-                                        <tr>
-                                            <td align=center>admin</td>
-                                            <td align=center>admin</td>
-                                            <td align=center>관리자</td>
-                                        </tr>
-                                        <tr>
-                                            <td align=center>admin</td>
-                                            <td align=center>admin</td>
-                                            <td align=center>관리자</td>
-                                        </tr>
-                                        <tr>
-                                            <td align=center>admin</td>
-                                            <td align=center>admin</td>
-                                            <td align=center>관리자</td>
-                                        </tr>
-                                        <tr>
-                                            <td align=center>admin</td>
-                                            <td align=center>admin</td>
-                                            <td align=center>관리자</td>
-                                        </tr>
+                                    <tbody id="tbody">
                                     </tbody>
                                 </table>
                             </div>
                         </div>
                     </div>
-                        </div>
-                    </div>
-
                 </div>
-                <!-- /.container-fluid -->
-
             </div>
-            <!-- End of Main Content -->
-
-            <!-- Footer -->
-            <footer class="sticky-footer bg-white">
-                <div class="container my-auto">
-                    <div class="copyright text-center my-auto">
-                        <span>Copyright &copy; Binary Website 2022 </span>
-                    </div>
-                </div>
-            </footer>
-            <!-- End of Footer -->
 
         </div>
-        <!-- End of Content Wrapper -->
+        <!-- /.container-fluid -->
+
+    </div>
+    <!-- End of Main Content -->
+
+    <!-- Footer -->
+    <footer class="sticky-footer bg-white">
+        <div class="container my-auto">
+            <div class="copyright text-center my-auto">
+                <span>Copyright &copy; Binary Website 2022 </span>
+            </div>
+        </div>
+    </footer>
+    <!-- End of Footer -->
+
+    </div>
+    <!-- End of Content Wrapper -->
 
     </div>
     <!-- End of Page Wrapper -->
@@ -460,7 +291,145 @@
     <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
     <!-- Page level custom scripts -->
-    <script src="js/demo/datatables-demo.js"></script>
+
+    <script type="module">
+        import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.9.1/firebase-app.js';
+        import { getDatabase, ref, get, set, child, update, remove} from 'https://www.gstatic.com/firebasejs/9.9.1/firebase-database.js';
+        
+        const firebaseConfig = {
+            apiKey: "AIzaSyBETK45cbP1g2ZYC03ras5UYys5fXAqV_4",
+            authDomain: "fir-course-edb8c.firebaseapp.com",
+            databaseURL: "https://fir-course-edb8c-default-rtdb.firebaseio.com",
+            projectId: "fir-course-edb8c",
+            storageBucket: "fir-course-edb8c.appspot.com",
+            messagingSenderId: "760960563313",
+            appId: "1:760960563313:web:eb3b145202888f8a3c83d0",
+            measurementId: "G-336MJ5MK72"
+        };
+        
+        const app = initializeApp(firebaseConfig);
+        const db = getDatabase();
+
+        let registered = {}
+        const selectName = async function(){
+            const dbref = ref(db);
+            let snapshot = await get(child(dbref,"registered/"));
+            if(snapshot.exists()){
+                snapshot.forEach(number=>{
+                    registered[number.key] = number.val().name;
+                    
+                })
+            }
+            else{
+                alret("No data found");
+            }
+        }
+        selectName()
+        console.log(registered)
+        
+        const selectData = async function(year, month, date){
+            const dbref = ref(db);
+            const path = "club/"+year+"/"+month+"/"+date+"/"
+            console.log('path : '+path);
+
+            let snapshot = await get(child(dbref,path));
+            if(snapshot.exists()){
+                console.log(snapshot.key)
+                snapshot.forEach(key=>{
+                    console.log(key.key)
+                    key.forEach(names=>{
+                        let number = names.key;
+                        let time = names.val()
+                    addRow(number, registered[number], time)
+                    })
+                })
+            }
+            else{
+                // alret("No data found");
+            }
+        }
+        function addRow(number, name, time){
+            let tbody = document.getElementById("tbody")
+            let tdList = [];
+            let row = document.createElement("tr");
+            for(let i=0; i<3;i++){
+                let td = document.createElement("td");
+                td.align = 'center';
+                tdList.push(td)
+            }
+
+            tdList[0].innerHTML = number;
+            tdList[1].innerHTML = name;
+            tdList[2].innerHTML = time;
+            for(let i=0; i<3;i++){
+                row.appendChild(tdList[i])
+            }
+            tbody.appendChild(row)
+        }
+
+        // await selectData('2022','08','29')
+        let input = document.createElement('input');
+        input.type = 'date';
+        input.id = 'select-date';
+        input.style.height = '0';
+        input.style.display = 'block';
+        input.style.visibility = 'hidden';
+        document.querySelector(`.input-date`).appendChild(input)
+        let nowYear;
+        let nowMonth;
+        let nowDate;
+        // 달력 생성
+        const changeDate = (newDate) => {
+            let inputDate = new Date(newDate);
+
+            // 현재의 년도와 월 받아오기
+            date = newDate
+            nowYear = date.getFullYear();
+            nowMonth = date.getMonth() + 1;
+            nowDate = date.getDate()
+
+            document.querySelector(`.dateTitle`).innerText = `${nowYear}년 ${nowMonth}월 ${nowDate}월`;
+            
+            
+            inputDate.setDate(date.getDate() +1);
+            inputValue.valueAsDate = inputDate;
+            // selectData(nowYear,nowMonth,nowDate)
+
+            await selectData(nowYear,nowMonth,nowDate)
+        }
+
+        let date = new Date();
+        let inputValue = document.getElementById('select-date');
+        inputValue.valueAsDate = date;
+
+        changeDate(date);
+        // 이전달 이동
+        document.querySelector(`.prevDay`).onclick = () => {
+            date.setDate(date.getDate()-1);
+            changeDate(date);
+        }
+
+        // 다음달 이동
+        document.querySelector(`.nextDay`).onclick = () => {
+            date.setDate(date.getDate()+1);
+            changeDate(date);
+        }
+
+        // input으로 이벤트 넘김
+        document.querySelector(`.dateTitle`).onclick = () => {
+            input.click();
+        }
+        input.onchange = e => {
+            let inputValue = document.getElementById('select-date').value;
+            let nowYear = inputValue.split('-')[0];
+            let nowMonth = inputValue.split('-')[1];
+            let nowDate = inputValue.split('-')[2];
+
+            let newDate = new Date(nowYear,nowMonth-1,nowDate);
+            date = newDate
+            changeDate(new Date(date));
+        }
+    </script>
 
 </body>
 

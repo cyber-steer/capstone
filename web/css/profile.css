@@ -1,6 +1,3 @@
-.main-up{
-    overflow: hidden;
-}
 .img-box {
     overflow: hidden;
     display: inline-block;
@@ -36,15 +33,6 @@ form{
     float: right;
     width: 250px;
 }
-.main-down{
-    overflow: hidden;
-}
 .btn-box{
-    overflow: hidden;
-    max-width: 225px;
-    margin: 0 auto;
     margin-top: 30px;
-}
-.data-box{
-    overflow: hidden;
 }

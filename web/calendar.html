@@ -23,8 +23,10 @@
     
     <!-- Favicon -->
     <link href="img/cod.png" rel="icon">
-    
     <link rel="stylesheet" href="css/calendar.css">
+
+    <!-- Button -->
+    <link rel="stylesheet" href="css/style.css">
     
 </head>
 
@@ -101,8 +103,16 @@
                         <a class="collapse-item" href="contact.html">Contact</a>
                         <a class="collapse-item" href="login.html">Login</a>
                         <div class="collapse-divider"></div>
+                        <hr>
                         <h6 class="collapse-header">Other Pages:</h6>
                         <a class="collapse-item" href="404.html">404 Page</a>
+                        <hr>
+                        <h6 class="collapse-header">My pages:</h6>
+                        <a class="collapse-item" href="profile.html">회원정보</a>
+                        <a class="collapse-item" href="re.html">정보수정</a>
+                        <a class="collapse-item" href="regist2.html">회원추가</a>
+                        <a class="collapse-item" href="mypage.html">정보확인</a>
+                        <a class="collapse-item" href="mypage.html">정보삭제</a>
                     </div>
                 </div>
             </li>
@@ -233,14 +243,11 @@
             <div class="modal-content">
                 <div class="modal-header">
                     <h5 class="modal-title" id="exampleModalLabel">정말 로그아웃 하시겠습니까?</h5>
-                    <button class="close" type="button" data-dismiss="modal" aria-label="Close">
-                        <span aria-hidden="true">×</span>
-                    </button>
                 </div>
                 <div class="modal-body">현재 세션을 종료할 준비가 되었으면 아래 "로그아웃"을 <br>선택하십시오.</div>
                 <div class="modal-footer">
-                    <button class="btn btn-secondary" type="button" data-dismiss="modal">취소</button>
-                    <a class="btn btn-primary" href="index.html">로그아웃</a>
+                    <button class="btn-secondary" type="button" data-dismiss="modal" data-dismiss="modal">취소</button>
+                    <button class="btn-primary" type="button" data-dismiss="modal" onclick="location.href='index.html'">로그아웃</button>
                 </div>
             </div>
         </div>

@@ -75,7 +75,7 @@
                         <h6 class="collapse-header">Custom Components:</h6>
                         <a class="collapse-item" href="profile.html">회원정보</a>
                         <a class="collapse-item" href="charts.html">출입통계</a>
-                        <a class="collapse-item" href="record.html">출입기록</a>
+                        <a class="collapse-item" id="record">출입기록</a>
                     </div>
                 </div>
             </li>
@@ -286,8 +286,7 @@
     <script src="vendor/datatables/dataTables.bootstrap4.min.js"></script>
 
     <!-- Page level custom scripts -->
-    <!-- <script src="js/demo/datatables-demo.js"></script> -->
-
+    <!--<script src="js/demo/datatables-demo.js"></script> -->
     <script type="module">
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.9.1/firebase-app.js';
         import { getDatabase, ref, get, set, child, update, remove} from 'https://www.gstatic.com/firebasejs/9.9.1/firebase-database.js';
@@ -318,7 +317,7 @@
                     let name = number.val().name;
                     let status = number.val().status;
                     let tel = number.val().tel;
-                    addRow(categori, key, name, tel, status);
+                    addRow(categori, key, name, tel, status)
                     
                 })
             }
@@ -358,7 +357,14 @@
 
         $('#dataTable').DataTable();
     </script>
-
+    <script>
+        let now = new Date()
+        let nowYear = now.getFullYear()
+        let nowMonth = now.getMonth() + 1
+        let nowDate = now.getDate()
+        let record = document.getElementById("record");
+        record.href = "record.html?search_date=" + nowYear + "-" + nowMonth + "-" + nowDate
+    </script>
 </body>
 
 </html>

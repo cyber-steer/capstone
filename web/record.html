@@ -26,7 +26,6 @@
     <!-- Favicon -->
     <link href="img/cod.png" rel="icon">
     <link rel="stylesheet" href="css/calendar.css">
-
 </head>
 
 <body id="page-top">
@@ -74,7 +73,6 @@
                         <a class="collapse-item" href="profile.html">회원정보</a>
                         <a class="collapse-item" href="charts.html">출입통계</a>
                         <a class="collapse-item" href="record.html">출입기록</a>
-                        <a class="collapse-item" href="calendar.html">월별 출입통계</a>
                     </div>
                 </div>
             </li>
@@ -103,10 +101,17 @@
                         <a class="collapse-item" href="blog.html">Process</a>
                         <a class="collapse-item" href="contact.html">Contact</a>
                         <a class="collapse-item" href="login.html">Login</a>
-                        <a class="collapse-item" href="registr.html">Register</a>
                         <div class="collapse-divider"></div>
+                        <hr>
                         <h6 class="collapse-header">Other Pages:</h6>
                         <a class="collapse-item" href="404.html">404 Page</a>
+                        <hr>
+                        <h6 class="collapse-header">My pages:</h6>
+                        <a class="collapse-item" href="profile.html">회원정보</a>
+                        <a class="collapse-item" href="re.html">정보수정</a>
+                        <a class="collapse-item" href="regist2.html">회원추가</a>
+                        <a class="collapse-item" href="mypage.html">정보확인</a>
+                        <a class="collapse-item" href="mypage.html">정보삭제</a>
                     </div>
                 </div>
             </li>
@@ -202,8 +207,9 @@
                         </div>
                         <div class="card-body">
                             <div class="table-responsive">
+                                <h6 style="color:red;">※ 달력을 클릭한 후 빈 여백을 클릭하시면 넘어갑니다.</h6> <br>
                                 <div class="header">
-                                    <div class="btn prevDay"></div>
+                                    <div class="btn prevDay"></div> 
                                     <div class="input-date">
                                         <label for="select-date">
                                             <h2 class='dateTitle'></h2>
@@ -309,8 +315,7 @@
         
         const app = initializeApp(firebaseConfig);
         const db = getDatabase();
-
-        let registered = {}
+        
         const selectName = async function(){
             const dbref = ref(db);
             let snapshot = await get(child(dbref,"registered/"));
@@ -324,24 +329,19 @@
                 alret("No data found");
             }
         }
-        selectName()
-        console.log(registered)
-        
         const selectData = async function(year, month, date){
             const dbref = ref(db);
             const path = "club/"+year+"/"+month+"/"+date+"/"
-            console.log('path : '+path);
 
             let snapshot = await get(child(dbref,path));
             if(snapshot.exists()){
-                console.log(snapshot.key)
                 snapshot.forEach(key=>{
-                    console.log(key.key)
-                    key.forEach(names=>{
-                        let number = names.key;
-                        let time = names.val()
-                    addRow(number, registered[number], time)
-                    })
+                    console.log(key.val().name)
+                    let number = key.val().number;
+                    let name = key.val().name;
+                    let time = key.val().time;
+
+                    addRow(number, name, time)
                 })
             }
             else{
@@ -366,70 +366,87 @@
             }
             tbody.appendChild(row)
         }
+        
+        function getParameterByName(name) {
+            name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
+            var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
+                results = regex.exec(location.search);
+            return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
+        }
 
-        // await selectData('2022','08','29')
+        const changeDate = (nowDate) => {
+            let inputDate = new Date(nowDate);
+            
+            // 현재의 년도와 월 받아오기
+            let date = nowDate
+            
+            let nowYear = nowDate.getFullYear();
+            let nowMonth = nowDate.getMonth() + 1;
+            let nowDay = nowDate.getDate();
+
+            inputDate.setMonth(date.getMonth());
+            inputDate.setDate(date.getDate()+1);
+
+            input.valueAsDate = inputDate;
+
+            document.querySelector(`.dateTitle`).innerText = `${nowYear}년 ${nowMonth}월 ${nowDay}일`;
+        }
+        function searchPage(newDate){
+            let newYear = newDate.getFullYear();
+            let newMonth = newDate.getMonth()+1;
+            let newDay = newDate.getDate();
+            window.location.href = "record.html?search_date="+newYear+"-"+newMonth+"-"+newDay
+        }
+        
+        
+        let registered = {}
+        
+        let search_date = getParameterByName("search_date");
+        let year = search_date.split('-')[0];
+        let month = search_date.split('-')[1];
+        let day = search_date.split('-')[2];
+
+        
+        month = month < 10 ? '0' + month : month;
+        day = day < 10 ? '0' + day : day;
+        
+        let date = new Date(year, month-1, day)
+        console.log(date)
+        
         let input = document.createElement('input');
         input.type = 'date';
         input.id = 'select-date';
-        input.style.height = '0';
+        // input.style.height = '0';
         input.style.display = 'block';
-        input.style.visibility = 'hidden';
+        // input.style.visibility = 'hidden';
         document.querySelector(`.input-date`).appendChild(input)
-        let nowYear;
-        let nowMonth;
-        let nowDate;
-        // 달력 생성
-        const changeDate = (newDate) => {
-            let inputDate = new Date(newDate);
 
-            // 현재의 년도와 월 받아오기
-            date = newDate
-            nowYear = date.getFullYear();
-            nowMonth = date.getMonth() + 1;
-            nowDate = date.getDate()
-
-            document.querySelector(`.dateTitle`).innerText = `${nowYear}년 ${nowMonth}월 ${nowDate}월`;
-            
-            
-            inputDate.setDate(date.getDate() +1);
-            inputValue.valueAsDate = inputDate;
-            // selectData(nowYear,nowMonth,nowDate)
-
-            await selectData(nowYear,nowMonth,nowDate)
-        }
-
-        let date = new Date();
-        let inputValue = document.getElementById('select-date');
-        inputValue.valueAsDate = date;
-
-        changeDate(date);
         // 이전달 이동
         document.querySelector(`.prevDay`).onclick = () => {
             date.setDate(date.getDate()-1);
-            changeDate(date);
+            searchPage(date);
         }
 
         // 다음달 이동
         document.querySelector(`.nextDay`).onclick = () => {
             date.setDate(date.getDate()+1);
-            changeDate(date);
+            searchPage(date);
         }
 
         // input으로 이벤트 넘김
         document.querySelector(`.dateTitle`).onclick = () => {
             input.click();
         }
-        input.onchange = e => {
-            let inputValue = document.getElementById('select-date').value;
-            let nowYear = inputValue.split('-')[0];
-            let nowMonth = inputValue.split('-')[1];
-            let nowDate = inputValue.split('-')[2];
-
-            let newDate = new Date(nowYear,nowMonth-1,nowDate);
-            date = newDate
-            changeDate(new Date(date));
+        input.onblur = () => {
+            let newDate = input.valueAsDate
+            // console.log(newDate)
+            searchPage(newDate)
         }
-    </script>
+        changeDate(date)
+        selectName()
+
+        await selectData(year,month,day)
+        </script>
 
 </body>
 

@@ -6,6 +6,7 @@ class Doorlock:
     output_pin = 18  # BCM pin 18, BOARD pin 12
 
     def open(self):
+        time.sleep(3)
         # GPIO.setmode(GPIO.BCM)
         # GPIO.setup(self.output_pin, GPIO.OUT, initial=GPIO.HIGH)
 
@@ -14,7 +15,7 @@ class Doorlock:
         try:
             for i in range(1, 3):
                 time.sleep(1)
-                # print("Outputting {} to pin {}".format(curr_value, output_pin))
+                # print("Outputting {} to pin {}".format(curr_value, self.output_pin))
                 # GPIO.output(self.output_pin, GPIO.LOW)
                 
         finally:
@@ -24,5 +25,4 @@ class Doorlock:
     def action(self, q):
         while True:
             name = q.get()
-            if name !='' and name != 'Unknown':
-                self.open()
+            self.open()

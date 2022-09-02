@@ -1,26 +1,38 @@
-import pyrebase
+import random
+import threading
+import time
+from queue import Queue
 import datetime
+
 import json
 
-class firebase_database():
+from db.firebase_connet import Firebase
 
-    def __init__(self, delay = 10):
+
+class firebase_database(Firebase):
+
+    def __init__(self, delay = 10, path='db/auth_database.json'):
+        super().__init__(path)
+        self.registered_data = None
         self.delay = delay
         self.last_person = None
-        with open("db/auth_database.json") as f:
-            config = json.load(f)
-        firebase = pyrebase.initialize_app(config)
-        self.db=firebase.database()
+        # with open(path) as f:
+        #     config = json.load(f)
+        # firebase = pyrebase.initialize_app(config)
+        self.db= self.firebase.database()
 
     def insert(self, q):
         while True:
             name = q.get()
-            if name != "":
-                self.set(name)
+            self.set(name)
+
     # firebase에 추가
     def set(self, name):
         date = str(datetime.datetime.now())
-        data = {name:date}
+        data = self.registered_data[name]
+        data['time'] = date
+        # print(data)
+        # data = {name:date}
         year = date[:4]
         month = date[5:7]
         day = date[8:10]
@@ -36,8 +48,8 @@ class firebase_database():
             return True
         else:
             for key, val in self.last_person.items():
-                key =key
-                val =val
+                key = key
+                val = val
             # if key != name:
             #     return True
             now = datetime.datetime.now()
@@ -55,3 +67,40 @@ class firebase_database():
             else:
                 return False
         print("error")
+    def changeName(self, numbers):
+        while True:
+            self.registered_data = {}
+            names = []
+            # numbers = list(self.db.child("registered").shallow().get().val())
+            for number in numbers:
+                name = self.db.child('registered').child(number).child('name').get().val()
+                engname = self.db.child('registered').child(number).child('engname').get().val()
+                self.registered_data[engname] = {
+                    'number': number,
+                    'name' : name
+                }
+                names.append(engname)
+            return names
+    def observer(self, q, e):
+        data = {'insert': '201813066'}
+        self.db.child("log").push(data)
+        while True:
+            registered = self.db.child("log").get()
+            if registered != None and registered.val() != None:
+                print('observer :',registered)
+                e.set()
+                for people in registered.each():
+                    key = people.key()
+                    data = self.db.child('log').child(key).get().val()
+                    data = dict(data)
+                    q.put(data)
+                    self.db.child('log').child(key).remove()
+
+if __name__ == '__main__':
+    db = firebase_database(path='./auth_database.json')
+    db = db.db
+    time.sleep(5)
+    for i in range (19,23):
+        for j in range(random.randint(10,30)):
+            db.child("club").child('2022').child('08').child(i).push('data')
+

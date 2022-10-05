@@ -58,15 +58,15 @@ if __name__ == '__main__':
     # thread start ==============================================================
     # knwon--------------------------------------------------------------
     realtime_thread.start()
-    doorlock_thread.start()
-    # unknwon--------------------------------------------------------------
-    capture_thread.start()
-    storage_thread.start()
-    telegram_thread.start()
-    # update--------------------------------------------------------------
-    observer_thread.start()
-    update_thread.start()
-    patch_thread.start()
+    # doorlock_thread.start()
+    # # unknwon--------------------------------------------------------------
+    # capture_thread.start()
+    # storage_thread.start()
+    # telegram_thread.start()
+    # # update--------------------------------------------------------------
+    # observer_thread.start()
+    # update_thread.start()
+    # patch_thread.start()
 
     # main preparation ==============================================================
     # unkown receive ready

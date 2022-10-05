@@ -14,11 +14,17 @@ class Camera():
         self.encoded_face_train = [] # 인코딩된 훈련 데이터 저장.
         self.cap  = cv2.VideoCapture(0)
         self.imgRead()
+    
+    # 저장된 학번 얻기
     def get_numbers(self):
         return self.classNames
+    
+    # 이름 저장
     def set_names(self, names):
         self.classNames = names
         print(f'classNames : {self.classNames}')
+        
+    # 사진 인코딩 (학번, 인코딩된 이미지) 얻기
     def imgRead(self):
         self.classNames = []
         self.encoded_face_train = []
@@ -34,15 +40,7 @@ class Camera():
             except:
                 print(f'error : {cl}')
 
-        # self.encoded_face_train = self.findEncodings(images)
-
-    # 훈련 데이터를 인코딩하고 함수에 저장.
-    # def findEncodings(self, images):
-    #     self.encoded_face_train = []
-    #     for curImg in images:
-    #         curImg = cv2.cvtColor(curImg, cv2.COLOR_BGR2RGB)
-    #         encoded_face = face_recognition.face_encodings(curImg)[0]
-    #         self.encoded_face_train.append(encoded_face)
+    # 인식된 이름과 화면에 보여줄 frame 얻기
     def getData(self, update=False):
         name = ""
         success, frame = self.cap.read()
@@ -60,6 +58,8 @@ class Camera():
                 else:
                     self.draw(frame, name, faces_in_frame, 'green')
         return frame, name
+
+    # 사진 비교후 인식된 이름 얻기
     def getName(self, faces_in_frame, encoded_faces):
         name =''
         for encode_face, faceloc in zip(encoded_faces,faces_in_frame):
@@ -74,6 +74,8 @@ class Camera():
             if self.develop:
                 print(f'{name} : {min_faceDist}')
         return name
+
+    # 인식한뒤 네모 그리기
     def draw(self, frame, name, face_loc, color):
             if color == 'red' or color == 'Red' or color == "RED":
                 color = (0,0,255)
@@ -87,6 +89,8 @@ class Camera():
                 cv2.rectangle(frame,(x1,y1),(x2,y2),color,2)
                 cv2.rectangle(frame, (x1,y2-35),(x2,y2), color, cv2.FILLED)
                 cv2.putText(frame, name, (x1+6,y2-5), cv2.FONT_HERSHEY_COMPLEX,1,(255,255,255),2)
+
+    # 업데이트 로딩 그리기
     def update_drow(self, frame):
         now = str(datetime.datetime.now().time())
         second = now.split(":")[-1]
@@ -94,6 +98,8 @@ class Camera():
         w, h, c = frame.shape
         messsege = 'UPDATE' + '.'* ((second%3)+1)
         cv2.putText(frame, messsege, (int(w/2),30), cv2.FONT_HERSHEY_COMPLEX,1,(0,0,0),2)
+        
+    # 업데이트된 사진들 다시 인코딩하기
     def data_update(self, patch_event, update_event, db, q):
         while True:
             patch_event.wait()
@@ -110,7 +116,7 @@ class Camera():
             update_event.clear()
             patch_event.clear()
 
-
+    # 이미지 캡쳐하기
     def imgCaptture(self, q, send, receive):
         while True:
             if receive.is_set():

@@ -19,6 +19,8 @@ class Telegram:
         # bot = telegram.Bot(self.chat_token)
         # bot.send_photo(chat_id = '5526673347', photo=open(img, 'rb'))
         print("sendImg call")
+    
+    # 텔레그램 스레드
     def send(self, q, send, receive):
         while True:
             if receive.is_set():

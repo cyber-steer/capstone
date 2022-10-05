@@ -3,7 +3,7 @@ import threading
 import time
 from queue import Queue
 import datetime
-
+import pyrebase
 import json
 
 from db.firebase_connet import Firebase
@@ -13,12 +13,9 @@ class firebase_database(Firebase):
 
     def __init__(self, delay = 10, path='db/auth_database.json'):
         super().__init__(path)
-        self.registered_data = None
+        self.registered_data = {}
         self.delay = delay
-        self.last_person = None
-        # with open(path) as f:
-        #     config = json.load(f)
-        # firebase = pyrebase.initialize_app(config)
+        self.last_person = {}
         self.db= self.firebase.database()
 
     def insert(self, q):
@@ -28,45 +25,51 @@ class firebase_database(Firebase):
 
     # firebase에 추가
     def set(self, name):
-        date = str(datetime.datetime.now())
-        data = self.registered_data[name]
+        now = datetime.datetime.now()
+        date = str(now)
+        data = {}
+
+        # 깊은 복사
+        data['engname'] = name
+        data['number'] = self.registered_data[name]['number']
+        data['name'] = self.registered_data[name]['name']
         data['time'] = date
-        # print(data)
-        # data = {name:date}
+
         year = date[:4]
         month = date[5:7]
         day = date[8:10]
         if self.cooldowncheck(name):
-            self.last_person = data
+        # if True:
+            print("last :",self.last_person)
+            self.last_person['number'] = data['number']
+            self.last_person['engname'] = name
+            self.last_person['name'] = data['name']
+            self.last_person['time'] = now
+            print("last set :", self.last_person)
             self.db.child("club").child(year).child(month).child(day).push(data)
             return True
         else:
             return False
 
+    # 딜레이 계산
     def cooldowncheck(self, name): # 마지막과 동일하면 False DB저장하려면 True
-        if self.last_person == None:
+        if self.last_person == {}:
+            print('true')
             return True
         else:
-            for key, val in self.last_person.items():
-                key = key
-                val = val
-            # if key != name:
+            # 이름이 다를시 바로 저장
+            # if name != self.last_person['engname']:
             #     return True
             now = datetime.datetime.now()
-            date = val
-            year = int(date[:4])
-            month = int(date[5:7])
-            day = int(date[8:10])
-            hour = int(date[11:13])
-            minute = int(date[14:16])
-            second = int(date[17:19])
-            date = datetime.datetime(year, month, day, hour, minute, second)
+            date = self.last_person['time']
             difference = (now - date).seconds
             if difference > self.delay:
                 return True
             else:
                 return False
         print("error")
+
+    # 이름 변경 (학번->영어이름)
     def changeName(self, numbers):
         while True:
             self.registered_data = {}
@@ -81,6 +84,8 @@ class firebase_database(Firebase):
                 }
                 names.append(engname)
             return names
+
+    # realdatabase 감시 스레드
     def observer(self, q, e):
         data = {'insert': '201813066'}
         self.db.child("log").push(data)
@@ -97,10 +102,44 @@ class firebase_database(Firebase):
                     self.db.child('log').child(key).remove()
 
 if __name__ == '__main__':
-    db = firebase_database(path='./auth_database.json')
-    db = db.db
-    time.sleep(5)
-    for i in range (19,23):
-        for j in range(random.randint(10,30)):
-            db.child("club").child('2022').child('08').child(i).push('data')
 
+    # def randData(startDate):
+    #     start = datetime.datetime(startDate)
+    # db = firebase_database(path='./auth_database.json')
+
+    # 학생 정보 임의 추가
+    # db.registered_data ={'Jang': {'number': '201813066', 'name': '장성익'}, 'Seol': {'number': '201929196', 'name': '설재혁'}, 'Son': {'number': '202159884', 'name': '손옥무'}, 'Kim': {'number': '202163104', 'name': '김건우'}}
+    # db.set('Jang')
+
+    # 랜덤 추가
+
+    registered_data = {'Jang': {'number': '201813066', 'name': '장성익'}, 'Seol': {'number': '201929196', 'name': '설재혁'}, 'Son': {'number': '202159884', 'name': '손옥무'}, 'Kim': {'number': '202163104', 'name': '김건우'}}
+
+
+    now = datetime.datetime.now()
+
+    with open('auth_database.json') as f:
+        config = json.load(f)
+    firebase = pyrebase.initialize_app(config)
+    db = firebase.database()
+
+    dateList = []
+    data = {}
+    for i in range(10):
+        newDate = now - datetime.timedelta(days=i)
+        dateList.append(newDate)
+    for item in dateList:
+        newList = []
+        for i in range(8, 21):
+            for j in range(0, 50, 10):
+                r = random.randint(0,100)
+                if r<10:
+                    r = random.randint(0,10)
+                    newDate = datetime.datetime(item.year, item.month, item.day, i, j+r, item.second)
+                    newList.append(newDate)
+        data[item] = newList
+
+    for key, val in data.items():
+        for item in val:
+            print(key," a " ,item)
+    # db.child("club").child(year).child(month).child(day).push(data)

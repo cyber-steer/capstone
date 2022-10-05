@@ -431,6 +431,7 @@
             if (snapshot.exists) {
                 snapshot.forEach(childSnapshot => {
                     let time = childSnapshot.val().time.substr(11,2);
+                    console.log(childSnapshot.val().time)
                     returns[parseInt(time)][time] = returns[parseInt(time)][time] + 1;
 
                 })

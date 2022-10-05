@@ -5,6 +5,7 @@ class Doorlock:
     # Pin Definitions
     output_pin = 18  # BCM pin 18, BOARD pin 12
 
+    # 도어락 열기
     def open(self):
         time.sleep(3)
         # GPIO.setmode(GPIO.BCM)
@@ -22,6 +23,7 @@ class Doorlock:
             # GPIO.cleanup()
             pass
 
+    # 도어락 여는 스레드
     def action(self, q):
         while True:
             name = q.get()

@@ -226,15 +226,16 @@
                                         <option value="재학">재학</option>
                                         <option value="휴학">휴학</option>
                                     </select>
-                                    <!-- <label for="grade" id="grade-label">학년 :</label>
+                                    <label for="grade" id="grade-label">학년 :</label>
                                     <select id="grade">
                                         <option value=1>1 학년</option>
                                         <option value=2>2 학년</option>
-                                    </select> -->
+                                    </select>
                                     <label for="number" style="left:auto;" id="number-label">학번 : </label>
                                     <input id="number" type="text"
                                         oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-                                        minlength="1" maxlength="9" required autofocus> <br>
+                                        minlength="1" maxlength="9" required autofocus> 
+                                    <br>
                                     <label for="tel">
                                         전화번호 : </label>
                                     <input id="tel" type="text"
@@ -399,9 +400,9 @@
                 console.log('status.value : '+status.value);
                 return true
             }
-            // else if(grade.value){
-            //     return false
-            // }
+            else if(grade.value){
+                return false
+            }
             else if(number.value == ''){
                 console.log('number.value : '+number.value);
                 return true
@@ -484,43 +485,43 @@
             });
         }
         categori.onchange = () => {
-            // let val = categori.value;
-            // if (val == '학생'){
-            //     while(grade.hasChildNodes()){
-            //         grade.removeChild(
-            //             grade.firstChild
-            //         )
-            //     }
-            //     let optionA = document.createElement('option')
-            //     let optionB = document.createElement('option')
-            //     optionA.value = '1 학년'
-            //     optionA.innerHTML = '1 학년'
-            //     optionB.value = '2 학년'
-            //     optionB.innerHTML = '2 학년'
+            let val = categori.value;
+            if (val == '학생'){
+                while(grade.hasChildNodes()){
+                    grade.removeChild(
+                        grade.firstChild
+                    )
+                }
+                let optionA = document.createElement('option')
+                let optionB = document.createElement('option')
+                optionA.value = '1 학년'
+                optionA.innerHTML = '1 학년'
+                optionB.value = '2 학년'
+                optionB.innerHTML = '2 학년'
                 
-            //     grade.appendChild(optionA)
-            //     grade.appendChild(optionB)
-            // }
-            // else if(val == '교수'){
-            //     while(grade.hasChildNodes()){
-            //         grade.removeChild(
-            //             grade.firstChild
-            //         )
-            //     }
-            //     let optionA = document.createElement('option')
-            //     let optionB = document.createElement('option')
-            //     let optionC = document.createElement('option')
-            //     optionA.value = '전임 교수'
-            //     optionA.innerHTML = '전임 교수'
-            //     optionB.value = '외래 교수'
-            //     optionB.innerHTML = '외래 교수'
-            //     optionC.value = '명예 교수'
-            //     optionC.innerHTML = '명예 교수'
+                grade.appendChild(optionA)
+                grade.appendChild(optionB)
+            }
+            else if(val == '교수'){
+                while(grade.hasChildNodes()){
+                    grade.removeChild(
+                        grade.firstChild
+                    )
+                }
+                let optionA = document.createElement('option')
+                let optionB = document.createElement('option')
+                let optionC = document.createElement('option')
+                optionA.value = '전임 교수'
+                optionA.innerHTML = '전임 교수'
+                optionB.value = '외래 교수'
+                optionB.innerHTML = '외래 교수'
+                optionC.value = '명예 교수'
+                optionC.innerHTML = '명예 교수'
 
-            //     grade.appendChild(optionA)
-            //     grade.appendChild(optionB)
-            //     grade.appendChild(optionC)
-            // }
+                grade.appendChild(optionA)
+                grade.appendChild(optionB)
+                grade.appendChild(optionC)
+            }
 
         }
 

@@ -214,6 +214,7 @@
                                         <tr>
                                             <td align=center><b>구분</td>
                                             <td align=center><b>학번</td>
+                                            <td align=center><b>학년</td>
                                             <td align=center><b>이름</td>
                                             <td align=center><b>전화번호</td>
                                             <td align=center><b>학적상태</td>
@@ -314,10 +315,11 @@
                 snapshot.forEach(number=>{
                     let key = number.key;
                     let categori = number.val().categori;
+                    let grade = number.val().grade;
                     let name = number.val().name;
                     let status = number.val().status;
                     let tel = number.val().tel;
-                    addRow(categori, key, name, tel, status)
+                    addRow(categori, key,grade, name, tel, status)
                     
                 })
             }
@@ -326,11 +328,11 @@
             }
             
         }
-        function addRow(categori, number, name,tel,status){
+        function addRow(categori, number,grade, name,tel,status){
             let tbody = document.getElementById("tbody")
             let tdList = [];
             let row = document.createElement("tr");
-            for(let i=0; i<6;i++){
+            for(let i=0; i<7;i++){
                 let td = document.createElement("td");
                 td.align = 'center';
                 tdList.push(td)
@@ -338,11 +340,14 @@
 
             tdList[0].innerHTML = categori;
             tdList[1].innerHTML = number;
-            tdList[2].innerHTML = name;
-            tdList[3].innerHTML = tel;
-            tdList[4].innerHTML = status;
-            tdList[5].appendChild(nextPage(number));
-            for(let i=0; i<6;i++){
+            tdList[2].innerHTML = grade;
+            tdList[3].innerHTML = name;
+            tdList[4].innerHTML = tel;
+            tdList[5].innerHTML = status;
+            tdList[6].appendChild(nextPage(number));
+            tdList[6].appendChild(lineCreate());
+            tdList[6].appendChild(chartPage(number));
+            for(let i=0; i<7;i++){
                 row.appendChild(tdList[i])
             }
             tbody.appendChild(row)
@@ -352,6 +357,17 @@
             a.innerHTML = "관리"
             a.href = "mypage.html?number="+number;
             return a;
+        }
+        function chartPage(number){
+            let a= document.createElement("a");
+            a.innerHTML = "통계"
+            a.href = "chartPage.html?number="+number;
+            return a;
+        }
+        function lineCreate(){
+            let p= document.createElement("span");
+            p.innerHTML = " | "
+            return p;
         }
         await selectData()
 

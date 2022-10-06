@@ -210,35 +210,44 @@
                             <h6 class="m-0 font-weight-bold text-primary" style="display:inline-block">회원 정보 수정</h6>
                         </div>
                         <form class="form">
-                            <div class="img-box">
-                                <img id="myimg" class="profile" src="img/add profile.png" alt="사진등록" title="사진을 등록해주세요"
-                                    required autofocus>
-                            </div>
-                            <div class="input-box">
-                                <label for="categori">구분 : </label>
-                                <input id="categori" type="text" readonly minlength="1" maxlength="2" required autofocus> <br>
-                                <label for="status">학적 : </label>
-                                <select id="status">
-                                    <option value="재학">재학</option>
-                                    <option value="휴학">휴학</option>
-                                </select>
-                                <label for="number" style="left:auto;">학번 : </label>
-                                <input id="number" type="text" readonly
-                                    oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-                                    minlength="1" maxlength="9" required autofocus> <br>
-                                <label for="tel">
-                                    전화번호 : </label>
-                                <input id="tel" type="text"
-                                    oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
-                                    minlength="1" maxlength="11" required autofocus> <br>
+                            <div style="overflow: auto;">
+                                <div class="img-box">
+                                    <img id="myimg" class="profile" src="img/add profile.png" alt="사진등록" title="사진을 등록해주세요"
+                                        required autofocus>
+                                </div>
+                                <div class="input-box">
+                                    <label for="categori">구분 : </label>
+                                    <input id="categori" type="text" readonly minlength="1" maxlength="2" required autofocus> <br>
+                                    <label for="status">학적 : </label>
+                                    <select id="status">
+                                        <option value="재학">재학</option>
+                                        <option value="휴학">휴학</option>
+                                    </select>
+                                    
+                                    <label for="grade" id="grade-label">학년 :</label>
+                                    <select id="grade">
+                                        <option value=1>1 학년</option>
+                                        <option value=2>2 학년</option>
+                                    </select>
 
-                                <label for="name">이름 : </label>
-                                <input id="name" type="text"  minlength="1" maxlength="7"
-                                    required autofocus> <br>
+                                    <label for="number" style="left:auto;">학번 : </label>
+                                    <input id="number" type="text" readonly
+                                        oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                                        minlength="1" maxlength="9" required autofocus> <br>
+                                    <label for="tel">
+                                        전화번호 : </label>
+                                    <input id="tel" type="text"
+                                        oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
+                                        minlength="1" maxlength="11" required autofocus> <br>
 
-                                <label for="engname">영문이름 : </label>
-                                <input id="engname" type="text" aria-describedby="name" minlength="1" maxlength="7"
-                                    required autofocus>
+                                    <label for="name">이름 : </label>
+                                    <input id="name" type="text"  minlength="1" maxlength="7"
+                                        required autofocus> <br>
+
+                                    <label for="engname">영문이름 : </label>
+                                    <input id="engname" type="text" aria-describedby="name" minlength="1" maxlength="7"
+                                        required autofocus>
+                                </div>
                             </div>
                             <div class="btn-box">
                                 <a class="btn btn-primary" data-toggle="modal" data-target="#addModal">
@@ -382,6 +391,7 @@
                 let statusVal = snapshot.val().status;
                 let telVal = snapshot.val().tel;
                 let imgUrl = snapshot.val().imgUrl;
+                let gradeVal = snapshot.val().grade;
 
                 categori.value = categoriVal;
                 status.value = statusVal;
@@ -390,6 +400,7 @@
                 name.value = nameVal;
                 engname.value = engnameVal;
                 myimg.src = imgUrl;
+                grade.value = gradeVal;
 
             }
             else {
@@ -443,7 +454,8 @@
                     status: status.value,
                     tel: tel.value,
                     name: name.value,
-                    engname: engname.value
+                    engname: engname.value,
+                    grade: grade.value
                 }).then(()=>{
                     alert("data updated successfully");
                 }).catch((error)=>{
@@ -458,7 +470,8 @@
                     tel: tel.value,
                     name: name.value,
                     engname: engname.value,
-                    imgUrl: URL
+                    imgUrl: URL,
+                    grade: grade.value
                 }).then(()=>{
                     alert("data updated successfully");
                 }).catch((error)=>{
@@ -491,6 +504,7 @@
         }
         let categori = document.getElementById("categori");
         let status = document.getElementById("status");
+        let grade = document.getElementById("grade");
         let number = document.getElementById("number");
         let tel = document.getElementById("tel");
         let name = document.getElementById("name");

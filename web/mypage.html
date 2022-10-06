@@ -221,6 +221,9 @@
                                     <label for="status">학적 : </label>
                                     <input id="status" type="text" readonly minlength="1" maxlength="2" required autofocus>
                                     <br>
+                                    <label for="grade">학년 : </label>
+                                    <input id="grade" type="text" readonly minlength="1" maxlength="2" required autofocus>
+                                    <br>
                                     <label for="number" style="left:auto;">학번 : </label>
                                     <input id="number" type="text" readonly
                                         oninput="this.value = this.value.replace(/[^0-9.]/g, '').replace(/(\..*)\./g, '$1');"
@@ -362,6 +365,7 @@
                 let statusVal = snapshot.val().status;
                 let telVal = snapshot.val().tel;
                 let imgUrl = snapshot.val().imgUrl;
+                let gradeVal = snapshot.val().grade;
 
                 categori.value = categoriVal;
                 status.value = statusVal;
@@ -370,6 +374,7 @@
                 name.value = nameVal;
                 engname.value = engnameVal;
                 myimg.src = imgUrl;
+                grade.value = gradeVal;
 
             }
             else {
@@ -429,6 +434,7 @@
         let tel = document.getElementById("tel");
         let name = document.getElementById("name");
         let engname = document.getElementById("engname");
+        let grade = document.getElementById("grade");
 
         let delBtn = document.getElementById("delBtn");
 

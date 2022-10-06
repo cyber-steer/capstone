@@ -418,6 +418,7 @@
             let date = today.getDate()
             let hours = today.getHours()
             month = month < 10 ? '0' + month : month;
+            date = date < 10 ? '0' + date : date;
 
             let time_level = []
             for(let i=0;i<=hours;i++){
@@ -426,7 +427,9 @@
                 data[ii] = 0
                 returns.push(data);
             }
-            
+            console.log(year)
+            console.log(month)
+            console.log(date)
             let snapshot = await get(child(dbref, "club/" + year + "/" + month +'/'+date));
             if (snapshot.exists) {
                 snapshot.forEach(childSnapshot => {

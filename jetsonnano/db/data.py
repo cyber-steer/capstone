@@ -3,7 +3,7 @@ import datetime
 import random
 import pyrebase
 
-value = 4
+value = 1
 
 registered = []
 registered.append({'Jang': {'name': '장성익', 'number': '201813066'}})
@@ -28,7 +28,7 @@ for item in dateList:
     for i in range(8, 21):
         for j in range(0, 50, 10):
             r = random.randint(0, 100)
-            if r < 10:
+            if r < 30:
                 r = random.randint(0, 10)
                 newDate = datetime.datetime(item.year, item.month, item.day, i, j + r, item.second)
                 newList.append(newDate)
@@ -41,9 +41,9 @@ for key, val in data.items():
         dateList.append(item)
 # db.child("club").child(year).child(month).child(day).push(data)
 for date in dateList:
-    year = date.year
-    month = date.month
-    day = date.day
+    year = str(date)[:4]
+    month = str(date)[5:7]
+    day = str(date)[8:10]
 
     data = {}
     r = random.randint(0,3)
@@ -52,5 +52,6 @@ for date in dateList:
         for k, v in val.items():
             data[k] = v
     data['time'] = str(date)
-    # print(data)
+
+    print(data)
     db.child("club").child(year).child(month).child(day).push(data)

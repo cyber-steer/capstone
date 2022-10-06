@@ -331,12 +331,11 @@
         }
         const selectData = async function(year, month, date){
             const dbref = ref(db);
-            const path = "club/"+year+"/"+month+"/"+date+"/"
-
+            const path = "club/"+year+"/"+month+"/"+date+"/";
+            
             let snapshot = await get(child(dbref,path));
             if(snapshot.exists()){
                 snapshot.forEach(key=>{
-                    console.log(key.val().name)
                     let number = key.val().number;
                     let name = key.val().name;
                     let time = key.val().time;
@@ -349,7 +348,7 @@
             }
         }
         function addRow(number, name, time){
-            let tbody = document.getElementById("tbody")
+            let tbody = document.getElementById("tbody");
             let tdList = [];
             let row = document.createElement("tr");
             for(let i=0; i<3;i++){
@@ -375,6 +374,7 @@
         }
 
         const changeDate = (nowDate) => {
+            console.log(nowDate)
             let inputDate = new Date(nowDate);
             
             // 현재의 년도와 월 받아오기
@@ -386,7 +386,6 @@
 
             inputDate.setMonth(date.getMonth());
             inputDate.setDate(date.getDate()+1);
-
             input.valueAsDate = inputDate;
 
             document.querySelector(`.dateTitle`).innerText = `${nowYear}년 ${nowMonth}월 ${nowDay}일`;
@@ -430,6 +429,7 @@
         // 다음달 이동
         document.querySelector(`.nextDay`).onclick = () => {
             date.setDate(date.getDate()+1);
+            console.log(date)
             searchPage(date);
         }
 

@@ -26,38 +26,28 @@
 		const app = initializeApp(firebaseConfig);
 		const db = getDatabase();
 
-
-		
         const test = async function () {
             const dbref = ref(db);
-			
-            let today = new Date();
-            let year = today.getFullYear();
-            let month = today.getMonth() + 1;
-            month = month < 10 ? '0' + month : month;
-            let date = today.getDate();
-
-			console.log(today);
-			console.log(year);
-			console.log(month);
-			console.log(date);
-
-            let snapshot = await get(child(dbref, "club/" + year + "/" + month + "/" + date))
+			let list= []
+            let snapshot = await get(child(dbref, "club/"))
             if (snapshot.exists) {
-                snapshot.forEach(childSnapshot => {
-					console.log(childSnapshot.val().name)
+                snapshot.forEach(year => {
+					year.forEach(month =>{
+						month.forEach(date=>{
+							date.forEach(data=>{
+								if('김건우' == data.val().name){
+									list.push(data.val().time)
+
+								}
+							})
+						})
+					})
                 });
             }
-            return count;
+			return list
         }
-
-
-		test();
-
-
-
-
-
+		let list = await test();
+		console.log(list)
 	</script>
 </body>
 </html>

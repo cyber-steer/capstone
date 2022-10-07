@@ -99,6 +99,7 @@ if __name__ == '__main__':
             # q.put(data_dict[name])
             q.put(name)
 
+
         key = cv2.waitKey(1) & 0xFF
 
         if key == ord("q"):

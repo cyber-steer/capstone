@@ -408,6 +408,37 @@
             return count;
         }
 
+        // const dayTotal = async function () {
+        //     const dbref = ref(db);
+        //     let returns = [];
+        //     let count = 0;
+        //     let today = new Date();
+        //     let year = today.getFullYear();
+        //     let month = today.getMonth() + 1;
+        //     let date = today.getDate()
+        //     let hours = today.getHours()
+        //     month = month < 10 ? '0' + month : month;
+        //     date = date < 10 ? '0' + date : date;
+
+        //     let time_level = []
+        //     for(let i=0;i<=hours;i++){
+        //         let ii = i< 10 ? '0' +i : i;
+        //         let data = {}
+        //         data[ii] = 0
+        //         returns.push(data);
+        //     }
+        //     console.log(returns)
+        //     let snapshot = await get(child(dbref, "club/" + year + "/" + month +'/'+date));
+        //     if (snapshot.exists) {
+        //         snapshot.forEach(childSnapshot => {
+        //             let time = childSnapshot.val().time.substr(11,2);
+        //             console.log(time)
+        //             returns[parseInt(time)][time] = returns[parseInt(time)][time] + 1;
+
+        //         })
+        //     }
+        //     return returns;
+        // }
         const dayTotal = async function () {
             const dbref = ref(db);
             let returns = [];
@@ -427,20 +458,20 @@
                 data[ii] = 0
                 returns.push(data);
             }
-            console.log(year)
-            console.log(month)
-            console.log(date)
+            console.log(returns)
             let snapshot = await get(child(dbref, "club/" + year + "/" + month +'/'+date));
             if (snapshot.exists) {
                 snapshot.forEach(childSnapshot => {
                     let time = childSnapshot.val().time.substr(11,2);
                     console.log(childSnapshot.val().time)
+                    console.log(time)
                     returns[parseInt(time)][time] = returns[parseInt(time)][time] + 1;
 
                 })
             }
             return returns;
         }
+
 
         const dayPerson = async function () {
             const dbref = ref(db);

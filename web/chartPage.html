@@ -993,10 +993,8 @@
         });
         //========================================================================================================================================
         let weekAllData = await weekChartAll(number);
-        let minData = weekAllData[0];
         let maxData = weekAllData[0];
         weekAllData.forEach(data =>{
-            minData = minData > data ? data : minData;
             maxData = maxData < data ? data : maxData;
         })
         // Set new default font family and font color to mimic Bootstrap's default styling

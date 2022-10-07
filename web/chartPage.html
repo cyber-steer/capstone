@@ -256,7 +256,7 @@
             <!-- Area Chart -->
             <div class="card shadow mb-4" style="margin: 0 1.5rem;">
                 <div class="card-header py-3">
-                    <h6 class="m-0 font-weight-bold text-primary" style="display:inline-block">전체 요일별 출입 통계</h6>
+                    <h6 class="m-0 font-weight-bold text-primary" style="display:inline-block">최근 6개월동안 월별 통계</h6>
                 </div>
                 <div class="card-body" style="height: 360px;">
                     <div class="chart-area">
@@ -269,7 +269,7 @@
             <!-- Bar Chart -->
             <div class="card shadow mb-2" style="margin: 0 1.5rem;">
                 <div class="card-header py-2">
-                    <h6 class="m-0 font-weight-bold text-primary">월별 출입현황</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">전체 요일별 출입 통계</h6>
                 </div>
                 <div class="card-body">
                     <div class="chart-bar">
@@ -281,37 +281,49 @@
             <!-- Project Card Example -->
             <div class="card shadow mb-2" style="margin: 1rem 1.5rem;">
                 <div class="card-header py-2">
-                    <h6 class="m-0 font-weight-bold text-primary">Projects</h6>
+                    <h6 class="m-0 font-weight-bold text-primary">최근 한달동안 요일별 출석률</h6>
                 </div>
                 <div class="card-body">
-                    <h4 class="small font-weight-bold">Server Migration <span
-                            class="float-right">20%</span></h4>
+                    <h4 class="small font-weight-bold">일요일 <span
+                            class="float-right" id="sunTitle">20%</span></h4>
                     <div class="progress mb-4">
-                        <div class="progress-bar bg-danger" role="progressbar" style="width: 20%"
+                        <div id="sunday" class="progress-bar" role="progressbar" style="width: 20%"
                             aria-valuenow="20" aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
-                    <h4 class="small font-weight-bold">Sales Tracking <span
-                            class="float-right">40%</span></h4>
+                    <h4 class="small font-weight-bold">월요일 <span
+                            class="float-right" id="monTitle">40%</span></h4>
                     <div class="progress mb-4">
-                        <div class="progress-bar bg-warning" role="progressbar" style="width: 40%"
+                        <div id="monday" class="progress-bar" role="progressbar" style="width: 40%"
                             aria-valuenow="40" aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
-                    <h4 class="small font-weight-bold">Customer Database <span
-                            class="float-right">60%</span></h4>
+                    <h4 class="small font-weight-bold">화요일 <span
+                            class="float-right" id="tueTitle">60%</span></h4>
                     <div class="progress mb-4">
-                        <div class="progress-bar" role="progressbar" style="width: 60%"
+                        <div id="tuesday" class="progress-bar" role="progressbar" style="width: 60%"
                             aria-valuenow="60" aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
-                    <h4 class="small font-weight-bold">Payout Details <span
-                            class="float-right">80%</span></h4>
+                    <h4 class="small font-weight-bold">수요일 <span
+                            class="float-right" id="wedTitle">80%</span></h4>
                     <div class="progress mb-4">
-                        <div class="progress-bar bg-info" role="progressbar" style="width: 80%"
+                        <div id="wednesday" class="progress-bar" role="progressbar" style="width: 80%"
                             aria-valuenow="80" aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
-                    <h4 class="small font-weight-bold">Account Setup <span
-                            class="float-right">Complete!</span></h4>
+                    <h4 class="small font-weight-bold">목요일 <span
+                            class="float-right" id="thuTitle">Complete!</span></h4>
+                    <div class="progress mb-4">
+                        <div id="thursday" class="progress-bar" role="progressbar" style="width: 100%"
+                            aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <h4 class="small font-weight-bold">금요일 <span
+                            class="float-right" id="friTitle">Complete!</span></h4>
+                    <div class="progress mb-4">
+                        <div id="friday" class="progress-bar" role="progressbar" style="width: 100%"
+                            aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+                    <h4 class="small font-weight-bold">토요일 <span
+                            class="float-right" id="satTitle">Complete!</span></h4>
                     <div class="progress">
-                        <div class="progress-bar bg-success" role="progressbar" style="width: 100%"
+                        <div id="saturday" class="progress-bar" role="progressbar" style="width: 100%"
                             aria-valuenow="100" aria-valuemin="0" aria-valuemax="100"></div>
                     </div>
                 </div>
@@ -398,9 +410,7 @@
     <script src="vendor/chart.js/Chart.min.js"></script>
 
     <!-- Page level custom scripts -->
-    <script src="js/demo/chart-bar-demo.js"></script>
     <script type="module">
-        
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.9.1/firebase-app.js';
         import { getDatabase, ref, child, get, onValue } from 'https://www.gstatic.com/firebasejs/9.9.1/firebase-database.js';
 
@@ -517,11 +527,44 @@
                         })
                     })
                 });
-            }
-            console.log(week)
+            }   
             return week;
         }
 
+        const weekAttendance = async function (number) {
+            const dbref = ref(db);
+            let monthData = await attendance(number);
+            let attendanceData = [0,0,0,0,0,0,0];
+            let attendanceDate = [0,0,0,0,0,0,0];
+
+            let monthDictKey = Object.keys(monthData);
+            let monthDictVal = [];
+            for(let i=0; i<monthDictKey.length; i++){
+                let data = monthData[monthDictKey[i]];
+                data = data >0 ? 1:0
+                monthDictVal.push(data);
+            }
+            for(let i=0; i<monthDictKey.length; i++){
+                let date = new Date(monthDictKey[i]);
+                let index = date.getDay();
+                attendanceData[index] += monthDictVal[i];
+                attendanceDate[index] += 1;
+            }
+
+            let temp = attendanceData.shift();
+            attendanceData.push(temp)
+            temp = attendanceDate.shift();
+            attendanceDate.push(temp)
+
+            let arr = [];
+            for(let i=0;i<attendanceData.length;i++){
+                let temp = (attendanceData[i] / attendanceDate[i])*100;
+                arr.push(Math.round(temp * 10) / 10);
+            }
+            console.log(arr)
+            weekGraph(arr);
+        }
+        
         
         const monthCount = async function (number) {
             const dbref = ref(db);
@@ -532,32 +575,84 @@
                 date.setMonth(date.getMonth()-i);
                 date.setHours(date.getHours()+9);
                 date = date.toISOString()+"";
-                monthValue.push(date.substr(0,10));
+                monthValue.push(date.substr(0,7));
             }
-            console.log()
-            let week = {}  
-            for(let i=0; i<weekValue.length;i++){
-                week[weekValue[i]] = 0;
+            let monthVal = {}  
+            for(let i=0; i<monthValue.length;i++){
+                monthVal[monthValue[i]] = 0;
             }
             let snapshot = await get(child(dbref, "club/"))
             if (snapshot.exists) {
                 snapshot.forEach(childSnapshot => {
                     childSnapshot.forEach(month =>{
-                        month.forEach(day => {
-                            day.forEach(data => {
-                                let date = `${childSnapshot.key}-${month.key}-${day.key}`; 
-                                if(date in week){
+                        let date = `${childSnapshot.key}-${month.key}`; 
+                        if(date in monthVal){
+                            month.forEach(day => {
+                                day.forEach(data => {
                                     if(data.val().number == number){
-                                        week[date] = week[date] + 1;
+                                        monthVal[date] = monthVal[date] + 1;
                                     }
-                                }
+                                })
                             })
-                        })
+                        }
                     })
                 });
             }
-            console.log(week)
-            return week;
+            return monthVal;
+        }
+
+        const weekGraph = async function (arr) {
+            let divTitle = [];
+            let div = [];
+            divTitle.push(document.getElementById("sunTitle"));
+            divTitle.push(document.getElementById("monTitle"));
+            divTitle.push(document.getElementById("tueTitle"));
+            divTitle.push(document.getElementById("wedTitle"));
+            divTitle.push(document.getElementById("thuTitle"));
+            divTitle.push(document.getElementById("friTitle"));
+            divTitle.push(document.getElementById("satTitle"));
+            div.push(document.getElementById("sunday"));
+            div.push(document.getElementById("monday"));
+            div.push(document.getElementById("tuesday"));
+            div.push(document.getElementById("wednesday"));
+            div.push(document.getElementById("thursday"));
+            div.push(document.getElementById("friday"));
+            div.push(document.getElementById("saturday"));
+            
+            for(let i=0;i<arr.length;i++){
+                divTitle[i].innerHTML = arr[i]+"%";
+                div[i].style.width = arr[i]+"%";
+                if(arr[i] >= 90){
+                    div[i].style.backgroundColor = "#66FF66";
+                }
+                else if(arr[i] >= 80){
+                    div[i].style.backgroundColor = "#99FF99";
+                }
+                else if(arr[i] >= 70){
+                    div[i].style.backgroundColor = "#CCFFCC";
+                }
+                else if(arr[i] >= 60){
+                    div[i].style.backgroundColor = "#FFFFCC";
+                }
+                else if(arr[i] >= 50){
+                    div[i].style.backgroundColor = "#FFFF99";
+                }
+                else if(arr[i] >= 40){
+                    div[i].style.backgroundColor = "#FFFF66";
+                }
+                else if(arr[i] >= 30){
+                    div[i].style.backgroundColor = "#FFFF33";
+                }
+                else if(arr[i] >= 20){
+                    div[i].style.backgroundColor = "#FF6666";
+                }
+                else if(arr[i] >= 10){
+                    div[i].style.backgroundColor = "#FF3333";
+                }
+                else{
+                    div[i].style.backgroundColor = "#FF0000";
+                }
+            }
         }
 
         const addRow = async function (number, name, time) {
@@ -601,9 +696,16 @@
         let number = getParameterByName("number");
         
         await selectRow(number);
-        
+        await weekAttendance(number);
         $('#dataTable').DataTable();
         //========================================================================================================================================
+        let monthDict = await monthCount(number);
+        let monthDictKey = Object.keys(monthDict);
+        let monthDictVal = [];
+        for(let i=0; i<monthDictKey.length; i++){
+            monthDictVal.push(monthDict[monthDictKey[i]]);
+        }
+
         // Set new default font family and font color to mimic Bootstrap's default styling
         Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
         Chart.defaults.global.defaultFontColor = '#858796';
@@ -639,7 +741,7 @@
         var myLineChart = new Chart(ctx, {
         type: 'line',
         data: {
-            labels: ["일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일"],
+            labels: monthDictKey,
             datasets: [{
             label: "횟수",
             lineTension: 0.3,
@@ -653,7 +755,7 @@
             pointHoverBorderColor: "rgba(78, 115, 223, 1)",
             pointHitRadius: 10,
             pointBorderWidth: 2,
-            data: await weekChartAll(number),
+            data: monthDictVal,
             }],
         },
         options: {
@@ -845,7 +947,6 @@
             attendanceData[i] = attendanceData[i] / (attendanceKey.length) * 100;            
             attendanceData[i] = Math.round(attendanceData[i] * 10) / 10;
         }
-        console.log(attendanceData)
 
 
         // Set new default font family and font color to mimic Bootstrap's default styling
@@ -890,6 +991,101 @@
                 cutoutPercentage: 80,
             },
         });
+        //========================================================================================================================================
+        let weekAllData = await weekChartAll(number);
+        let minData = weekAllData[0];
+        let maxData = weekAllData[0];
+        weekAllData.forEach(data =>{
+            minData = minData > data ? data : minData;
+            maxData = maxData < data ? data : maxData;
+        })
+        // Set new default font family and font color to mimic Bootstrap's default styling
+        Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
+        Chart.defaults.global.defaultFontColor = '#858796';
+
+        // Bar Chart Example
+        var ctx = document.getElementById("myBarChart");
+        var myBarChart = new Chart(ctx, {
+        type: 'bar',
+        data: {
+            labels: ["일요일", "월요일", "화요일", "수요일", "목요일", "금요일", "토요일"],
+            datasets: [{
+            label: "출입 인원 수",
+            backgroundColor: "#4e73df",
+            hoverBackgroundColor: "#2e59d9",
+            borderColor: "#4e73df",
+            data: weekAllData,
+            }],
+        },
+        options: {
+            maintainAspectRatio: false,
+            layout: {
+            padding: {
+                left: 10,
+                right: 25,
+                top: 25,
+                bottom: 0
+            }
+            },
+            scales: {
+            xAxes: [{
+                time: {
+                unit: 'month'
+                },
+                gridLines: {
+                display: false,
+                drawBorder: false
+                },
+                ticks: {
+                maxTicksLimit: 6
+                },
+                maxBarThickness: 25,
+            }],
+            yAxes: [{
+                ticks: {
+                min: 0,
+                max: maxData,
+                maxTicksLimit: 5,
+                padding: 10,
+                // Include a dollar sign in the ticks
+                callback: function(value, index, values) {
+                    return '$' + number_format(value);
+                }
+                },
+                gridLines: {
+                color: "rgb(234, 236, 244)",
+                zeroLineColor: "rgb(234, 236, 244)",
+                drawBorder: false,
+                borderDash: [2],
+                zeroLineBorderDash: [2]
+                }
+            }],
+            },
+            legend: {
+            display: false
+            },
+            tooltips: {
+            titleMarginBottom: 10,
+            titleFontColor: '#6e707e',
+            titleFontSize: 14,
+            backgroundColor: "rgb(255,255,255)",
+            bodyFontColor: "#858796",
+            borderColor: '#dddfeb',
+            borderWidth: 1,
+            xPadding: 15,
+            yPadding: 15,
+            displayColors: false,
+            caretPadding: 10,
+            callbacks: {
+                label: function(tooltipItem, chart) {
+                var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
+                return datasetLabel + ': $' + number_format(tooltipItem.yLabel);
+                }
+            }
+            },
+        }
+        });
+
     </script>
     <script>
         let now = new Date()

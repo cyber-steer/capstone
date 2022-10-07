@@ -26,27 +26,44 @@
 		const app = initializeApp(firebaseConfig);
 		const db = getDatabase();
 
-        const test = async function () {
+        const test = async function (number) {
             const dbref = ref(db);
-			let list= []
+            let monthValue = [];
+
+            for(let i =5; i>=0; i--){
+                let date = new Date()
+                date.setMonth(date.getMonth()-i);
+                date.setHours(date.getHours()+9);
+                date = date.toISOString()+"";
+                monthValue.push(date.substr(0,7));
+            }
+
+            let week = {}
+            for(let i=0; i<monthValue.length;i++){
+                week[monthValue[i]] = 0;
+            }
+			console.log(week)
             let snapshot = await get(child(dbref, "club/"))
             if (snapshot.exists) {
-                snapshot.forEach(year => {
-					year.forEach(month =>{
-						month.forEach(date=>{
-							date.forEach(data=>{
-								if('김건우' == data.val().name){
-									list.push(data.val().time)
-
-								}
-							})
-						})
-					})
+                snapshot.forEach(childSnapshot => {
+                    childSnapshot.forEach(month =>{
+                        month.forEach(day => {
+                            day.forEach(data => {
+                                let date = `${childSnapshot.key}-${month.key}`; 
+                                if(date in week){
+									console.log(date)
+                                    if(data.val().number == number){
+                                        week[date] = week[date] + 1;
+                                    }
+                                }
+                            })
+                        })
+                    })
                 });
-            }
-			return list
+            }   
+            return week;
         }
-		let list = await test();
+		let list = await test("201813066");
 		console.log(list)
 	</script>
 </body>

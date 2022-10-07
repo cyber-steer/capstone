@@ -213,18 +213,6 @@
                                 </div>
                             </div>
 
-                            <!-- Bar Chart -->
-                            <div class="card shadow mb-4" style="width: 1652px;">
-                                <div class="card-header py-3">
-                                    <h6 class="m-0 font-weight-bold text-primary">월별 출입현황</h6>
-                                </div>
-                                <div class="card-body">
-                                    <div class="chart-bar">
-                                        <canvas id="myBarChart"></canvas>
-                                    </div>
-                                    <hr>
-                                </div>
-                            </div>
 
                         </div>
 
@@ -256,10 +244,23 @@
                             </div>
                         </div>
                     </div>
+                    
 
                 </div>
                 <!-- /.container-fluid -->
 
+                    <!-- Bar Chart -->
+                    <div class="card shadow mb-4" style="margin: 0 1.5rem;">
+                        <div class="card-header py-3">
+                            <h6 class="m-0 font-weight-bold text-primary">월별 출입현황</h6>
+                        </div>
+                        <div class="card-body">
+                            <div class="chart-bar">
+                                <canvas id="myBarChart"></canvas>
+                            </div>
+                            <hr>
+                        </div>
+                    </div>
             </div>
             <!-- End of Main Content -->
 
@@ -354,10 +355,298 @@
     <script src="vendor/chart.js/Chart.min.js"></script>
 
     <!-- Page level custom scripts -->
-    <script src="js/demo/chart-area-demo.js"></script>
-    <script src="js/demo/chart-pie-demo.js"></script>
     <script src="js/demo/chart-bar-demo.js"></script>
-    
+    <script type="module">
+		// 기본 설정
+		import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.9.1/firebase-app.js';
+		import { getDatabase, ref, get, set, child, update, remove} from 'https://www.gstatic.com/firebasejs/9.9.1/firebase-database.js';
+		
+		const firebaseConfig = {
+			apiKey: "AIzaSyBETK45cbP1g2ZYC03ras5UYys5fXAqV_4",
+			authDomain: "fir-course-edb8c.firebaseapp.com",
+			databaseURL: "https://fir-course-edb8c-default-rtdb.firebaseio.com",
+			projectId: "fir-course-edb8c",
+			storageBucket: "fir-course-edb8c.appspot.com",
+			messagingSenderId: "760960563313",
+			appId: "1:760960563313:web:eb3b145202888f8a3c83d0",
+			measurementId: "G-336MJ5MK72"
+		};
+		
+		const app = initializeApp(firebaseConfig);
+		const db = getDatabase();
+
+        const weekChart = async function () {
+            const dbref = ref(db);
+            let weekValue = [];
+
+            for(let i =6; i>=0; i--){
+                let date = new Date()
+                date.setDate(date.getDate()-i);
+                date.setHours(date.getHours()+9);
+                date = date.toISOString()+"";
+                weekValue.push(date.substr(0,10));
+            }
+
+            let week = {}
+            for(let i=0; i<weekValue.length;i++){
+                week[weekValue[i]] = 0;
+            }
+            let snapshot = await get(child(dbref, "club/"))
+            if (snapshot.exists) {
+                snapshot.forEach(childSnapshot => {
+                    childSnapshot.forEach(month =>{
+                        month.forEach(day => {
+                            day.forEach(data => {
+                                let date = `${childSnapshot.key}-${month.key}-${day.key}`; 
+                                if(date in week){
+                                    week[date] = week[date] + 1;
+                                }
+                            })
+                        })
+                    })
+                });
+            }
+            return week;
+        }
+        
+        const registeredGetgrade = async function () {
+            const dbref = ref(db);
+            let registered = {}
+
+            let snapshot = await get(child(dbref, "registered/"))
+            if (snapshot.exists) {
+                snapshot.forEach(childSnapshot => {
+                    registered[childSnapshot.key] = childSnapshot.val()
+                });
+            }
+            return registered
+        }
+        const gradeGraph = async function (registered) {
+            const dbref = ref(db);
+            let weekValue = [];
+
+            let grade = {}
+            
+            let gradeDictKey = Object.keys(registered);
+            let gradeDictVal = [];
+            for(let i=0; i<gradeDictKey.length; i++){
+                gradeDictVal.push(registered[gradeDictKey[i]]);
+                grade[gradeDictKey[i]] = gradeDictVal[i]['grade'];
+            }
+            gradeDictKey  = Object.keys(grade);
+            gradeDictVal = [];
+            for(let i=0; i<gradeDictKey.length; i++){
+                gradeDictVal.push(grade[gradeDictKey[i]]);
+            }
+
+            for(let i =6; i>=0; i--){
+                let date = new Date()
+                date.setDate(date.getDate()-i);
+                date.setHours(date.getHours()+9);
+                date = date.toISOString()+"";
+                weekValue.push(date.substr(0,10));
+            }
+
+            let week = {}
+            for(let i=0; i<weekValue.length;i++){
+                week[weekValue[i]] = 0;
+            }
+            let weekData = {}
+            for(let i=0; i<gradeDictVal.length;i++){
+                weekData[gradeDictVal[i]] = 0;
+            }
+            let snapshot = await get(child(dbref, "club/"))
+            if (snapshot.exists) {
+                snapshot.forEach(year => {
+                    year.forEach(month => {
+                        month.forEach(day => {
+                            day.forEach(data => {
+                                let date = `${year.key}-${month.key}-${day.key}`; 
+                                let number = data.val().number;
+                                if(date in week){
+                                    weekData[grade[number]] += 1;
+                                }
+                            })
+                        })
+                    })
+                });
+            }
+            return weekData;
+        }
+        //========================================================================================================================================
+        let registered  = await registeredGetgrade();
+        //========================================================================================================================================
+        let weekDict = await weekChart();
+        let weekDictKey = Object.keys(weekDict);
+        let weekDictVal = [];
+        for(let i=0; i<weekDictKey.length; i++){
+            weekDictVal.push(weekDict[weekDictKey[i]]);
+        }
+        // Set new default font family and font color to mimic Bootstrap's default styling
+        Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
+        Chart.defaults.global.defaultFontColor = '#858796';
+
+        function number_format(number, decimals, dec_point, thousands_sep) {
+        // *     example: number_format(1234.56, 2, ',', ' ');
+        // *     return: '1 234,56'
+        number = (number + '').replace(',', '').replace(' ', '');
+        var n = !isFinite(+number) ? 0 : +number,
+            prec = !isFinite(+decimals) ? 0 : Math.abs(decimals),
+            sep = (typeof thousands_sep === 'undefined') ? ',' : thousands_sep,
+            dec = (typeof dec_point === 'undefined') ? '.' : dec_point,
+            s = '',
+            toFixedFix = function(n, prec) {
+            var k = Math.pow(10, prec);
+            return '' + Math.round(n * k) / k;
+            };
+        // Fix for IE parseFloat(0.55).toFixed(0) = 0;
+        s = (prec ? toFixedFix(n, prec) : '' + Math.round(n)).split('.');
+        if (s[0].length > 3) {
+            s[0] = s[0].replace(/\B(?=(?:\d{3})+(?!\d))/g, sep);
+        }
+        if ((s[1] || '').length < prec) {
+            s[1] = s[1] || '';
+            s[1] += new Array(prec - s[1].length + 1).join('0');
+        }
+        return s.join(dec);
+        }
+
+        // Area Chart Example
+
+        var ctx = document.getElementById("myAreaChart");
+        var myLineChart = new Chart(ctx, {
+        type: 'line',
+        data: {
+            labels: weekDictKey,
+            datasets: [{
+            label: "Earnings",
+            lineTension: 0.3,
+            backgroundColor: "rgba(78, 115, 223, 0.05)",
+            borderColor: "rgba(78, 115, 223, 1)",
+            pointRadius: 3,
+            pointBackgroundColor: "rgba(78, 115, 223, 1)",
+            pointBorderColor: "rgba(78, 115, 223, 1)",
+            pointHoverRadius: 3,
+            pointHoverBackgroundColor: "rgba(78, 115, 223, 1)",
+            pointHoverBorderColor: "rgba(78, 115, 223, 1)",
+            pointHitRadius: 10,
+            pointBorderWidth: 2,
+            data: weekDictVal,
+            }],
+        },
+        options: {
+            maintainAspectRatio: false,
+            layout: {
+            padding: {
+                left: 10,
+                right: 25,
+                top: 25,
+                bottom: 0
+            }
+            },
+            scales: {
+            xAxes: [{
+                time: {
+                unit: 'date'
+                },
+                gridLines: {
+                display: false,
+                drawBorder: false
+                },
+                ticks: {
+                maxTicksLimit: 7
+                }
+            }],
+            yAxes: [{
+                ticks: {
+                maxTicksLimit: 5,
+                padding: 10,
+                // Include a dollar sign in the ticks
+                callback: function(value, index, values) {
+                    return '명' + number_format(value);
+                }
+                },
+                gridLines: {
+                color: "rgb(234, 236, 244)",
+                zeroLineColor: "rgb(234, 236, 244)",
+                drawBorder: false,
+                borderDash: [2],
+                zeroLineBorderDash: [2]
+                }
+            }],
+            },
+            legend: {
+            display: false
+            },
+            tooltips: {
+            backgroundColor: "rgb(255,255,255)",
+            bodyFontColor: "#858796",
+            titleMarginBottom: 10,
+            titleFontColor: '#6e707e',
+            titleFontSize: 14,
+            borderColor: '#dddfeb',
+            borderWidth: 1,
+            xPadding: 15,
+            yPadding: 15,
+            displayColors: false,
+            intersect: false,
+            mode: 'index',
+            caretPadding: 10,
+            callbacks: {
+                label: function(tooltipItem, chart) {
+                var datasetLabel = chart.datasets[tooltipItem.datasetIndex].label || '';
+                return datasetLabel + ': $' + number_format(tooltipItem.yLabel);
+                }
+            }
+            }
+        }
+        });
+        //========================================================================================================================================
+        let gradeData = await gradeGraph(registered);
+        
+        let gradeDictKey = Object.keys(gradeData);
+        let gradeDictVal = [];
+        for(let i=0; i<gradeDictKey.length; i++){
+            gradeDictVal.push(gradeData[gradeDictKey[i]]);
+            gradeDictKey[i] +=" 학년";
+        }
+        // Set new default font family and font color to mimic Bootstrap's default styling
+        Chart.defaults.global.defaultFontFamily = 'Nunito', '-apple-system,system-ui,BlinkMacSystemFont,"Segoe UI",Roboto,"Helvetica Neue",Arial,sans-serif';
+        Chart.defaults.global.defaultFontColor = '#858796';
+
+        // Pie Chart Example
+        var ctx = document.getElementById("myPieChart");
+        var myPieChart = new Chart(ctx, {
+        type: 'doughnut',
+        data: {
+            labels: gradeDictKey,
+            datasets: [{
+            data: gradeDictVal,
+            backgroundColor: ['#4e73df', '#1cc88a', '#36b9cc'],
+            hoverBackgroundColor: ['#2e59d9', '#17a673', '#2c9faf'],
+            hoverBorderColor: "rgba(234, 236, 244, 1)",
+            }],
+        },
+        options: {
+            maintainAspectRatio: false,
+            tooltips: {
+            backgroundColor: "rgb(255,255,255)",
+            bodyFontColor: "#858796",
+            borderColor: '#dddfeb',
+            borderWidth: 1,
+            xPadding: 15,
+            yPadding: 15,
+            displayColors: false,
+            caretPadding: 10,
+            },
+            legend: {
+            display: false
+            },
+            cutoutPercentage: 80,
+        },
+        });
+
+	</script>
     <script>
         let now = new Date()
         let nowYear = now.getFullYear()

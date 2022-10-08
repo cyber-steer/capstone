@@ -571,3 +571,35 @@ button:hover{
     cursor: pointer;
     box-shadow: 0 2px 4px rgba(0,79,255,0.6);
 }
+
+.red {
+    color : #be0000;
+  }
+  
+  .orange {
+    color : #e2703a;
+  }
+  
+  .yellow {
+    color : #f7ea00;
+  }
+  
+  .green {
+    color : #3a6351;
+  }
+  
+  .blue {
+    color : #046582;
+  }
+  
+  .puple {
+    color : purple;
+  }
+  
+  .gray {
+    color : gray;
+  }
+
+  .aqua {
+    color : aqua;
+  }

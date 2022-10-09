@@ -28,7 +28,7 @@ for item in dateList:
     for i in range(8, 21):
         for j in range(0, 50, 10):
             r = random.randint(0, 100)
-            if r < 5:
+            if r < 1:
                 r = random.randint(0, 10)
                 newDate = datetime.datetime(item.year, item.month, item.day, i, j + r, item.second)
                 newList.append(newDate)

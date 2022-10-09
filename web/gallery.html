@@ -380,6 +380,10 @@
             searchPage(newDate)
         }
         //-----------------------------------------------------------------
+        function updateBox(number, count){
+            let countBox = document.getElementById(number);
+            countBox.innerHTML = count +"회";
+        }
         function createBox(data){
             // let data = {
             //     "imgUrl":"https://dummyimage.com/450x300/dee2e6/6c757d.jpg",
@@ -399,12 +403,12 @@
             let textBox = document.createElement("div");
             let h5 = document.createElement("h5");
             let p = document.createElement("p");
-            let dateStr = data.date;
 
             boderBox.className = "col mb-5";
             mainBox.className = "card h-100";
             img.className = "card-img-top";
             countBox.className = "badge bg-dark text-white position-absolute";
+            countBox.id = data.number;
             bottomBox.className = "card-body p-4";
             textBox.className = "text-center";
             h5.className = "fw-bolder";
@@ -413,13 +417,13 @@
             img.src = data.imgUrl;
             countBox.style.top = "0.5rem";
             countBox.style.right = "0.5rem";
-            countBox.innerHTML = data.count;
-            h5.innerHTML = data.number;
-            p.innerHTML = data.date;
+            countBox.innerHTML = data.count +"회";
+            h5.innerHTML = data.name;
+            p.innerHTML = data.number;
 
             textBox.appendChild(h5);
             textBox.appendChild(p);
-            textBox.innerHTML += dateStr;
+            textBox.innerHTML += data.date;
             
             mainBox.appendChild(img);
             mainBox.appendChild(img);
@@ -452,16 +456,16 @@
             let nowDate = date.slice(10,12);
             let registered = {};
             let access = {};
-            console.log(nowYear)
-            console.log(nowMonth)
-            console.log(nowDate)
-            console.log("===================")
             
             const dbRef  = query(ref(db, "/"), orderByChild("registered"));
             onValue(dbRef, (snapshot)=>{
+                let contentBox = document.getElementById("contentBox");
+                contentBox.innerHTML = "";
+                registered = {};
+                access = {};
+
                 snapshot.forEach(categori=>{
                     if(categori.key == "registered"){
-                        console.log(categori.key);
                         categori.forEach(number => {
                             let data = {}
                             data.categori = number.val().categori;
@@ -476,10 +480,8 @@
                     }
 
                 })
-                console.log(registered)
                 snapshot.forEach(categori=>{
                     if(categori.key == "club"){
-                    console.log(categori.key);
                         categori.forEach(year=>{
                             if(year.key == nowYear){
                                 year.forEach(month=>{
@@ -487,11 +489,14 @@
                                         month.forEach(date => {
                                             if(date.key == nowDate){
                                                 date.forEach(data => {
-                                                    if(data.val().number in access){
+                                                    let number = data.val().number
+                                                    if(number in access){
+                                                        access[number]++;
+                                                        console.log(access)
+                                                        updateBox(number, access[number]);
 
                                                     }
                                                     else{
-                                                        let number = data.val().number
                                                         let accessData = {};
 
                                                         accessData["imgUrl"] = registered[number].imgUrl;
@@ -500,6 +505,7 @@
                                                         accessData.number = number;
                                                         accessData.date = data.val().time;
                                                         access[number] = 1;
+
                                                         createBox(accessData);
                                                     }
                                                 })
@@ -511,8 +517,6 @@
                         })
                     }
                 })
-                
-                console.log(access)
             })
 
         }

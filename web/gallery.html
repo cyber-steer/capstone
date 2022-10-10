@@ -326,14 +326,13 @@
             let now;
             if(search_date ==""){
                 now = new Date();
+                search_date = now.getFullYear()+"-"+(now.getMonth()+1)+"-"+now.getDate();
             }
-            else{
-                let year = search_date.split('-')[0];
-                let month = search_date.split('-')[1];
-                let day = search_date.split('-')[2];
-                now = new Date(year, month - 1, day)
+            let year = search_date.split('-')[0];
+            let month = search_date.split('-')[1];
+            let day = search_date.split('-')[2];
+            now = new Date(year, month - 1, day)
 
-            }
             let inputDate = new Date(now);
             inputDate.setDate(inputDate.getDate()+1);
             let nowYear = now.getFullYear()
@@ -492,7 +491,6 @@
                                                     let number = data.val().number
                                                     if(number in access){
                                                         access[number]++;
-                                                        console.log(access)
                                                         updateBox(number, access[number]);
 
                                                     }

@@ -1,6 +1,11 @@
-import telegram
-chat_token = "5781093194:AAGj5G9KNiMR2qxoZHK7oY5N_RyMfH-TuKc"
-chat = telegram.Bot(token=chat_token)
-bot = telegram.Bot(chat_token)
-text = '등록되지 않은 사람이 인식되었습니다.'
-bot.sendMessage(chat_id = "5600518771", text=text)
+import time
+import Jetson.GPIO as GPIO
+output_pin = 18  # BCM pin 18, BOARD pin 12
+
+GPIO.setmode(GPIO.BCM)
+GPIO.setup(output_pin, GPIO.OUT, initial=GPIO.HIGH)
+try:
+    time.sleep(2)
+    GPIO.output(output_pin, GPIO.LOW)
+finally:
+    GPIO.cleanup()

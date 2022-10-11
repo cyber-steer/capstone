@@ -33,8 +33,9 @@ class Thread_Queue:
             self.doorlock_queue.put(keyword)
 
     def put_img(self, name, frame):
-        if time.time() - self.unKnown > self.delay:
+        # if time.time() - self.unKnown > self.delay:
+        if self.capture_queue.empty():
             data = { name : frame}
             self.capture_queue.put(data)
-            self.storage_queue.put(name)
-            self.telegram_queue.put(name)
+            # self.telegram_queue.put(name)
+            # self.storage_queue.put(name)

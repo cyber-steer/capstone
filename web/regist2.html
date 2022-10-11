@@ -383,7 +383,7 @@
         //----------------------------------------------------------
         let categori = document.getElementById("categori");
         let status = document.getElementById("status");
-        // let grade = document.getElementById('grade');
+        let grade = document.getElementById('grade');
         let number = document.getElementById("number");
         let tel = document.getElementById("tel");
         let name = document.getElementById("name");
@@ -401,6 +401,7 @@
                 return true
             }
             else if(grade.value){
+                console.log(grade.value)
                 return false
             }
             else if(number.value == ''){
@@ -463,6 +464,7 @@
             set(ref(realdb, "registered/"+number.value),{
                 categori: categori.value,
                 status: status.value,
+                grade: grade.value,
                 tel: tel.value,
                 name: name.value,
                 engname: engname.value,

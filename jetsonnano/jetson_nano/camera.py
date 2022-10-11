@@ -1,4 +1,5 @@
 import datetime
+import time
 import sys
 import threading
 import cv2
@@ -44,6 +45,7 @@ class Camera():
     def getData(self, update=False):
         name = ""
         success, frame = self.cap.read()
+        frame = cv2.flip(frame, 1)
         img = cv2.resize(frame, (0,0), None, 0.25,0.25)  # 인식 부분에만 크기를 1/4로 조정. (초당 프레임 향상 효과)
         if update:
             self.update_drow(frame)
@@ -126,15 +128,31 @@ class Camera():
             patch_event.clear()
 
     # 이미지 캡쳐하기
-    def imgCaptture(self, q, send, receive):
+    def imgCaptture(self, q, capture_to_storage, capture_to_telegram, storage_to_capture,telegram_to_capture):
         while True:
-            if receive.is_set():
+            if storage_to_capture.is_set() and telegram_to_capture.is_set() :
                 data = q.get()
+                print()
+                print("캡쳐 시작")
                 cv2.imwrite('Unknown.jpg', data['Unknown'])
-                send.setAll()
-                receive.clearAll()
+                print("캡쳐 끝")
+                capture_to_storage.set()
+                capture_to_telegram.set()
+
+                storage_to_capture.clear()
+                telegram_to_capture.clear()
+                time.sleep(10)
                 while not q.empty():
                     q.get()
+    # def imgCaptture(self, q, send, receive):
+    #     while True:
+    #         if receive.is_set():
+    #             data = q.get()
+    #             cv2.imwrite('Unknown.jpg', data['Unknown'])
+    #             send.setAll()
+    #             receive.clearAll()
+    #             while not q.empty():
+    #                 q.get()
 
 if __name__ == '__main__':
     camera = Camera('../registered')

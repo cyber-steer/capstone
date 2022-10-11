@@ -527,6 +527,14 @@
         window.onload = selectData;
 
     </script>
+    <script>
+        let now = new Date()
+        let nowYear = now.getFullYear()
+        let nowMonth = now.getMonth() + 1
+        let nowDate = now.getDate()
+        let record = document.getElementById("record");
+        record.href = "record.html?search_date=" + nowYear + "-" + nowMonth + "-" + nowDate
+    </script>
 </body>
 
 </html>

@@ -76,7 +76,7 @@
                         <h6 class="collapse-header">Custom Components:</h6>
                         <a class="collapse-item" href="profile.html">회원정보</a>
                         <a class="collapse-item" href="charts.html">출입통계</a>
-                        <a class="collapse-item" id="record">출입기록</a>
+                        <a class="collapse-item" href="record.html">출입기록</a>
                         <a class="collapse-item" href="gallery.html">인증기록</a>
                     </div>
                 </div>
@@ -225,8 +225,7 @@
                                 <table class="table table-bordered" width="100%" cellspacing="0">
                                     <thead>
                                         <tr>
-                                            <td align="center"><b>학번</td>
-                                            <td align=center><b>이름</td>
+                                            <td align="center"><b>사진</td>
                                             <td align=center><b>출입일시</td>
                                         </tr>
                                     </thead>
@@ -295,7 +294,7 @@
 
     <script type="module">
         import { initializeApp } from 'https://www.gstatic.com/firebasejs/9.9.1/firebase-app.js';
-        import { getDatabase, ref, get, set, child, update, remove } from 'https://www.gstatic.com/firebasejs/9.9.1/firebase-database.js';
+        import { getStorage, ref, getDownloadURL, list, listAll} from 'https://www.gstatic.com/firebasejs/9.9.1/firebase-storage.js';
 
         const firebaseConfig = {
             apiKey: "AIzaSyBETK45cbP1g2ZYC03ras5UYys5fXAqV_4",
@@ -309,112 +308,59 @@
         };
 
         const app = initializeApp(firebaseConfig);
-        const db = getDatabase();
+        const storage = getStorage();
 
-        const selectName = async function () {
-            const dbref = ref(db);
-            let snapshot = await get(child(dbref, "registered/"));
-            if (snapshot.exists()) {
-                snapshot.forEach(number => {
-                    registered[number.key] = number.val().name;
-
-                })
-            }
-            else {
-                alret("No data found");
-            }
-        }
-        const selectData = async function (year, month, date) {
-            const dbref = ref(db);
-            const path = "club/" + year + "/" + month + "/" + date + "/";
-
-            let snapshot = await get(child(dbref, path));
-            if (snapshot.exists()) {
-                snapshot.forEach(key => {
-                    let number = key.val().number;
-                    let name = key.val().name;
-                    let time = key.val().time;
-
-                    addRow(number, name, time)
-                })
-            }
-            else {
-                // alret("No data found");
-            }
-        }
-        function addRow(number, name, time) {
-            let tbody = document.getElementById("tbody");
-            let tdList = [];
-            let row = document.createElement("tr");
-            for (let i = 0; i < 3; i++) {
-                let td = document.createElement("td");
-                td.align = 'center';
-                tdList.push(td)
-            }
-
-            tdList[0].innerHTML = number;
-            tdList[1].innerHTML = name;
-            tdList[2].innerHTML = time;
-            for (let i = 0; i < 3; i++) {
-                row.appendChild(tdList[i])
-            }
-            tbody.appendChild(row)
-        }
-
+        //---------------create input-------------------------------------------
+        let input = document.createElement('input');
+        input.type = 'date';
+        input.id = 'select-date';
+        input.style.display = 'block';
+        document.querySelector(`.input-date`).appendChild(input)
+        //------------date control-----------------------------------------------------------
+        
         function getParameterByName(name) {
             name = name.replace(/[\[]/, "\\[").replace(/[\]]/, "\\]");
             var regex = new RegExp("[\\?&]" + name + "=([^&#]*)"),
                 results = regex.exec(location.search);
             return results === null ? "" : decodeURIComponent(results[1].replace(/\+/g, " "));
         }
+        function dateInit(search_date){
+            let dateTitle = document.querySelector(`.dateTitle`);
+            let now;
+            if(search_date ==""){
+                now = new Date();
+                search_date = now.getFullYear()+"-"+(now.getMonth()+1)+"-"+now.getDate();
+            }
+            let year = search_date.split('-')[0];
+            let month = search_date.split('-')[1];
+            let day = search_date.split('-')[2];
+            now = new Date(year, month - 1, day)
 
-        const changeDate = (nowDate) => {
-            console.log(nowDate)
-            let inputDate = new Date(nowDate);
+            let inputDate = new Date(now);
+            inputDate.setDate(inputDate.getDate()+1);
+            let nowYear = now.getFullYear()
+            let nowMonth = now.getMonth() + 1
+            let nowDate = now.getDate()
 
-            // 현재의 년도와 월 받아오기
-            let date = nowDate
+            nowMonth = nowMonth < 10 ? '0' + nowMonth : nowMonth;
+            nowDate = nowDate < 10 ? '0' + nowDate : nowDate;
 
-            let nowYear = nowDate.getFullYear();
-            let nowMonth = nowDate.getMonth() + 1;
-            let nowDay = nowDate.getDate();
-
-            inputDate.setMonth(date.getMonth());
-            inputDate.setDate(date.getDate() + 1);
+            dateTitle.innerText = `${nowYear}년 ${nowMonth}월 ${nowDate}일`;
             input.valueAsDate = inputDate;
 
-            document.querySelector(`.dateTitle`).innerText = `${nowYear}년 ${nowMonth}월 ${nowDay}일`;
+            return now;
         }
+
         function searchPage(newDate) {
             let newYear = newDate.getFullYear();
             let newMonth = newDate.getMonth() + 1;
             let newDay = newDate.getDate();
-            window.location.href = "record.html?search_date=" + newYear + "-" + newMonth + "-" + newDay
+            
+            newMonth = newMonth < 10 ? '0' + newMonth : newMonth;
+            newDay = newDay < 10 ? '0' + newDay : newDay;
+
+            window.location.href = "unKnown.html?search_date=" + newYear + "-" + newMonth + "-" + newDay
         }
-
-
-        let registered = {}
-
-        let search_date = getParameterByName("search_date");
-        let year = search_date.split('-')[0];
-        let month = search_date.split('-')[1];
-        let day = search_date.split('-')[2];
-
-
-        month = month < 10 ? '0' + month : month;
-        day = day < 10 ? '0' + day : day;
-
-        let date = new Date(year, month - 1, day)
-        console.log(date)
-
-        let input = document.createElement('input');
-        input.type = 'date';
-        input.id = 'select-date';
-        // input.style.height = '0';
-        input.style.display = 'block';
-        // input.style.visibility = 'hidden';
-        document.querySelector(`.input-date`).appendChild(input)
-
         // 이전달 이동
         document.querySelector(`.prevDay`).onclick = () => {
             date.setDate(date.getDate() - 1);
@@ -424,7 +370,6 @@
         // 다음달 이동
         document.querySelector(`.nextDay`).onclick = () => {
             date.setDate(date.getDate() + 1);
-            console.log(date)
             searchPage(date);
         }
 
@@ -434,21 +379,79 @@
         }
         input.onblur = () => {
             let newDate = input.valueAsDate
-            // console.log(newDate)
             searchPage(newDate)
         }
-        changeDate(date)
-        selectName()
+        //-----------------------------------------------------------------
+        function addRow(url, time) {
+            let tbody = document.getElementById("tbody");
 
-        await selectData(year, month, day)
-    </script>
-    <script>
-        let now = new Date()
-        let nowYear = now.getFullYear()
-        let nowMonth = now.getMonth() + 1
-        let nowDate = now.getDate()
-        let record = document.getElementById("record");
-        record.href = "record.html?search_date=" + nowYear + "-" + nowMonth + "-" + nowDate
+            let tr = document.createElement("tr");
+            let tdUrl = document.createElement("td");
+            let tdTime = document.createElement("td");
+            let img = document.createElement("img");
+            
+            img.src = url;
+            tdTime.innerHTML = time;
+
+            tdUrl.appendChild(img);
+            tr.appendChild(tdUrl);
+            tr.appendChild(tdTime);
+
+            tbody.appendChild(tr);
+        }
+
+        
+        const selectData =  async function () {
+            let date = document.querySelector(`.dateTitle`).innerHTML;
+            let nowYear = date.slice(0,4);
+            let nowMonth = date.slice(6,8);
+            let nowDate = date.slice(10,12);
+            let path = "club/"+nowYear+"/"+nowMonth+"/"+nowDate;
+            console.log(path);
+            let fileName = [];
+            let time = [];
+            let urls = [];
+            const imgRef = ref(storage, "club/"+nowYear+"/"+nowMonth+"/"+nowDate);
+            await listAll(imgRef).then((res)=>{
+                res.prefixes.forEach(folderRef => {
+                });
+                res.items.forEach((itemRef)=>{
+                    fileName.push(itemRef.fullPath);
+                });
+            });
+            fileName.forEach(name=>{
+                time.push(name.split("/")[4]);
+            });
+            console.log(time)
+            let count = 0;
+            fileName.forEach(name=>{
+                const storage = getStorage();
+                getDownloadURL(ref(storage, name))
+                .then((url) => {
+                    const xhr = new XMLHttpRequest();
+                    xhr.responseType = 'blob';
+                    xhr.onload = (event) => {
+                        const blob = xhr.response;
+                    };
+                    xhr.open('GET', url);
+                    xhr.send();
+                    urls.push(url);
+                    addRow(url, time[count++])
+                })
+                .catch((error) => {
+                    // Handle any errors
+                });
+            })
+            console.log(urls);
+            console.log(name);
+
+        }
+
+        //-----------------------------------------------------------------
+        let search_date = getParameterByName("search_date");
+        let date = dateInit(search_date);
+
+        await selectData()
     </script>
 
 </body>

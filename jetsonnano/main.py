@@ -18,9 +18,9 @@ from messenger.thread_event import Thread_Event
 if __name__ == '__main__':
     # instance create ==============================================================
     # main --------------------------------------------------------------
-    camera = Camera(tolerance=0.45)
+    camera = Camera(tolerance=0.45, develop=True)
     # known --------------------------------------------------------------
-    realtime_db = firebase_database(2)
+    realtime_db = firebase_database(5)
     doorlock = Doorlock()
     # unknown --------------------------------------------------------------
     storage = firebase_storage()
@@ -31,7 +31,7 @@ if __name__ == '__main__':
     update_event = threading.Event()
     patch_event = threading.Event()
     # queue --------------------------------------------------------------
-    q = Thread_Queue()
+    q = Thread_Queue(10)
     main_q = Queue()
 
     # thread create ==============================================================
@@ -60,13 +60,13 @@ if __name__ == '__main__':
     realtime_thread.start()
     # doorlock_thread.start()
     # # unknwon--------------------------------------------------------------
-    # capture_thread.start()
-    # storage_thread.start()
-    # telegram_thread.start()
+    capture_thread.start()
+    storage_thread.start()
+    telegram_thread.start()
     # # update--------------------------------------------------------------
-    # observer_thread.start()
-    # update_thread.start()
-    # patch_thread.start()
+    observer_thread.start()
+    update_thread.start()
+    patch_thread.start()
 
     # main preparation ==============================================================
     # unkown receive ready
@@ -76,32 +76,58 @@ if __name__ == '__main__':
     numbers = camera.get_numbers()
     camera.set_names(realtime_db.changeName(numbers))
     names = camera.get_numbers()
-    # data_dict = {}
-    # for number, name in zip(numbers, names):
-    #     data_dict[name] = number
-    # print(data_dict)
 
     # main start ==============================================================
+    accessTime = []
     while True:
         update = False
         if update_event.is_set():
             update = True
-        if not main_q.empty():
-            data_dict = main_q.get()
         frame, name = camera.getData(update)
-        # cv2.namedWindow("webcam", cv2.WND_PROP_FULLSCREEN)
-        # cv2.setWindowProperty("webcam", cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
+        cv2.namedWindow("webcam", cv2.WND_PROP_FULLSCREEN)
+        cv2.setWindowProperty("webcam", cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
         cv2.imshow("webcam", frame)
-        # 등록된 인원이 아닐경우
-        if name == 'Unknown':
-            q.put_img('Unknown',frame)
-        elif name != '':
-            # q.put(data_dict[name])
-            q.put(name)
+
+        if name != "":
+            if len(accessTime) == 3:
+                data = [name, time.time()]
+                accessTime.pop(0)
+                accessTime.append(data)
+
+                timeList = []
+                sum = 0
+                for i in range(1, len(accessTime)):
+                    timeList.append(accessTime[i][1] - accessTime[i-1][1])
+                for item in timeList:
+                    sum += item
+                avg = sum/len(timeList)
+
+                data = {}
+                if avg < 0.6:
+                    for item in accessTime:
+                        if item[0] in data:
+                            data[item[0]] += 1
+                        else:
+                            data[item[0]] = 1
+                maxCount = 1
+                name = ""
+                for k, v in data.items():
+                    if maxCount < v:
+                        name = k
+
+                print(name)
+
+
+                if name == 'Unknown':
+                    q.put_img('Unknown',frame)
+                elif name != "":
+                    q.put(name)
+            else:
+                data = [name, time.time()]
+                accessTime.append(data)
 
 
         key = cv2.waitKey(1) & 0xFF
-
         if key == ord("q"):
             break
 

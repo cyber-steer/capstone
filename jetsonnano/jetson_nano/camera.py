@@ -52,7 +52,14 @@ class Camera():
             encoded_faces = face_recognition.face_encodings(img, faces_in_frame)
 
             name = self.getName(faces_in_frame , encoded_faces)
-            if name != '':
+            if self.develop and name != '':
+                nameVal = name
+                name = name.split(" : ")[0]
+                if name == 'Unknown':
+                    self.draw(frame, nameVal, faces_in_frame, 'red')
+                else:
+                    self.draw(frame, nameVal, faces_in_frame, 'green')
+            elif name != '':
                 if name == 'Unknown':
                     self.draw(frame, name, faces_in_frame, 'red')
                 else:
@@ -72,7 +79,7 @@ class Camera():
             else:
                 name = 'Unknown'
             if self.develop:
-                print(f'{name} : {min_faceDist}')
+                name += " : "+str(min_faceDist)
         return name
 
     # 인식한뒤 네모 그리기

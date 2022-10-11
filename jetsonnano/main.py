@@ -88,43 +88,40 @@ if __name__ == '__main__':
         # cv2.setWindowProperty("webcam", cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
         cv2.imshow("webcam", frame)
 
-        if name != "":
-            if len(accessTime) == 3:
-                data = [name, time.time()]
-                accessTime.pop(0)
-                accessTime.append(data)
-
-                timeList = []
-                sum = 0
-                for i in range(1, len(accessTime)):
-                    timeList.append(accessTime[i][1] - accessTime[i-1][1])
-                for item in timeList:
-                    sum += item
-                avg = sum/len(timeList)
-
-                data = {}
-                if avg < 5:
-                    for item in accessTime:
-                        if item[0] in data:
-                            data[item[0]] += 1
-                        else:
-                            data[item[0]] = 1
-                maxCount = 1
-                name = ""
-                for k, v in data.items():
-                    if maxCount < v:
-                        name = k
-
-                print(name)
-
-
-                if name == 'Unknown':
-                    q.put_img('Unknown',frame)
-                elif name != "":
-                    q.put(name)
-            else:
-                data = [name, time.time()]
-                accessTime.append(data)
+        # if name != "":
+        #     if len(accessTime) == 3:
+        #         data = [name, time.time()]
+        #         accessTime.pop(0)
+        #         accessTime.append(data)
+        #
+        #         timeList = []
+        #         sum = 0
+        #         for i in range(1, len(accessTime)):
+        #             timeList.append(accessTime[i][1] - accessTime[i-1][1])
+        #         for item in timeList:
+        #             sum += item
+        #         avg = sum/len(timeList)
+        #
+        #         data = {}
+        #         if avg < 5:
+        #             for item in accessTime:
+        #                 if item[0] in data:
+        #                     data[item[0]] += 1
+        #                 else:
+        #                     data[item[0]] = 1
+        #         maxCount = 1
+        #         name = ""
+        #         for k, v in data.items():
+        #             if maxCount < v:
+        #                 name = k
+        #
+        #     else:
+        #         data = [name, time.time()]
+        #         accessTime.append(data)
+        if name == 'Unknown':
+            q.put_img('Unknown',frame)
+        elif name != "":
+            q.put(name)
 
 
         key = cv2.waitKey(1) & 0xFF

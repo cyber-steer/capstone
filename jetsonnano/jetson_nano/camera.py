@@ -79,6 +79,8 @@ class Camera():
             else:
                 name = 'Unknown'
             if self.develop:
+                print("name :",name)
+                print("min_faceDist :",str(min_faceDist))
                 name += " : "+str(min_faceDist)
         return name
 
@@ -131,6 +133,8 @@ class Camera():
                 cv2.imwrite('Unknown.jpg', data['Unknown'])
                 send.setAll()
                 receive.clearAll()
+                while not q.empty():
+                    q.get()
 
 if __name__ == '__main__':
     camera = Camera('../registered')

@@ -2,12 +2,13 @@ import telegram
 
 class Telegram:
 
-    # Telegram API
-    chat_token = "5781093194:AAGj5G9KNiMR2qxoZHK7oY5N_RyMfH-TuKc"
-    chat = telegram.Bot(token = chat_token)
-    updates = chat.getUpdates()
-    # for u in updates:
-    #     print(u.message['chat']['id'])
+    def __init__(self):
+        # Telegram API
+        self.chat_token = "5781093194:AAGj5G9KNiMR2qxoZHK7oY5N_RyMfH-TuKc"
+        self.chat = telegram.Bot(token = self.chat_token)
+        # updates = chat.getUpdates()
+        # for u in updates:
+        #     print(u.message['chat']['id'])
 
     def sendMessege(self):
         bot = telegram.Bot(self.chat_token)

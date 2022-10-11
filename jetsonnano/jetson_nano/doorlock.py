@@ -26,5 +26,5 @@ class Doorlock:
         while True:
             name = q.get()
             self.open()
-            while q.empty():
+            while not q.empty():
                 q.get()

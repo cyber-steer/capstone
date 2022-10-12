@@ -430,19 +430,13 @@
             fileName.forEach(name=>{
                 time.push(name.split("/")[4]);
             });
-            console.log(time)
             let count = 0;
+            console.log()
             fileName.forEach(name=>{
+                console.log(name)
                 const storage = getStorage();
                 getDownloadURL(ref(storage, name))
                 .then((url) => {
-                    const xhr = new XMLHttpRequest();
-                    xhr.responseType = 'blob';
-                    xhr.onload = (event) => {
-                        const blob = xhr.response;
-                    };
-                    xhr.open('GET', url);
-                    xhr.send();
                     urls.push(url);
                     addRow(url, time[count++])
                 })
@@ -450,8 +444,6 @@
                     // Handle any errors
                 });
             })
-            console.log(urls);
-            console.log(name);
 
         }
 

@@ -8,7 +8,7 @@ from queue import Queue
 import cv2
 
 from jetson_nano.camera import Camera
-# from jetson_nano.doorlock import Doorlock
+from jetson_nano.doorlock import Doorlock
 from db.firebase_database import firebase_database
 from db.firebase_storage import firebase_storage
 from messenger.Telegram import Telegram
@@ -21,13 +21,11 @@ if __name__ == '__main__':
     camera = Camera(tolerance=0.41)
     # known --------------------------------------------------------------
     realtime_db = firebase_database(5)
-    # doorlock = Doorlock()
+    doorlock = Doorlock()
     # unknown --------------------------------------------------------------
     storage = firebase_storage()
     telegram = Telegram()
     # event --------------------------------------------------------------
-    # send_evnet = Thread_Event()
-    # receive_evnet = Thread_Event()
     capture_to_storage = threading.Event()
     capture_to_telegram = threading.Event()
     storage_to_capture = threading.Event()
@@ -43,8 +41,8 @@ if __name__ == '__main__':
     # knwon --------------------------------------------------------------
     realtime_thread = threading.Thread(
         target=realtime_db.insert, args=(q.get_realtime(),), daemon=True)
-    # doorlock_thread = threading.Thread(
-    #     target=doorlock.action, args=(q.get_doorlock(),), daemon=True)
+    doorlock_thread = threading.Thread(
+        target=doorlock.action, args=(q.get_doorlock(),), daemon=True)
     # unknwon--------------------------------------------------------------
     capture_thread = threading.Thread(
         target=camera.imgCaptture, args=(q.get_capture(), capture_to_storage, capture_to_telegram, storage_to_capture, telegram_to_capture), daemon=True)
@@ -52,13 +50,6 @@ if __name__ == '__main__':
         target=storage.insert, args=(q.get_storage(),capture_to_storage, storage_to_capture), daemon=True)
     telegram_thread = threading.Thread(
         target=telegram.send, args=(q.get_telegram(),capture_to_telegram, telegram_to_capture), daemon=True)
-
-    # capture_thread = threading.Thread(
-    #     target=camera.imgCaptture, args=(q.get_capture(), send_evnet, receive_evnet), daemon=True)
-    # storage_thread = threading.Thread(
-    #     target=storage.insert, args=(q.get_storage(), receive_evnet.get_a(), send_evnet.get_a()), daemon=True)
-    # telegram_thread = threading.Thread(
-    #     target=telegram.send, args=(q.get_telegram(), receive_evnet.get_b(), send_evnet.get_b()), daemon=True)
     # update--------------------------------------------------------------
     observer_thread = threading.Thread(
         target=realtime_db.observer, args=(q.get_update(), update_event), daemon=True)
@@ -70,7 +61,7 @@ if __name__ == '__main__':
     # thread start ==============================================================
     # knwon--------------------------------------------------------------
     realtime_thread.start()
-    # doorlock_thread.start()
+    doorlock_thread.start()
     # # unknwon--------------------------------------------------------------
     capture_thread.start()
     storage_thread.start()
@@ -82,9 +73,9 @@ if __name__ == '__main__':
 
     # main preparation ==============================================================
     # unkown receive ready
-    # receive_evnet.setAll()
     storage_to_capture.set()
     telegram_to_capture.set()
+
     # number to eng name
     numbers = camera.get_numbers()
     camera.set_names(realtime_db.changeName(numbers))
@@ -97,9 +88,8 @@ if __name__ == '__main__':
         if update_event.is_set():
             update = True
         frame, name = camera.getData(update)
-        # frame = cv2.flip(frame, 1)
-        # cv2.namedWindow("webcam", cv2.WND_PROP_FULLSCREEN)
-        # cv2.setWindowProperty("webcam", cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
+        cv2.namedWindow("webcam", cv2.WND_PROP_FULLSCREEN)
+        cv2.setWindowProperty("webcam", cv2.WND_PROP_FULLSCREEN, cv2.WINDOW_FULLSCREEN)
         cv2.imshow("webcam", frame)
 
         if name == 'Unknown':

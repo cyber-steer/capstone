@@ -388,7 +388,6 @@
 
             let tr = document.createElement("tr");
             let tdUrl = document.createElement("td");
-            // let tdTime = document.createElement("td");
             let img = document.createElement("img");
             let imgBox = document.createElement("div");
             let index = -1;
@@ -396,15 +395,7 @@
             img.src = url;
             img.style.width="20rem"
             imgBox.style.textAlign = "center";
-            // tdTime.innerHTML = visitTime;
-            // tdTime.style.fontSize = '2rem';
-            // tdTime.style.textAlign = 'center';
-            // tdTime.style.verticalAlign = 'middle';
             imgBox.appendChild(img);
-
-            // tdUrl.appendChild(imgBox);
-            // tr.appendChild(tdUrl);
-            // tr.appendChild(tdTime);
 
 
             let trList = tbody.childNodes;
@@ -425,12 +416,6 @@
 
             cell0.appendChild(imgBox);
             cell1.innerHTML = visitTime;
-            // imgBox.appendChild(img);
-            // tdUrl.appendChild(imgBox);
-            // tr.appendChild(tdUrl);
-            // tr.appendChild(tdTime);
-            // tbody.appendChild(tr);
-
         }
 
         let timeList = [];

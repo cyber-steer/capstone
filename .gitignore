@@ -1,6 +1,9 @@
 Unknown.jpg
 registered/
-db/__pycahe__/
-jetson_nano/__pycahe__/
-messenger/__pycahe__/
-db/__pycahe__/
+.idea/
+venv/
+db/__pycache__/
+jetson_nano/__pycache__/
+messenger/__pycache__/
+db/__pycache__/
+

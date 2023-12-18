@@ -8,7 +8,7 @@ from queue import Queue
 import cv2
 
 from jetson_nano.camera import Camera
-# from jetson_nano.doorlock import Doorlock
+from jetson_nano.doorlock import Doorlock
 from db.firebase_database import firebase_database
 from db.firebase_storage import firebase_storage
 from messenger.Telegram import Telegram
@@ -21,7 +21,7 @@ if __name__ == '__main__':
     camera = Camera(tolerance=0.41)
     # known --------------------------------------------------------------
     realtime_db = firebase_database(5)
-    # doorlock = Doorlock()
+    doorlock = Doorlock()
     # unknown --------------------------------------------------------------
     storage = firebase_storage()
     telegram = Telegram()
@@ -41,8 +41,8 @@ if __name__ == '__main__':
     # knwon --------------------------------------------------------------
     realtime_thread = threading.Thread(
         target=realtime_db.insert, args=(q.get_realtime(),), daemon=True)
-    # doorlock_thread = threading.Thread(
-    #     target=doorlock.action, args=(q.get_doorlock(),), daemon=True)
+    doorlock_thread = threading.Thread(
+        target=doorlock.action, args=(q.get_doorlock(),), daemon=True)
     # unknwon--------------------------------------------------------------
     capture_thread = threading.Thread(
         target=camera.imgCaptture, args=(q.get_capture(), capture_to_storage, capture_to_telegram, storage_to_capture, telegram_to_capture), daemon=True)
@@ -61,7 +61,7 @@ if __name__ == '__main__':
     # thread start ==============================================================
     # knwon--------------------------------------------------------------
     realtime_thread.start()
-    # doorlock_thread.start()
+    doorlock_thread.start()
     # # unknwon--------------------------------------------------------------
     capture_thread.start()
     storage_thread.start()

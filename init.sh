@@ -1,3 +1,7 @@
+if [ "$EUID" -ne 0 ]; then
+    echo "Please run this script with sudo."
+    exit 1
+fi
 sudo apt update
 sudo apt install build-essential cmake
 sudo apt install libopenblas-dev liblapack-dev -y
@@ -15,7 +19,3 @@ RULES_CONTENT='KERNEL=="gpiochip0", MODE="0666"'
 
 echo "$RULES_CONTENT" | sudo tee "$UDEV_RULES_FILE" > /dev/null
 sudo udevadm control --reload-rules
-
-CRONTAB_LINE="@reboot python3 ~/capstone/main.py"
-
-(crontab -l 2>/dev/null; echo "$CRONTAB_LINE") | crontab -

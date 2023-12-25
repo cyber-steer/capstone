@@ -8,7 +8,7 @@ import requests
 
 class firebase_storage(Firebase):
     def __init__(self, path='db/auth_database.json'):
-        super(). __init__(path)
+        super().__init__(path)
         self.storage = self.firebase.storage()
         
     # unknown 이미지 저장
@@ -22,7 +22,6 @@ class firebase_storage(Firebase):
     def insert(self, q, capture_to_storage, storage_to_capture):
         while True:
             capture_to_storage.wait()
-            print("storage")
             # file = q.get()
             self.img_insert(str(datetime.now()))
             storage_to_capture.set()
@@ -41,7 +40,6 @@ class firebase_storage(Firebase):
     def update(self,q, e):
         while True:
             log = q.get()
-            print('log :', log)
             for key, value in log.items():
                 if key == 'insert' or key == 'update':
                     self.download(value)
@@ -53,11 +51,9 @@ class firebase_storage(Firebase):
                 
     # 이미지 저장
     def download(self, number, path='registered/'):
-        print("downloading...")
         cloud_path = 'registered/' + str(number)
         local_path = path + str(number) +'.jpg'
         self.storage.child(cloud_path).download( local_path)
-        print("download end")
     def download_all(self, numbers, path='registered/'):
         for number in numbers:
             self.download(number)

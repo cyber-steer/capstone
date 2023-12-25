@@ -18,7 +18,8 @@ import os
 
 if __name__ == '__main__':
     home_directory = os.path.expanduser('~')
-    python_directory = os.path.join(home_directory, 'python')
+    python_directory = os.path.join(home_directory, 'capstone')
+    file_path = python_directory+"/db/auth_database.json"
 
 
     # instance create ==============================================================

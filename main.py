@@ -14,8 +14,13 @@ from db.firebase_storage import firebase_storage
 from messenger.Telegram import Telegram
 from messenger.thread_queue import Thread_Queue
 from messenger.thread_event import Thread_Event
+import os
 
 if __name__ == '__main__':
+    home_directory = os.path.expanduser('~')
+    python_directory = os.path.join(home_directory, 'python')
+
+
     # instance create ==============================================================
     # main --------------------------------------------------------------
     camera = Camera(tolerance=0.41)

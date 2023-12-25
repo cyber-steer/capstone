@@ -46,10 +46,10 @@ class Camera():
 
     # 인식된 이름과 화면에 보여줄 frame 얻기
     def getData(self, update=False):
-        self.cap  = cv2.VideoCapture(0)
         name = ""
         if not self.cap.isOpened():
             frame = self.not_find_camera()
+            self.cap = cv2.VideoCapture(0)
         else:
             success, frame = self.cap.read()
         frame = cv2.flip(frame, 1)

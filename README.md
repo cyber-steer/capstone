@@ -30,5 +30,13 @@ reboot
 ```Python
 python3 capstone/main.py
 ```
+
+# 쿨러 사용
+[https://github.com/jugfk/jetson-fan-ctl](https://github.com/jugfk/jetson-fan-ctl)
+```Bash
+git clone https://github.com/jetsonworld/jetson-fan-ctl.git
+cd jetson-fan-ctl
+sudo sh install.sh
+```
 # 회로 구성
 ![회로구성](https://github.com/cyber-steer/capstone/blob/nano/img/doorlock.jpg)

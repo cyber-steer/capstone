@@ -30,3 +30,5 @@ reboot
 ```Python
 python3 capstone/main.py
 ```
+# 회로 구성
+![회로구성](https://github.com/cyber-steer/capstone/blob/nano/img/doorlock.jpg)
